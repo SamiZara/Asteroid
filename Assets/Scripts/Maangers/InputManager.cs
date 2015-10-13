@@ -11,9 +11,13 @@ public class InputManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButton(0))
-        {
-            CharachterControlManager.Instance.rotate();
-        }
+        if (Input.GetMouseButton (0)) 
+		{
+			CharachterControlManager.Instance.rotate ();
+		} 
+		else if (Input.GetMouseButtonUp (0)) 
+		{
+			CharachterControlManager.Instance.stopRotate();
+		}
 	}
 }
