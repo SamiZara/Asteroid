@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class MathHelper : MonoBehaviour {
+public class MathHelper{
 
 	// Use this for initialization
 	void Start () {
