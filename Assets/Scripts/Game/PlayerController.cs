@@ -8,14 +8,12 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     public float rotateSpeed, speed;
     private Rigidbody2D playerRb;
-    Vector3 screenPos;
     public TrailRenderer playerTrail;
     void Start()
     {
         if (Instance == null)
             Instance = this;
         playerRb = GetComponent<Rigidbody2D>();
-        screenPos = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
     }
 
     // Update is called once per frame
@@ -33,7 +31,7 @@ public class PlayerController : MonoBehaviour
         if (degree < 0)
             degree += 360;
         float myRotation = transform.rotation.eulerAngles.z;
-        if (Math.Abs(myRotation - degree) > 4)
+        if (Math.Abs(myRotation - degree) > 10)
         {
             if (myRotation > degree)
             {
@@ -65,25 +63,25 @@ public class PlayerController : MonoBehaviour
     void OnBecameInvisible()
     {
         Vector3 playerPos = transform.position;
-        if(transform.position.y > screenPos.y)
+        if(transform.position.y > GlobalsManager.Instance.screenPos.y)
         {
             transform.position = new Vector3(playerPos.x, -playerPos.y, playerPos.z);
             playerPos = transform.position;
             StartCoroutine("ResetTrailRenderer",playerTrail);
         }
-        else if(transform.position.y < -screenPos.y)
+        else if(transform.position.y < -GlobalsManager.Instance.screenPos.y)
         {
             transform.position = new Vector3(playerPos.x, -playerPos.y, playerPos.z);
             playerPos = transform.position;
             StartCoroutine("ResetTrailRenderer", playerTrail);
         }
-        if (transform.position.x > screenPos.x)
+        if (transform.position.x > GlobalsManager.Instance.screenPos.x)
         {
             transform.position = new Vector3(-playerPos.x, playerPos.y, playerPos.z);
             playerPos = transform.position;
             StartCoroutine("ResetTrailRenderer", playerTrail);
         }
-        else if (transform.position.x < -screenPos.x)
+        else if (transform.position.x < -GlobalsManager.Instance.screenPos.x)
         {
             transform.position = new Vector3(-playerPos.x, playerPos.y, playerPos.z);
             playerPos = transform.position;

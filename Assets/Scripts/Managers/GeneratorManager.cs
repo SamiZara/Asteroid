@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GeneratorManager : MonoBehaviour {
 
     public static GeneratorManager Instance;
-	void Start () {
+    public List<GameObject> asteroids = new List<GameObject>();
+    void Start () {
         Instance = this;
 	}
 	
