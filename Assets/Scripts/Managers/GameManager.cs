@@ -4,7 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
-	void Start () {
+	void Awake () {
         Instance = this;
         Application.LoadLevelAdditiveAsync("Background");
 	}

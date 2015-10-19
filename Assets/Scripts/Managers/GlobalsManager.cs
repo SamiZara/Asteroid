@@ -5,7 +5,7 @@ public class GlobalsManager : MonoBehaviour {
     public static GlobalsManager Instance;
     public Vector3 screenPos;
     // Use this for initialization
-    void Start () {
+	void Awake () {
         Instance = this;
 	}
 	

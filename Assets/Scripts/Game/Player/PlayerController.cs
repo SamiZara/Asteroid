@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float rotateSpeed, speed;
     private Rigidbody2D playerRb;
     public TrailRenderer playerTrail;
+
     void Start()
     {
         if (Instance == null)
@@ -91,10 +92,9 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ResetTrailRenderer(TrailRenderer tr)
     {
-        float trailTime = tr.time;
         tr.time = 0;
         yield return null;
-        tr.time = trailTime;
+        tr.time = 0.2f;
     }
 }
 

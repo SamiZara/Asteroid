@@ -4,7 +4,7 @@ using System.Collections;
 public class InputManager : MonoBehaviour {
 
     public static InputManager Instance;
-	void Start () {
+	void Awake () {
         Instance = this;
 	}
 	

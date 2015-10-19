@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ResourceManager {
+public class ResourceManager : MonoBehaviour{
     public static ResourceManager Instance;
-    Dictionary<string, GameObject> storedAllocations = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> storedAllocations = new Dictionary<string, GameObject>();
     // Use this for initialization
-    void Start () {
+    void Awake () {
         Instance = this;
 	}
 	
