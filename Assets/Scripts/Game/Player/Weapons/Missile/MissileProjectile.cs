@@ -65,25 +65,22 @@ public class MissileProjectile : MonoBehaviour
             if (degree < 0)
                 degree += 360;
             float myRotation = transform.rotation.eulerAngles.z;
-            if (Mathf.Abs(myRotation - degree) > 10)
+            if (myRotation > degree)
             {
-                if (myRotation > degree)
-                {
-                    if (Mathf.Abs(myRotation - degree) < 180)
-                        rb.angularVelocity = -rotateSpeed;
-                    else
-                    {
-                        rb.angularVelocity = rotateSpeed;
-                    }
-                }
+                if (Mathf.Abs(myRotation - degree) < 180)
+                    rb.angularVelocity = -rotateSpeed;
                 else
                 {
-                    if (Mathf.Abs(myRotation - degree) < 180)
-                        rb.angularVelocity = rotateSpeed;
-                    else
-                    {
-                        rb.angularVelocity = -rotateSpeed;
-                    }
+                    rb.angularVelocity = rotateSpeed;
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(myRotation - degree) < 180)
+                    rb.angularVelocity = rotateSpeed;
+                else
+                {
+                    rb.angularVelocity = -rotateSpeed;
                 }
             }
             GetComponent<Rigidbody2D>().velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
@@ -123,9 +120,8 @@ public class MissileProjectile : MonoBehaviour
 
     IEnumerator ResetTrailRenderer(TrailRenderer tr)
     {
-        float trailTime = tr.time;
         tr.time = 0;
         yield return null;
-        tr.time = trailTime;
+        tr.time = 0.2f;
     }
 }

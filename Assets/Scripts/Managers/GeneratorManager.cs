@@ -13,7 +13,17 @@ public class GeneratorManager : MonoBehaviour {
 	void Start()
 	{
 		ResourceManager.Instance.AllocateAndStore ("Prefabs/asteroid", "asteroid");
-		Instantiate (ResourceManager.Instance.storedAllocations ["asteroid"], new Vector3 (2, 0, 0), Quaternion.identity);
+        GameObject asteroid = ResourceManager.Instance.storedAllocations["asteroid"];
+        float asteroidXPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.width/100 + GlobalsManager.Instance.screenPos.x;
+        float asteroidYPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.height / 100 + GlobalsManager.Instance.screenPos.y;
+        int random1 = (Random.Range(0, 2) * 2) - 1;
+        int random2 = (Random.Range(0, 2) * 2) - 1;
+        if (random1 == 1)
+            asteroidXPos = Random.Range(0, asteroidXPos);
+        else
+            asteroidYPos = Random.Range(0, asteroidYPos);
+        GameObject temp = (GameObject)Instantiate (asteroid, new Vector3 (random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
+        asteroids.Add(temp);
 	}
 	
 	// Update is called once per frame

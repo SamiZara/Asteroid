@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         var v3 = Input.mousePosition;
         v3.z = 10.0f;
         v3 = Camera.main.ScreenToWorldPoint(v3);
-        double degree = MathHelper.degreeBetween2Points(transform.position, v3);
+        float degree = MathHelper.degreeBetween2Points(transform.position, v3);
         if (degree < 0)
             degree += 360;
         float myRotation = transform.rotation.eulerAngles.z;
