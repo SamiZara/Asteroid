@@ -68,25 +68,25 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(playerPos.x, -playerPos.y, playerPos.z);
             playerPos = transform.position;
-            StartCoroutine("ResetTrailRenderer",playerTrail);
+            //StartCoroutine("ResetTrailRenderer",playerTrail);
         }
         else if(transform.position.y < -GlobalsManager.Instance.screenPos.y)
         {
             transform.position = new Vector3(playerPos.x, -playerPos.y, playerPos.z);
             playerPos = transform.position;
-            StartCoroutine("ResetTrailRenderer", playerTrail);
+            //StartCoroutine("ResetTrailRenderer", playerTrail);
         }
         if (transform.position.x > GlobalsManager.Instance.screenPos.x)
         {
             transform.position = new Vector3(-playerPos.x, playerPos.y, playerPos.z);
             playerPos = transform.position;
-            StartCoroutine("ResetTrailRenderer", playerTrail);
+            //StartCoroutine("ResetTrailRenderer", playerTrail);
         }
         else if (transform.position.x < -GlobalsManager.Instance.screenPos.x)
         {
             transform.position = new Vector3(-playerPos.x, playerPos.y, playerPos.z);
             playerPos = transform.position;
-            StartCoroutine("ResetTrailRenderer", playerTrail);
+            //StartCoroutine("ResetTrailRenderer", playerTrail);
         }
     }
 

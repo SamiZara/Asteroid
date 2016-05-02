@@ -35,25 +35,25 @@ public class MissileProjectile : MonoBehaviour
         {
             transform.position = new Vector3(missilePos.x, -missilePos.y, missilePos.z);
             missilePos = transform.position;
-            StartCoroutine("ResetTrailRenderer", trainRenderer);
+            //StartCoroutine("ResetTrailRenderer", trainRenderer);
         }
         else if (transform.position.y < -GlobalsManager.Instance.screenPos.y)
         {
             transform.position = new Vector3(missilePos.x, -missilePos.y, missilePos.z);
             missilePos = transform.position;
-            StartCoroutine("ResetTrailRenderer", trainRenderer);
+            //StartCoroutine("ResetTrailRenderer", trainRenderer);
         }
         if (transform.position.x > GlobalsManager.Instance.screenPos.x)
         {
             transform.position = new Vector3(-missilePos.x, missilePos.y, missilePos.z);
             missilePos = transform.position;
-            StartCoroutine("ResetTrailRenderer", trainRenderer);
+            //StartCoroutine("ResetTrailRenderer", trainRenderer);
         }
         else if (transform.position.x < -GlobalsManager.Instance.screenPos.x)
         {
             transform.position = new Vector3(-missilePos.x, missilePos.y, missilePos.z);
             missilePos = transform.position;
-            StartCoroutine("ResetTrailRenderer", trainRenderer);
+            //StartCoroutine("ResetTrailRenderer", trainRenderer);
         }
     }
 
