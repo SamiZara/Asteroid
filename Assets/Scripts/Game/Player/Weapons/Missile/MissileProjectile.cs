@@ -4,7 +4,7 @@ using System.Collections;
 public class MissileProjectile : MonoBehaviour
 {
     public float speed, rotateSpeed, damage, duration, startTime;
-    public GameObject target;
+    public GameObject target,explosionParticle;
     private TrailRenderer trainRenderer;
     private Rigidbody2D rb;
     private bool isReadyToDestroy;
@@ -61,7 +61,7 @@ public class MissileProjectile : MonoBehaviour
     {
         if (!isReadyToDestroy)
         {
-            float degree = (float)degreeBetween2Points(transform.position, target.transform.position);
+            float degree = (float)MathHelper.degreeBetween2Points(transform.position, target.transform.position);
             if (degree < 0)
                 degree += 360;
             float myRotation = transform.rotation.eulerAngles.z;
@@ -87,13 +87,6 @@ public class MissileProjectile : MonoBehaviour
         }
     }
 
-    double degreeBetween2Points(Vector3 p1, Vector3 p2)
-    {
-        float xDiff = p2.x - p1.x;
-        float yDiff = p2.y - p1.y;
-        return Mathf.Atan2(yDiff, xDiff) * 180.0 / Mathf.PI;
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         Destroy();
@@ -101,15 +94,17 @@ public class MissileProjectile : MonoBehaviour
 
     void Destroy()
     {
-        /*if (particleSystem != null)
+        if (explosionParticle != null)
         {
-            particleSystem.SetActive(true);
-            particleSystem.transform.parent = transform.parent;
-            particleSystem.AddComponent<Destroyer>();
-            isReadyToDestroy = true;
+            explosionParticle.SetActive(true);
+            explosionParticle.transform.parent = transform.parent;
+            Destroyer temp = explosionParticle.AddComponent<Destroyer>();
+            temp.destroyDelayTime = 1;
+            //isReadyToDestroy = true;
             destroyTime = Time.time + 2;
         }
-        if (GetComponent<Rigidbody2D>() != null)
+        Destroy(gameObject);
+        /*if (GetComponent<Rigidbody2D>() != null)
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         GetComponent<SpriteRenderer>().sprite = null;
         if (GetComponent<BoxCollider2D>() != null)

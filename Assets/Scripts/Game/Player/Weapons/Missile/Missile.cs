@@ -3,12 +3,12 @@ using System.Collections;
 
 public class Missile : Weapon
 {
-
+    public float tier = 1;
     public float cooldown;
     private float lastShootTime;
     void Start()
     {
-        ResourceManager.Instance.AllocateAndStore("Prefabs/MissileProjectile", "MissileProjectile");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/MissileProjectileTier"+tier, "MissileProjectile");
     }
 
     // Update is called once per frame
