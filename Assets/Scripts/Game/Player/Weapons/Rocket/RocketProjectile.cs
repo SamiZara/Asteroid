@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TurretProjectile : MonoBehaviour
+public class RocketProjectile : MonoBehaviour
 {
 
-    public float speed, damage, duration, startTime;
-    public GameObject explosionParticle;
+    public float speed, damage , aoeDamage, duration, startTime;
+    public GameObject explosionParticle,aoeDamager;
     private Rigidbody2D rb;
     void Start()
     {
@@ -13,6 +13,7 @@ public class TurretProjectile : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         float myRotation = transform.rotation.eulerAngles.z;
         GetComponent<Rigidbody2D>().velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
+        aoeDamager.GetComponent<RocketAoeDamager>().damage = aoeDamage;
     }
 
     // Update is called once per frame
@@ -72,6 +73,14 @@ public class TurretProjectile : MonoBehaviour
             Destroyer temp = explosionParticle.AddComponent<Destroyer>();
             temp.destroyDelayTime = 1;
         }
+        if (aoeDamager != null)
+        {
+            aoeDamager.SetActive(true);
+            aoeDamager.transform.parent = transform.parent.parent;
+            Destroyer temp = aoeDamager.AddComponent<Destroyer>();
+            temp.destroyDelayTime = 0.2f;
+        }
+            
         Destroy(gameObject);
     }
 }

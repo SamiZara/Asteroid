@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TurretProjectile : MonoBehaviour
+public class GaussProjectile : MonoBehaviour
 {
 
     public float speed, damage, duration, startTime;

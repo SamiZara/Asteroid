@@ -8,20 +8,18 @@ public class MissileProjectile : MonoBehaviour
     private TrailRenderer trainRenderer;
     private Rigidbody2D rb;
     private bool isReadyToDestroy;
-    private float destroyTime;
     void Start()
     {
         startTime = Time.time;
         isReadyToDestroy = false;
         trainRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        target = MissileLocker.lockedAsteroid;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isReadyToDestroy && Time.time > destroyTime)
-            Destroy(gameObject);
         if (startTime + duration < Time.time)
         {
             Destroy();
@@ -89,6 +87,15 @@ public class MissileProjectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        Asteroid temp = collision.GetComponent<Asteroid>();
+        if (temp != null)
+        {
+            temp.Damage(damage);
+        }
+        else
+        {
+            Debug.Log("Something collided with something it should not");
+        }
         Destroy();
     }
 
@@ -97,20 +104,11 @@ public class MissileProjectile : MonoBehaviour
         if (explosionParticle != null)
         {
             explosionParticle.SetActive(true);
-            explosionParticle.transform.parent = transform.parent;
+            explosionParticle.transform.parent = transform.parent.parent;
             Destroyer temp = explosionParticle.AddComponent<Destroyer>();
             temp.destroyDelayTime = 1;
-            //isReadyToDestroy = true;
-            destroyTime = Time.time + 2;
         }
         Destroy(gameObject);
-        /*if (GetComponent<Rigidbody2D>() != null)
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
-        GetComponent<SpriteRenderer>().sprite = null;
-        if (GetComponent<BoxCollider2D>() != null)
-            Destroy(GetComponent<BoxCollider2D>());
-        if (GetComponent<Rigidbody2D>() != null)
-            Destroy(GetComponent<Rigidbody2D>());*/
     }
 
     IEnumerator ResetTrailRenderer(TrailRenderer tr)

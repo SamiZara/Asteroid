@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour {
 	void Awake () {
         Instance = this;
         Application.LoadLevelAdditiveAsync("Background");
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {

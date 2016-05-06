@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     public float rotateSpeed, speed;
     private Rigidbody2D playerRb;
-    public TrailRenderer playerTrail;
-
+    //public TrailRenderer playerTrail;
+    public ParticleSystem jetParticle;
     void Start()
     {
         if (Instance == null)
@@ -20,7 +20,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        playerRb.AddForce(new Vector2(speed * Time.fixedDeltaTime * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), speed * Time.deltaTime * Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)));
+        if(Input.GetMouseButton(0))
+            playerRb.AddForce(new Vector2(speed * Time.fixedDeltaTime * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), speed * Time.deltaTime * Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)));
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            jetParticle.Play();
+        else if (Input.GetMouseButtonUp(0))
+            jetParticle.Stop();
     }
 
     public void rotate()
@@ -90,11 +99,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator ResetTrailRenderer(TrailRenderer tr)
+    /*IEnumerator ResetTrailRenderer(TrailRenderer tr)
     {
         tr.time = 0;
         yield return null;
         tr.time = 0.2f;
-    }
+    }*/
 }
 

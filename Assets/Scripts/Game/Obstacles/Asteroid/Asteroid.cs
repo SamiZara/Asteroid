@@ -18,4 +18,9 @@ public class Asteroid : Obstacle
     {
 
     }
+
+    public void Damage(float damage)
+    {
+        //İmplement damage
+    }
 }

@@ -8,7 +8,7 @@ public class Missile : Weapon
     private float lastShootTime;
     void Start()
     {
-        ResourceManager.Instance.AllocateAndStore("Prefabs/MissileProjectileTier"+tier, "MissileProjectile");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/MissileProjectileTier"+tier, "MissileProjectile");
     }
 
     // Update is called once per frame
@@ -19,7 +19,6 @@ public class Missile : Weapon
             lastShootTime = Time.time;
             GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["MissileProjectile"], transform.position, transform.parent.rotation);
             MissileProjectile projectileScript = projectile.GetComponent<MissileProjectile>();
-            projectileScript.target = MissileLocker.lockedAsteroid;
             /*projectileScript.damage = 5;
             projectileScript.duration = 3;
             projectileScript.rotateSpeed = 120;
