@@ -61,7 +61,14 @@ public class ScatterMissileProjectile : MonoBehaviour
     void FixedUpdate()
     {
         if (target == null)
-            Destroy();
+        {
+            MissileLocker.ManuelLockOnAsteroid();
+            target = MissileLocker.lockedAsteroid;
+            if (target == null)
+            {
+                Destroy();
+            }
+        }
         if (!isReadyToDestroy)
         {
             float degree = (float)MathHelper.degreeBetween2Points(transform.position, target.transform.position);
@@ -106,13 +113,11 @@ public class ScatterMissileProjectile : MonoBehaviour
 
     void Destroy()
     {
-        if (explosionParticle != null)
-        {
-            explosionParticle.SetActive(true);
-            explosionParticle.transform.parent = transform.parent.parent;
-            Destroyer temp = explosionParticle.AddComponent<Destroyer>();
-            temp.destroyDelayTime = 1;
-        }
+        explosionParticle.SetActive(true);
+        explosionParticle.transform.parent = transform.parent.parent;
+        Destroyer temp = explosionParticle.AddComponent<Destroyer>();
+        temp.destroyDelayTime = 1;
+        isReadyToDestroy = true;
         Destroy(gameObject);
     }
 
@@ -128,8 +133,6 @@ public class ScatterMissileProjectile : MonoBehaviour
         scatterParticle.SetActive(true);
         List<GameObject> asteroidList = MissileLocker.Lock4DifferentAsteroid();
         GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["ScatteredMissileProjectile"], transform.position, transform.parent.rotation);
-        foreach (GameObject x in asteroidList)
-            Debug.Log(x.transform.position);
         for(int i = 1; i < 5; i++)
         {
             if (i < asteroidList.Count)

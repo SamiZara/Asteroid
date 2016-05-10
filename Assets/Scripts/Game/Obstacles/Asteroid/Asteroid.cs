@@ -12,15 +12,4 @@ public class Asteroid : Obstacle
         degreeToMiddle = Random.Range(degreeToMiddle - 20, degreeToMiddle + 20);
         rb.velocity = new Vector2(GlobalsManager.Instance.asteroidSpeed * Time.fixedDeltaTime * Mathf.Cos((float)degreeToMiddle * Mathf.Deg2Rad), GlobalsManager.Instance.asteroidSpeed * Time.deltaTime * Mathf.Sin((float)degreeToMiddle * Mathf.Deg2Rad));
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void Damage(float damage)
-    {
-        //İmplement damage
-    }
 }

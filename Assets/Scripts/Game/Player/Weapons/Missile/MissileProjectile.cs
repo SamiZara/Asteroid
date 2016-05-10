@@ -4,18 +4,17 @@ using System.Collections;
 public class MissileProjectile : MonoBehaviour
 {
     public float speed, rotateSpeed, damage, duration, startTime;
-    public GameObject target,explosionParticle;
+    public GameObject target, explosionParticle;
     private TrailRenderer trainRenderer;
     private Rigidbody2D rb;
-    private bool isReadyToDestroy;
     public bool autoLock;
+    private bool isReadyToDestroy = false;
     void Start()
     {
         startTime = Time.time;
-        isReadyToDestroy = false;
         trainRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        if(autoLock)
+        if (autoLock)
             target = MissileLocker.lockedAsteroid;
     }
 
@@ -60,7 +59,15 @@ public class MissileProjectile : MonoBehaviour
     void FixedUpdate()
     {
         if (target == null)
-            Destroy();
+        {
+            Debug.Log("null");
+            MissileLocker.ManuelLockOnAsteroid();
+            target = MissileLocker.lockedAsteroid;
+            if (target == null)
+            {
+                Destroy();
+            }
+        }
         if (!isReadyToDestroy)
         {
             float degree = (float)MathHelper.degreeBetween2Points(transform.position, target.transform.position);
@@ -91,7 +98,7 @@ public class MissileProjectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Asteroid temp = collision.GetComponent<Asteroid>();
+        Obstacle temp = collision.GetComponent<Obstacle>();
         if (temp != null)
         {
             temp.Damage(damage);
@@ -105,13 +112,11 @@ public class MissileProjectile : MonoBehaviour
 
     void Destroy()
     {
-        if (explosionParticle != null)
-        {
-            explosionParticle.SetActive(true);
-            explosionParticle.transform.parent = transform.parent.parent;
-            Destroyer temp = explosionParticle.AddComponent<Destroyer>();
-            temp.destroyDelayTime = 1;
-        }
+        explosionParticle.SetActive(true);
+        explosionParticle.transform.parent = transform.parent.parent;
+        Destroyer temp = explosionParticle.AddComponent<Destroyer>();
+        temp.destroyDelayTime = 1;
+        isReadyToDestroy = true;
         Destroy(gameObject);
     }
 

@@ -3,15 +3,18 @@ using System.Collections;
 
 public class Obstacle : MonoBehaviour {
 
+    public float hp = 20;
+    public GameObject explosionParticle;
+    public int id;
 	// Use this for initialization
 	void Start () {
-	
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+
+    }
 
     void OnBecameInvisible()
     {
@@ -36,5 +39,24 @@ public class Obstacle : MonoBehaviour {
             transform.position = new Vector3(-obstaclePos.x, obstaclePos.y, obstaclePos.z);
             obstaclePos = transform.position;
         }
+    }
+
+    public void Damage(float damage)
+    {
+        hp -= damage;
+        if(hp <= 0)
+        {
+            Destroy();
+        }
+    }
+
+    private void Destroy()
+    {
+        explosionParticle.SetActive(true);
+        explosionParticle.transform.parent = transform.parent;
+        GeneratorManager.Instance.asteroids.Remove(gameObject);
+        Destroyer temp = explosionParticle.AddComponent<Destroyer>();
+        temp.destroyDelayTime = 1;
+        Destroy(gameObject);
     }
 }

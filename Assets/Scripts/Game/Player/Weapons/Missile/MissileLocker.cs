@@ -6,10 +6,12 @@ public class MissileLocker : MonoBehaviour
 {
 
     public static GameObject lockedAsteroid = null;
+    public static Transform trans;
     public GameObject lockOnSprite;
     public GameObject lockOnSpritePrefab;
     void Start()
     {
+        trans = transform;
         StartCoroutine("LockOnAsteroid");
     }
 
@@ -37,6 +39,20 @@ public class MissileLocker : MonoBehaviour
         }
     }
 
+    public static void ManuelLockOnAsteroid()
+    {
+        float distance = float.MaxValue;
+        for (int i = 0; i < GeneratorManager.Instance.asteroids.Count; i++)
+        {
+            float tempDistance = MathHelper.distanceBetween2Points(trans.position, GeneratorManager.Instance.asteroids[i].transform.position);
+            if (distance > tempDistance)
+            {
+                lockedAsteroid = GeneratorManager.Instance.asteroids[i];
+                distance = tempDistance;
+            }
+        }
+    }
+
     public static List<GameObject> Lock4DifferentAsteroid()
     {
         List<GameObject> asteroidList = new List<GameObject>();
@@ -53,7 +69,7 @@ public class MissileLocker : MonoBehaviour
                         flag = true;
                         break;  
                     }         
-                float tempDistance = MathHelper.distanceBetween2Points(lockedAsteroid.transform.position, GeneratorManager.Instance.asteroids[h].transform.position);
+                float tempDistance = MathHelper.distanceBetween2Points(trans.position, GeneratorManager.Instance.asteroids[h].transform.position);
                 if (distance > tempDistance && !flag)
                 {
                     closestAsteroid = GeneratorManager.Instance.asteroids[h];

@@ -12,8 +12,8 @@ public class GeneratorManager : MonoBehaviour {
 
 	void Start()
 	{
-		ResourceManager.Instance.AllocateAndStore ("Prefabs/Asteroids/asteroid", "asteroid");
-        GameObject asteroid = ResourceManager.Instance.storedAllocations["asteroid"];
+		ResourceManager.Instance.AllocateAndStore ("Prefabs/Asteroids/normal", "NormalAsteroid");
+        GameObject asteroid = ResourceManager.Instance.storedAllocations["NormalAsteroid"];
         for (int i = 0; i < 3; i++)
         {
             float asteroidXPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.width / 100 + GlobalsManager.Instance.screenPos.x;
@@ -25,6 +25,7 @@ public class GeneratorManager : MonoBehaviour {
             else
                 asteroidYPos = Random.Range(0, asteroidYPos);
             GameObject temp = (GameObject)Instantiate(asteroid, new Vector3(random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
+            temp.GetComponent<Obstacle>().id = i;
             asteroids.Add(temp);
         }
 	}
