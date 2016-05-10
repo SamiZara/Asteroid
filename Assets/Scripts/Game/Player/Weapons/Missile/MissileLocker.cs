@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MissileLocker : MonoBehaviour
 {
 
-    public static GameObject lockedAsteroid;
+    public static GameObject lockedAsteroid = null;
     public GameObject lockOnSprite;
     public GameObject lockOnSpritePrefab;
     void Start()
     {
-        StartCoroutine("ResetTrailRenderer");
+        StartCoroutine("LockOnAsteroid");
     }
 
     // Update is called once per frame
@@ -18,19 +19,14 @@ public class MissileLocker : MonoBehaviour
 
     }
 
-    float distanceBetween2Points(Vector3 p1, Vector3 p2)
-    {
-        return Mathf.Sqrt(Mathf.Pow(p2.x - p1.x, 2) + Mathf.Pow(p2.y - p1.y, 2));
-    }
-
-    IEnumerator ResetTrailRenderer()
+    IEnumerator LockOnAsteroid()
     {
         while (true)
         {
             float distance = float.MaxValue;
             for (int i = 0; i < GeneratorManager.Instance.asteroids.Count; i++)
             {
-                float tempDistance = distanceBetween2Points(transform.position, GeneratorManager.Instance.asteroids[i].transform.position);
+                float tempDistance = MathHelper.distanceBetween2Points(transform.position, GeneratorManager.Instance.asteroids[i].transform.position);
                 if (distance > tempDistance)
                 {
                     lockedAsteroid = GeneratorManager.Instance.asteroids[i];
@@ -39,6 +35,34 @@ public class MissileLocker : MonoBehaviour
             }
             yield return new WaitForSeconds(1);
         }
+    }
+
+    public static List<GameObject> Lock4DifferentAsteroid()
+    {
+        List<GameObject> asteroidList = new List<GameObject>();
+        GameObject closestAsteroid = null;
+        for(int i = 0; i < 4; i++)
+        {
+            float distance = float.MaxValue;
+            for (int h = 0; h < GeneratorManager.Instance.asteroids.Count; h++)
+            {
+                bool flag = false;
+                foreach (GameObject asteroid in asteroidList)
+                    if (GeneratorManager.Instance.asteroids[h].transform.position == asteroid.transform.position)
+                    {
+                        flag = true;
+                        break;  
+                    }         
+                float tempDistance = MathHelper.distanceBetween2Points(lockedAsteroid.transform.position, GeneratorManager.Instance.asteroids[h].transform.position);
+                if (distance > tempDistance && !flag)
+                {
+                    closestAsteroid = GeneratorManager.Instance.asteroids[h];
+                    distance = tempDistance;
+                }
+            }
+            asteroidList.Add(closestAsteroid);
+        }
+        return asteroidList;
     }
 }
 

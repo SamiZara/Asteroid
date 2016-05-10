@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Turret : Weapon {
 
-    public float tier = 1;
+    public float tier;
     public float cooldown;
     private float lastShootTime;
     void Start () {
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/TurretProjectileTier" + tier, "TurretProjectile");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Turret/TurretProjectileTier" + tier, "TurretProjectile");
     }
 	
 	// Update is called once per frame

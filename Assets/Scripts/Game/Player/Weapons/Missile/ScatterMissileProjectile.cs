@@ -1,31 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class MissileProjectile : MonoBehaviour
+public class ScatterMissileProjectile : MonoBehaviour
 {
-    public float speed, rotateSpeed, damage, duration, startTime;
-    public GameObject target,explosionParticle;
+    public float speed, rotateSpeed, damage, startTime,splitDelay;
+    public GameObject target, explosionParticle,scatterParticle;
     private TrailRenderer trainRenderer;
     private Rigidbody2D rb;
     private bool isReadyToDestroy;
-    public bool autoLock;
     void Start()
     {
         startTime = Time.time;
         isReadyToDestroy = false;
         trainRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        if(autoLock)
-            target = MissileLocker.lockedAsteroid;
+        target = MissileLocker.lockedAsteroid;        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (startTime + duration < Time.time)
+        if (startTime + splitDelay < Time.time)
         {
+            Split();
             Destroy();
         }
+
     }
 
     void OnBecameInvisible()
@@ -121,4 +122,20 @@ public class MissileProjectile : MonoBehaviour
         yield return null;
         tr.time = 0.2f;
     }*/
+
+    private void Split()
+    {
+        scatterParticle.SetActive(true);
+        List<GameObject> asteroidList = MissileLocker.Lock4DifferentAsteroid();
+        GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["ScatteredMissileProjectile"], transform.position, transform.parent.rotation);
+        foreach (GameObject x in asteroidList)
+            Debug.Log(x.transform.position);
+        for(int i = 1; i < 5; i++)
+        {
+            if (i < asteroidList.Count)
+                projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[i];
+            else
+                projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[0];
+        }
+    }
 }

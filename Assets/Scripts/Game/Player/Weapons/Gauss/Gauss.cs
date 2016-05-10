@@ -4,12 +4,12 @@ using System.Collections;
 public class Gauss : Weapon
 {
 
-    public float tier = 1;
+    public float tier;
     public float cooldown;
     private float lastShootTime;
     void Start()
     {
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/GaussProjectileTier" + tier, "GaussProjectile");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Gauss/GaussProjectileTier" + tier, "GaussProjectile");
     }
 
     // Update is called once per frame
