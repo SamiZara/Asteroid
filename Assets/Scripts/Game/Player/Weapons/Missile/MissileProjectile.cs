@@ -60,7 +60,6 @@ public class MissileProjectile : MonoBehaviour
     {
         if (target == null)
         {
-            Debug.Log("null");
             MissileLocker.ManuelLockOnAsteroid();
             target = MissileLocker.lockedAsteroid;
             if (target == null)

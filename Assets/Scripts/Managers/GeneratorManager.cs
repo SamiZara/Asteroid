@@ -12,7 +12,7 @@ public class GeneratorManager : MonoBehaviour {
 
 	void Start()
 	{
-		ResourceManager.Instance.AllocateAndStore ("Prefabs/Asteroids/normal", "NormalAsteroid");
+		ResourceManager.Instance.AllocateAndStore ("Prefabs/Asteroids/Tracking", "NormalAsteroid");
         GameObject asteroid = ResourceManager.Instance.storedAllocations["NormalAsteroid"];
         for (int i = 0; i < 3; i++)
         {
@@ -25,7 +25,6 @@ public class GeneratorManager : MonoBehaviour {
             else
                 asteroidYPos = Random.Range(0, asteroidYPos);
             GameObject temp = (GameObject)Instantiate(asteroid, new Vector3(random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
-            temp.GetComponent<Obstacle>().id = i;
             asteroids.Add(temp);
         }
 	}
