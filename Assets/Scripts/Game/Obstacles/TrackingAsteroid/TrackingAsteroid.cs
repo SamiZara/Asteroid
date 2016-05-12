@@ -5,7 +5,6 @@ public class TrackingAsteroid : Obstacle
 {
 
     private GameObject player;
-    private Rigidbody2D rb;
 
     void Start()
     {

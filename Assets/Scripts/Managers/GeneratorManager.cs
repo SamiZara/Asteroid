@@ -12,9 +12,9 @@ public class GeneratorManager : MonoBehaviour {
 
 	void Start()
 	{
-		ResourceManager.Instance.AllocateAndStore ("Prefabs/Asteroids/Tracking", "NormalAsteroid");
+		ResourceManager.Instance.AllocateAndStore ("Prefabs/Asteroids/Exploding", "NormalAsteroid");
         GameObject asteroid = ResourceManager.Instance.storedAllocations["NormalAsteroid"];
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 10; i++)
         {
             float asteroidXPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.width / 100 + GlobalsManager.Instance.screenPos.x;
             float asteroidYPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.height / 100 + GlobalsManager.Instance.screenPos.y;

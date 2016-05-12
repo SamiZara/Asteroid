@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RocketAoeDamager : MonoBehaviour {
+public class ExplodingAsteroidAoeDamager : MonoBehaviour {
 
     public float damage;
 	// Use this for initialization
@@ -31,6 +31,18 @@ public class RocketAoeDamager : MonoBehaviour {
             else
             {
                 Debug.Log("Something collided with something it should not " + collision.name);
+            }
+        }
+        else if(collision.tag == "Player")
+        {
+            PlayerController player = collision.GetComponent<PlayerController>();
+            if(player != null)
+            {
+                player.Destroy();
+            }
+            else
+            {
+                Debug.Log("Something collided with something it should not");
             }
         }
     }

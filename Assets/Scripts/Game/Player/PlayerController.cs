@@ -105,5 +105,10 @@ public class PlayerController : MonoBehaviour
         yield return null;
         tr.time = 0.2f;
     }*/
+
+    public void Destroy()
+    {
+        //Lose sceneraio for player implement it
+    }
 }
 

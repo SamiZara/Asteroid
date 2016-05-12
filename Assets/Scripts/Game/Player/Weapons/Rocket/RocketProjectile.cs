@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RocketProjectile : MonoBehaviour
+public class RocketProjectile : Projectile
 {
 
-    public float speed, damage , aoeDamage, duration, startTime;
-    public GameObject explosionParticle,aoeDamager;
+    public float aoeDamage;
+    public GameObject aoeDamager;
     private Rigidbody2D rb;
     void Start()
     {
@@ -16,71 +16,37 @@ public class RocketProjectile : MonoBehaviour
         aoeDamager.GetComponent<RocketAoeDamager>().damage = aoeDamage;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (startTime + duration < Time.time)
-        {
-            Destroy();
-        }
-    }
-
-    void OnBecameInvisible()
-    {
-        Vector3 turretProjectile = transform.position;
-        if (transform.position.y > GlobalsManager.Instance.screenPos.y)
-        {
-            transform.position = new Vector3(turretProjectile.x, -turretProjectile.y, turretProjectile.z);
-            turretProjectile = transform.position;
-        }
-        else if (transform.position.y < -GlobalsManager.Instance.screenPos.y)
-        {
-            transform.position = new Vector3(turretProjectile.x, -turretProjectile.y, turretProjectile.z);
-            turretProjectile = transform.position;
-        }
-        if (transform.position.x > GlobalsManager.Instance.screenPos.x)
-        {
-            transform.position = new Vector3(-turretProjectile.x, turretProjectile.y, turretProjectile.z);
-            turretProjectile = transform.position;
-        }
-        else if (transform.position.x < -GlobalsManager.Instance.screenPos.x)
-        {
-            transform.position = new Vector3(-turretProjectile.x, turretProjectile.y, turretProjectile.z);
-            turretProjectile = transform.position;
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Asteroid temp = collision.GetComponent<Asteroid>();
-        if (temp != null)
+        if (collision.tag == "Obstacle")
         {
-            temp.Damage(damage);
-        }
-        else
-        {
-            Debug.Log("Something collided with something it should not");
+            ExplodingAsteroid temp = collision.GetComponent<ExplodingAsteroid>();
+            Obstacle temp2 = collision.GetComponent<Obstacle>();
+            if (temp != null)
+            {
+                temp.Damage(damage);
+            }
+            else if (temp2 != null)
+            {
+                temp2.Damage(damage);
+            }
+            else
+            {
+                Debug.Log("Something collided with something it should not " + collision.name);
+            }
         }
         Destroy();
     }
 
-    void Destroy()
+    new void Destroy()
     {
-        if (explosionParticle != null)
-        {
-            explosionParticle.SetActive(true);
-            explosionParticle.transform.parent = transform.parent.parent;
-            Destroyer temp = explosionParticle.AddComponent<Destroyer>();
-            temp.destroyDelayTime = 1;
-        }
-        if (aoeDamager != null)
-        {
-            aoeDamager.SetActive(true);
-            aoeDamager.transform.parent = transform.parent.parent;
-            Destroyer temp = aoeDamager.AddComponent<Destroyer>();
-            temp.destroyDelayTime = 0.2f;
-        }
-            
+
+        explosionParticle.SetActive(true);
+        explosionParticle.transform.parent = transform.parent.parent;
+
+        aoeDamager.SetActive(true);
+        aoeDamager.transform.parent = transform.parent.parent;
+
         Destroy(gameObject);
     }
 }

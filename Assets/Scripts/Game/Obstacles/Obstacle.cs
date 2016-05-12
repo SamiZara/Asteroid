@@ -5,7 +5,7 @@ public class Obstacle : MonoBehaviour {
 
     public float hp;
     public GameObject explosionParticle;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -58,8 +58,14 @@ public class Obstacle : MonoBehaviour {
         explosionParticle.SetActive(true);
         explosionParticle.transform.parent = transform.parent;
         GeneratorManager.Instance.asteroids.Remove(gameObject);
-        Destroyer temp = explosionParticle.AddComponent<Destroyer>();
-        temp.destroyDelayTime = 1;
         Destroy(gameObject);
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.tag == "Player")
+        {
+            Debug.Log("Player çarptı");
+        }
     }
 }
