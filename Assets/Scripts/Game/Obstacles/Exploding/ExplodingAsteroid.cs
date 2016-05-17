@@ -24,7 +24,6 @@ public class ExplodingAsteroid : Obstacle
 
         aoeDamager.transform.parent = transform.parent;
         aoeDamager.SetActive(true);
-        Debug.Log("3");
 
         Destroy(gameObject);
     }

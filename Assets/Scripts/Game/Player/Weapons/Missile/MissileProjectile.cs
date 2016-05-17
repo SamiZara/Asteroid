@@ -5,15 +5,14 @@ public class MissileProjectile : Projectile
 {
     public float rotateSpeed;
     public GameObject target;
-    private Rigidbody2D rb;
     public bool autoLock;
     private bool isReadyToDestroy = false;
     void Start()
     {
         startTime = Time.time;
-        rb = GetComponent<Rigidbody2D>();
         if (autoLock)
             target = MissileLocker.lockedAsteroid;
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()

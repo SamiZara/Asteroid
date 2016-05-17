@@ -1,21 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Obstacle : MonoBehaviour {
+public class Obstacle : MonoBehaviour
+{
 
     public float hp;
     public GameObject explosionParticle;
     public Rigidbody2D rb;
+    public bool isInTimeWarpBubble;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         float degreeToMiddle = MathHelper.degreeBetween2Points(transform.position, new Vector3(0, 0, 0));
-        degreeToMiddle = Random.Range(degreeToMiddle - 20, degreeToMiddle + 20);
-        rb.velocity = new Vector2(GlobalsManager.Instance.asteroidSpeed * Time.fixedDeltaTime * Mathf.Cos((float)degreeToMiddle * Mathf.Deg2Rad), GlobalsManager.Instance.asteroidSpeed * Time.deltaTime * Mathf.Sin((float)degreeToMiddle * Mathf.Deg2Rad));
+        degreeToMiddle = Random.Range(degreeToMiddle - Constants.ASTEROID_DEGREE_DEVIATION_TO_MIDDLE, degreeToMiddle + Constants.ASTEROID_DEGREE_DEVIATION_TO_MIDDLE);
+        rb.velocity = new Vector2(GlobalsManager.Instance.asteroidSpeed * Mathf.Cos((float)degreeToMiddle * Mathf.Deg2Rad), GlobalsManager.Instance.asteroidSpeed * Mathf.Sin((float)degreeToMiddle * Mathf.Deg2Rad));
+        Debug.Log(rb.velocity.magnitude);
+        StartCoroutine(SpeedStabilizer());
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
 
     }
 
@@ -47,7 +52,7 @@ public class Obstacle : MonoBehaviour {
     public void Damage(float damage)
     {
         hp -= damage;
-        if(hp <= 0)
+        if (hp <= 0)
         {
             Destroy();
         }
@@ -61,11 +66,27 @@ public class Obstacle : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if(collision.collider.tag == "Player")
+        if (collider.tag == "Player")
         {
-            Debug.Log("Player çarptı");
+            collider.GetComponent<PlayerController>().Destroy();
+        }
+    }
+
+    IEnumerator SpeedStabilizer()
+    {
+        while (true)
+        {
+            if (!isInTimeWarpBubble)
+            {
+                rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude;
+            }
+            else
+            {
+                rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * Constants.SLOW_BUBBLE_FACTOR;
+            }
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

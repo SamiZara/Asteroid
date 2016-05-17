@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour {
 
     public float speed, damage, duration, startTime;
     public GameObject explosionParticle;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     void Start()
     {
         startTime = Time.time;
@@ -48,12 +48,12 @@ public class Projectile : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.tag == "Obstacle")
+        if (collider.tag == "Obstacle")
         {
-            ExplodingAsteroid temp = collision.GetComponent<ExplodingAsteroid>();
-            Obstacle temp2 = collision.GetComponent<Obstacle>();
+            ExplodingAsteroid temp = collider.GetComponent<ExplodingAsteroid>();
+            Obstacle temp2 = collider.GetComponent<Obstacle>();
             if (temp != null)
             {
                 temp.Damage(damage);
@@ -64,7 +64,7 @@ public class Projectile : MonoBehaviour {
             }
             else
             {
-                Debug.Log("Something collided with something it should not " + collision.name);
+                Debug.Log("Something collided with something it should not " + collider.name);
             }
         }
         Destroy();

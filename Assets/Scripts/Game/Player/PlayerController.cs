@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
     //public TrailRenderer playerTrail;
     public ParticleSystem jetParticle;
+    public bool isImmune;
+    private bool isDashing;
+    private Vector3 dashDestinaion;
     void Start()
     {
         if (Instance == null)
@@ -30,6 +33,19 @@ public class PlayerController : MonoBehaviour
             jetParticle.Play();
         else if (Input.GetMouseButtonUp(0))
             jetParticle.Stop();
+        if (isDashing)
+        {
+            if(Vector3.Distance(transform.position, dashDestinaion) < 0.5f)
+            {
+                playerRb.velocity = new Vector2(0, 0);
+                transform.position = dashDestinaion;
+                GetComponent<CircleCollider2D>().enabled = true;
+                GameObject dash = transform.FindChild("Dash").gameObject;
+                dash.GetComponent<Dash>().isDashed = false;
+                dash.SetActive(false);
+                isDashing = false;
+            }
+        }
     }
 
     public void rotate()
@@ -108,7 +124,26 @@ public class PlayerController : MonoBehaviour
 
     public void Destroy()
     {
-        //Lose sceneraio for player implement it
+        if (!isImmune)
+            Debug.Log("Player hit");
+        else
+            Debug.Log("Player hit but immune");
+    }
+
+    public void Dash()
+    {
+        GetComponent<CircleCollider2D>().enabled = false;
+        var v3 = Input.mousePosition;
+        v3.z = 10.0f;
+        v3 = Camera.main.ScreenToWorldPoint(v3);
+        dashDestinaion = v3;
+        float degree = MathHelper.degreeBetween2Points(transform.position, v3);
+        if (degree < 0)
+            degree += 360;
+        transform.eulerAngles = new Vector3(0, 0, degree);
+        playerRb.velocity = new Vector3(0, 0, 0);//Stopping player first
+        playerRb.velocity = new Vector2(Constants.DASH_SPEED * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), Constants.DASH_SPEED * Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad));
+        isDashing = true;
     }
 }
 
