@@ -9,8 +9,9 @@ public class GeneratorManager : MonoBehaviour
 
     public static GeneratorManager Instance;
     public List<GameObject> asteroids = new List<GameObject>();
-    private int currentWave = 0;
+    private int currentWave = 4;
     private Dictionary<int, string> waves = new Dictionary<int, string>();
+    private float nextWaveTime;
     void Awake()
     {
         Instance = this;
@@ -28,25 +29,19 @@ public class GeneratorManager : MonoBehaviour
         //
         readText();
         sendWave();
-        /*for (int i = 0; i < 10; i++)
+    }
+
+    void Update()
+    {
+        if(asteroids.Count == 0 || Time.time >= nextWaveTime)
         {
-            float asteroidXPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.width / 100 + GlobalsManager.Instance.screenPos.x;
-            float asteroidYPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.height / 100 + GlobalsManager.Instance.screenPos.y;
-            int random1 = (Random.Range(0, 2) * 2) - 1;
-            int random2 = (Random.Range(0, 2) * 2) - 1;
-            if (random1 == 1)
-                asteroidXPos = Random.Range(0, asteroidXPos);
-            else
-                asteroidYPos = Random.Range(0, asteroidYPos);
-            GameObject temp = (GameObject)Instantiate(asteroid, new Vector3(random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
-            asteroids.Add(temp);
+            sendWave();
         }
-        */
     }
 
     void sendWave()
     {
-        string waveData = waves[currentWave];
+        string waveData = waves[currentWave++];
         string[] datas = waveData.Split(' ');
         for(int i = 0; i < datas.Length; i+=2)
         {
@@ -66,6 +61,7 @@ public class GeneratorManager : MonoBehaviour
                 asteroids.Add(temp);
             }
         }
+        nextWaveTime = Time.time + 60;
     }
 
     void readText()
