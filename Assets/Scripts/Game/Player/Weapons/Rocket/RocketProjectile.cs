@@ -6,7 +6,6 @@ public class RocketProjectile : Projectile
 
     public float aoeDamage;
     public GameObject aoeDamager;
-    private Rigidbody2D rb;
     void Start()
     {
         startTime = Time.time;

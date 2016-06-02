@@ -12,4 +12,4 @@
 4 Normal 4 Exploding 4 Pushing 1 Pulling 2 Steel 6 Tracking
 4 Normal 2 Exploding 2 Pushing 4 Pulling 4 Steel 6 Tracking
 15 Exploding
-3 Pushing 6 Pulling 8 steel 6 Tracking
+3 Pushing 6 Pulling 8 Steel 6 Tracking
