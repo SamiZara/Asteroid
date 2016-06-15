@@ -18,7 +18,7 @@ public class Missile : Weapon
         if (canShoot && (lastShootTime + cooldown) < Time.time && MissileLocker.lockedAsteroid != null)
         {
             lastShootTime = Time.time;
-            GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["MissileProjectile"], transform.position, transform.parent.rotation);            
+            GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["MissileProjectile"], transform.position, transform.parent.rotation);
         }
     }
 

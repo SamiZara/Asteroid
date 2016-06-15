@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RocketProjectile : Projectile
-{
+public class MoabProjectile : Projectile {
 
     public float aoeDamage;
     public GameObject aoeDamager;
@@ -45,14 +44,15 @@ public class RocketProjectile : Projectile
         Destroy();
     }
 
+
     new void Destroy()
     {
 
         explosionParticle.SetActive(true);
-        explosionParticle.transform.parent = transform.parent.parent;
+        explosionParticle.transform.parent = transform.parent;
 
         aoeDamager.SetActive(true);
-        aoeDamager.transform.parent = transform.parent.parent;
+        aoeDamager.transform.parent = transform.parent;
 
         Destroy(gameObject);
     }
