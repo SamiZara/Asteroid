@@ -70,15 +70,38 @@ public class Obstacle : MonoBehaviour
 
     IEnumerator SpeedStabilizer()
     {
+        float speedIncrementAmount = GlobalsManager.Instance.asteroidSpeed / 10;
         while (true)
         {
-            if (!isInTimeWarpBubble)
+            if (!isInTimeWarpBubble && rb.velocity.magnitude != GlobalsManager.Instance.asteroidSpeed)
             {
-                rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude;
+                if (rb.velocity.magnitude < GlobalsManager.Instance.asteroidSpeed)
+                {
+                    rb.velocity += (GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * rb.velocity) / 10;
+                    if (rb.velocity.magnitude > GlobalsManager.Instance.asteroidSpeed)//If exceeds speed limit
+                        rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude;
+                }
+                else
+                {
+                    rb.velocity -= (GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * rb.velocity) / 10;
+                    if (rb.velocity.magnitude < GlobalsManager.Instance.asteroidSpeed)//If exceeds speed limit
+                        rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude;
+                }
             }
             else
             {
-                rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * Constants.SLOW_BUBBLE_FACTOR;
+                if (rb.velocity.magnitude < GlobalsManager.Instance.asteroidSpeed)
+                {
+                    rb.velocity += (GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * rb.velocity * Constants.SLOW_BUBBLE_FACTOR) / 10;
+                    if (rb.velocity.magnitude > GlobalsManager.Instance.asteroidSpeed * Constants.SLOW_BUBBLE_FACTOR)//If exceeds speed limit
+                        rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * Constants.SLOW_BUBBLE_FACTOR;
+                }
+                else
+                {
+                    rb.velocity -= (GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * rb.velocity * Constants.SLOW_BUBBLE_FACTOR) / 10;
+                    if (rb.velocity.magnitude < GlobalsManager.Instance.asteroidSpeed * Constants.SLOW_BUBBLE_FACTOR)//If exceeds speed limit
+                        rb.velocity *= GlobalsManager.Instance.asteroidSpeed / rb.velocity.magnitude * Constants.SLOW_BUBBLE_FACTOR;
+                }
             }
             yield return new WaitForSeconds(0.5f);
         }
