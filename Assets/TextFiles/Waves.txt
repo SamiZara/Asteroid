@@ -1,15 +1,15 @@
-10 Normal
-9 Normal 1 Exploding
-9 Normal 2 Exploding 1 Pushing
-9 Normal 2 Exploding 1 Pushing 2 Pulling
-9 Normal 2 Exploding 2 Pushing 1 Pulling 2 Steel
-9 Normal 1 Exploding 1 Pushing 3 Pulling 2 Steel 2 Tracking
-8 Normal 2 Exploding 2 Pushing 2 Pulling 2 Steel 2 Tracking
-7 Normal 2 Exploding 1 Pushing 4 Pulling 2 Steel 2 Tracking
-6 Normal 3 Exploding 1 Pushing 3 Pulling 2 Steel 4 Tracking
-4 Normal 4 Exploding 3 Pushing 1 Pulling 3 Steel 4 Tracking
-4 Normal 4 Exploding 1 Pushing 4 Pulling 3 Steel 5 Tracking
-4 Normal 4 Exploding 4 Pushing 1 Pulling 2 Steel 6 Tracking
-4 Normal 2 Exploding 2 Pushing 4 Pulling 4 Steel 6 Tracking
+1 NormalBig
+1 NormalBig 1 NormalMedium 1 Exploding
+2 NormalBig 2 Exploding 1 Pushing
+2 NormalBig 2 Exploding 1 Pushing 2 Pulling
+2 NormalBig 2 Exploding 2 Pushing 1 Pulling 2 Steel
+3 NormalBig 1 Exploding 1 Pushing 3 Pulling 2 Steel 2 Tracking
+3 NormalBig 2 Exploding 2 Pushing 2 Pulling 2 Steel 2 Tracking
+3 NormalBig 2 Exploding 1 Pushing 4 Pulling 2 Steel 2 Tracking
+3 NormalBig 3 Exploding 1 Pushing 3 Pulling 2 Steel 4 Tracking
+4 NormalBig 4 Exploding 3 Pushing 1 Pulling 3 Steel 4 Tracking
+4 NormalBig 4 Exploding 1 Pushing 4 Pulling 3 Steel 5 Tracking
+4 NormalBig 4 Exploding 4 Pushing 1 Pulling 2 Steel 6 Tracking
+4 NormalBig 2 Exploding 2 Pushing 4 Pulling 4 Steel 6 Tracking
 15 Exploding
-3 Pushing 6 Pulling 8 Steel 6 Tracking
+1 NormalBig 3 Pushing 6 Pulling 8 Steel 6 Tracking

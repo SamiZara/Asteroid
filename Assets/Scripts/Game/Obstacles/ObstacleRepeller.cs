@@ -41,7 +41,8 @@ public class ObstacleRepeller : MonoBehaviour
     {
         while (true)
         {
-            foreach (GameObject asteroid in asteroidsInRange)
+            GameObject[] asteroids = asteroidsInRange.ToArray();
+            foreach (GameObject asteroid in asteroids)
             {
                 if (asteroid != null)
                 {

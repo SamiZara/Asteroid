@@ -5,6 +5,7 @@ public class Weapon : MonoBehaviour
 {
 
     public bool canShoot = true;
+    public int tier;
     // Use this for initialization
     void Start()
     {

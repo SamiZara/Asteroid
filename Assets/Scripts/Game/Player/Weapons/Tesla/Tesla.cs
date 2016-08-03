@@ -10,6 +10,16 @@ public class Tesla : Weapon
     void Start()
     {
         StartCoroutine(PeriodicShock());
+        if(tier == 2)
+        {
+            GetComponent<CircleCollider2D>().radius = 2.4f;
+            damage = 4;
+        }
+        if (tier == 3)
+        {
+            GetComponent<CircleCollider2D>().radius = 3f;
+            damage = 5;
+        }
     }
 
     // Update is called once per frame
@@ -52,7 +62,8 @@ public class Tesla : Weapon
                 if (asteroid != null)
                 {
                     ExplodingAsteroid temp = asteroid.GetComponent<ExplodingAsteroid>();
-                    Obstacle temp2 = asteroid.GetComponent<Obstacle>();
+                    Asteroid temp2 = asteroid.GetComponent<Asteroid>();
+                    Obstacle temp3 = asteroid.GetComponent<Obstacle>();
                     if (temp != null)
                     {
                         temp.Damage(damage);
@@ -60,6 +71,14 @@ public class Tesla : Weapon
                     else if (temp2 != null)
                     {
                         temp2.Damage(damage);
+                    }
+                    else if (temp3 != null)
+                    {
+                        temp3.Damage(damage);
+                    }
+                    else
+                    {
+                        Debug.Log("Something collided with something it should not " + GetComponent<Collider>().name);
                     }
                 }
                 else

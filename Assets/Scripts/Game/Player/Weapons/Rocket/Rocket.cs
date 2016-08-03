@@ -4,7 +4,6 @@ using System.Collections;
 public class Rocket : Weapon
 {
 
-    public float tier;
     public float cooldown;
     private float lastShootTime;
     void Start()

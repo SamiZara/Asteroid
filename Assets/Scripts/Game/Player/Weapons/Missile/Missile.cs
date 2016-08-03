@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Missile : Weapon
 {
-    public float tier;
     public float cooldown;
     private float lastShootTime;
     void Start()

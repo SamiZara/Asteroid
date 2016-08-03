@@ -20,7 +20,9 @@ public class GeneratorManager : MonoBehaviour
     void Start()
     {
         //Allocation part
-        ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/Normal", "Normal");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/NormalSmall", "NormalSmall");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/NormalMedium", "NormalMedium");
+        ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/NormalBig", "NormalBig");
         ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/Exploding", "Exploding");
         ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/Pulling", "Pulling");
         ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/Pushing", "Pushing");

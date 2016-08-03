@@ -6,7 +6,7 @@ public class Laser : Weapon {
     LineRenderer lr;
     public GameObject lrAim;
     private GameObject player;
-    public float tier, cooldown,lastShootTime;
+    public float cooldown,lastShootTime;
 	void Start () {
         lr = GetComponent<LineRenderer>();
         player = GlobalsManager.Instance.player;

@@ -53,7 +53,8 @@ public class Projectile : MonoBehaviour {
         if (collider.tag == "Obstacle")
         {
             ExplodingAsteroid temp = collider.GetComponent<ExplodingAsteroid>();
-            Obstacle temp2 = collider.GetComponent<Obstacle>();
+            Asteroid temp2 = collider.GetComponent<Asteroid>();
+            Obstacle temp3 = collider.GetComponent<Obstacle>();         
             if (temp != null)
             {
                 temp.Damage(damage);
@@ -61,6 +62,10 @@ public class Projectile : MonoBehaviour {
             else if (temp2 != null)
             {
                 temp2.Damage(damage);
+            }
+            else if (temp3 != null)
+            {
+                temp3.Damage(damage);
             }
             else
             {

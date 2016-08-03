@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if(Input.GetMouseButton(0))
-            playerRb.AddForce(new Vector2(speed * Time.fixedDeltaTime * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), speed * Time.deltaTime * Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad)));
+            playerRb.AddForce(new Vector2(speed * Time.fixedDeltaTime * Mathf.Cos((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad), speed * Time.deltaTime * Mathf.Sin((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad)));
     }
 
     void Update()
