@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 2a5d770b776dc694f8f7243010d2d039
+timeCreated: 1474285977
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - PF Square Sans Pro
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3bd109f7ecf08cb4ca1dacb0b09f2bb8, type: 3}
+  - {fileID: 12800000, guid: 1c691a6dc33c7bc47a798195db84d75a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

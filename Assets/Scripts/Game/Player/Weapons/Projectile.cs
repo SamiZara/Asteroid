@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour {
         startTime = Time.time;
         rb = GetComponent<Rigidbody2D>();
         float myRotation = transform.rotation.eulerAngles.z;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
+        rb.velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
     }
 
     // Update is called once per frame

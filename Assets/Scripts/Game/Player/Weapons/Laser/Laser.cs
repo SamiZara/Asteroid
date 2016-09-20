@@ -25,7 +25,7 @@ public class Laser : Weapon {
 	void FixedUpdate () {
         int layerMask = 1 << 10;
         Vector3 dir = Quaternion.AngleAxis(player.transform.rotation.eulerAngles.z, Vector3.forward) * transform.right;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(Mathf.Cos(player.transform.rotation.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(player.transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), 20,layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(Mathf.Cos(player.transform.rotation.eulerAngles.z * Mathf.Deg2Rad), Mathf.Sin(player.transform.rotation.eulerAngles.z * Mathf.Deg2Rad)), 5,layerMask);
         lr.SetPosition(0, GlobalsManager.Instance.player.transform.position);
         if (hit.collider != null)
         {
