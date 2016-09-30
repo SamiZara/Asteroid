@@ -17,20 +17,46 @@ public class MenuManager : MonoBehaviour {
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Turret", "TurretIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-GaussGun", "GaussIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Beam", "BeamIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Rocket", "RocketIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-HomMissile", "HomMissileIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-TeslaGun", "TeslaShieldIcon");
+        //Primary Weapon
         if (PlayerPrefs.GetInt("Weapon1", 0) == 0)
         {
             UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
             UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Turret Gun";
         }
         else if (PlayerPrefs.GetInt("Weapon1", 0) == 1)
         {
             UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["GaussIcon"];
             UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Gauss Gun";
         }
         else if (PlayerPrefs.GetInt("Weapon1", 0) == 2)
         {
-            UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
-            UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Beam";
+        }
+        //Secondary Weapon
+        if (PlayerPrefs.GetInt("Weapon2", 0) == 0)
+        {
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["RocketIcon"];
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Rocket";
+        }
+        else if (PlayerPrefs.GetInt("Weapon2", 0) == 1)
+        {
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["HomMissileIcon"];
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Homming Missile";
+        }
+        else if (PlayerPrefs.GetInt("Weapon2", 0) == 2)
+        {
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TeslaGunIcon"];
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Tesla Shield";
         }
     }
 
@@ -39,7 +65,7 @@ public class MenuManager : MonoBehaviour {
         //PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("PlayerMoney", 1000000);
         Instace = this;
-        UIReferenceManager.Instance.textPlayerMoney.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString()+"$";
+        UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString()+"$";
 
         weaponCosts = new int[3,3];
         weaponCosts[0, 0] = 0;
@@ -63,28 +89,41 @@ public class MenuManager : MonoBehaviour {
             case 1:
                 UIReferenceManager.Instance.windowsWeapon1.SetActive(true);
                 int turretState = PlayerPrefs.GetInt("WeaponTurret", 1);
-                if (turretState >= 3)
+                if(turretState != 0 && turretState < 3)
+                {
+                    UIReferenceManager.Instance.turretInfoText.text = "Tier:" + (turretState) + "\nUpgrade Cost: " + weaponCosts[0, turretState] + "";
+                }
+                else if (turretState >= 3)
                 {
                     UIReferenceManager.Instance.turretUpgradeButton.GetComponent<Button>().interactable = false;
+                    UIReferenceManager.Instance.turretInfoText.text = "Tier:" + (turretState) + "\nMaxed";
                 }
                 int gausState = PlayerPrefs.GetInt("WeaponGauss", 0);
                 if (gausState > 0)
                 {
+                    UIReferenceManager.Instance.gaussButton.interactable = true;
                     UIReferenceManager.Instance.gaussUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.gaussUpgradeButton.SetNativeSize();
-                    if (gausState >= 3)
+                    if(gausState < 3)
+                        UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + (gausState) + "\nUpgrade Cost: " + weaponCosts[1, gausState] + "";
+                    else if (gausState >= 3)
                     {
                         UIReferenceManager.Instance.gaussUpgradeButton.GetComponent<Button>().interactable = false;
+                        UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + (gausState) + "\nMaxed";
                     }
                 }
                 int beamState = PlayerPrefs.GetInt("WeaponBeam", 0);
                 if (beamState > 0)
                 {
+                    UIReferenceManager.Instance.beamButton.interactable = true;
                     UIReferenceManager.Instance.beamUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.beamUpgradeButton.SetNativeSize();
+                    if(beamState < 3)
+                        UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nUpgrade Cost: " + weaponCosts[2, beamState] + "";
                     if (beamState >= 3)
                     {
-                        UIReferenceManager.Instance.gaussUpgradeButton.GetComponent<Button>().interactable = false;
+                        UIReferenceManager.Instance.beamUpgradeButton.GetComponent<Button>().interactable = false;
+                        UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nMaxed";
                     }
                 }
                 MenuAction(PlayerPrefs.GetInt("Weapon1", 0) + 2);
@@ -94,7 +133,6 @@ public class MenuManager : MonoBehaviour {
                 UIReferenceManager.Instance.iconActiveWeapon.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
-                UIReferenceManager.Instance.textActiveWeapon1.text = "Turret Gun";
                 PlayerPrefs.SetInt("Weapon1", 0);
                 break;
             case 3:
@@ -102,7 +140,6 @@ public class MenuManager : MonoBehaviour {
                 UIReferenceManager.Instance.iconActiveWeapon.sprite = UIResourceManager.Instance.storedAllocations["GaussIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["GaussIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
-                UIReferenceManager.Instance.textActiveWeapon1.text = "Gauss Gun";
                 PlayerPrefs.SetInt("Weapon1", 1);
                 break;
             case 4:
@@ -110,7 +147,6 @@ public class MenuManager : MonoBehaviour {
                 UIReferenceManager.Instance.iconActiveWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
-                UIReferenceManager.Instance.textActiveWeapon1.text = "Beam";
                 PlayerPrefs.SetInt("Weapon1", 2);
                 break;
             case 5:
@@ -164,27 +200,60 @@ public class MenuManager : MonoBehaviour {
         {
             playerMoney -= cost;
             PlayerPrefs.SetInt("PlayerMoney", playerMoney);
+            state += 1;
             if (itemCode == 0)
-                PlayerPrefs.SetInt("WeaponTurret", state + 1);
+            {
+                PlayerPrefs.SetInt("WeaponTurret", state );
+                if(state < 3)
+                {
+                    UIReferenceManager.Instance.turretInfoText.text = "Tier:"+(state)+"\nUpgrade Cost: "+weaponCosts[0,state]+"";
+                }
+                if(state  == 3)
+                {
+                    UIReferenceManager.Instance.turretButton.interactable = false;
+                    UIReferenceManager.Instance.turretInfoText.text = "Tier:"+(state)+"\nMaxed";
+                    UIReferenceManager.Instance.turretUpgradeButton.GetComponent<Button>().interactable = false;
+                }
+            }
             else if (itemCode == 1)
             {
-                if(state == 0)
+                if (state == 1)
                 {
                     UIReferenceManager.Instance.gaussUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.gaussUpgradeButton.SetNativeSize();
+                    UIReferenceManager.Instance.gaussButton.interactable = true;
                 }
-                PlayerPrefs.SetInt("WeaponGauss", state + 1);
+                if(state < 3)
+                {
+                    UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + ((state)) + "\nUpgrade Cost: " + weaponCosts[1, state] + "";
+                }
+                if(state == 3)
+                {
+                    UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + ((state)) + "\nMaxed";
+                    UIReferenceManager.Instance.gaussUpgradeButton.GetComponent<Button>().interactable = false;
+                }
+                PlayerPrefs.SetInt("WeaponGauss", state );
             }
             else if (itemCode == 2)
             {
-                if (state == 0)
+                if (state == 1)
                 {
                     UIReferenceManager.Instance.beamUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.beamUpgradeButton.SetNativeSize();
+                    UIReferenceManager.Instance.beamButton.interactable = true;
                 }
-                PlayerPrefs.SetInt("WeaponBeam", state + 1);
+                if (state  < 3)
+                {
+                    UIReferenceManager.Instance.beamInfoText.text = "Tier:" + ((state)) + "\nUpgrade Cost: " + weaponCosts[2, state] + "";
+                }
+                if (state == 3)
+                {
+                    UIReferenceManager.Instance.beamInfoText.text = "Tier:" + ((state)) + "\nMaxed";
+                    UIReferenceManager.Instance.beamUpgradeButton.GetComponent<Button>().interactable = false;
+                }
+                PlayerPrefs.SetInt("WeaponBeam", state);
             }
-            UIReferenceManager.Instance.textPlayerMoney.text = playerMoney.ToString() + "$";
+            UIReferenceManager.Instance.playerMoneyText.text = playerMoney.ToString() + "$";
             UIReferenceManager.Instance.popUpMenu.SetActive(false);
         }
     }
