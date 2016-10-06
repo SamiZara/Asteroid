@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour {
     public static MenuManager Instace;
     private int itemCode;//Decides which item is being bought for popup menu
     private int[,] weaponCosts;
+    private int[] activeSkillCosts;
 
 
     void Start()
@@ -20,6 +21,10 @@ public class MenuManager : MonoBehaviour {
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Rocket", "RocketIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-HomMissile", "MissileIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-TeslaGun", "TeslaIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-bomb", "BombIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-dash", "DashIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-im-shield", "ShieldIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-time-warp", "WarpIcon");
         //Primary Weapon
         if (PlayerPrefs.GetInt("Weapon1", 0) == 0)
         {
@@ -50,23 +55,48 @@ public class MenuManager : MonoBehaviour {
         {
             UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["HomMissileIcon"];
             UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
-            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Homming Missile";
+            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Homming";
         }
         else if (PlayerPrefs.GetInt("Weapon2", 0) == 2)
         {
             UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TeslaIcon"];
             UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
-            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Tesla Shield";
+            UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Tesla";
+        }
+        //Active Düzeltmeleri yap
+        if (PlayerPrefs.GetInt("ActiveSkill", 0) == 0)
+        {
+            UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["ShieldIcon"];
+            UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Immunity Shield";
+        }
+        else if (PlayerPrefs.GetInt("ActiveSkill", 0) == 1)
+        {
+            UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["DashIcon"];
+            UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Dash";
+        }
+        else if (PlayerPrefs.GetInt("ActiveSkill", 0) == 2)
+        {
+            UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["WarpIcon"];
+            UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Time Warp";
+        }
+        else if (PlayerPrefs.GetInt("ActiveSkill", 0) == 3)
+        {
+            UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["BombIcon"];
+            UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Big Bomb";
         }
     }
 
     void Awake()
     {
-        PlayerPrefs.DeleteAll();
+        //PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("PlayerMoney", 1000000);
         Instace = this;
         UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString()+"$";
-
+        //Weapons
         weaponCosts = new int[6,3];
         weaponCosts[0, 0] = 0;
         weaponCosts[0, 1] = 50;
@@ -86,6 +116,12 @@ public class MenuManager : MonoBehaviour {
         weaponCosts[5, 0] = 125;
         weaponCosts[5, 1] = 250;
         weaponCosts[5, 2] = 750;
+        //Actives
+        activeSkillCosts = new int[4];
+        activeSkillCosts[0] = 0;
+        activeSkillCosts[1] = 150;
+        activeSkillCosts[2] = 250;
+        activeSkillCosts[3] = 400;
     }
 
 	public void MenuAction(int option)
@@ -152,27 +188,30 @@ public class MenuManager : MonoBehaviour {
                 UIReferenceManager.Instance.iconSecondaryActiveWeapon1.SetNativeSize();
                 break;
             case 2:
-                UIReferenceManager.Instance.iconSelectedWeapon1.localPosition = new Vector3(-305,117,0);
+                UIReferenceManager.Instance.selectedWeapon1Icon.localPosition = new Vector3(-305,117,0);
                 UIReferenceManager.Instance.iconActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
                 UIReferenceManager.Instance.iconActiveWeapon1.SetNativeSize();
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Turret Gun";
                 PlayerPrefs.SetInt("Weapon1", 0);
                 break;
             case 3:
-                UIReferenceManager.Instance.iconSelectedWeapon1.localPosition = new Vector3(0, 117, 0);
+                UIReferenceManager.Instance.selectedWeapon1Icon.localPosition = new Vector3(0, 117, 0);
                 UIReferenceManager.Instance.iconActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["GaussIcon"];
                 UIReferenceManager.Instance.iconActiveWeapon1.SetNativeSize();
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["GaussIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Gauss Gun";
                 PlayerPrefs.SetInt("Weapon1", 1);
                 break;
             case 4:
-                UIReferenceManager.Instance.iconSelectedWeapon1.localPosition = new Vector3(305, 117, 0);
+                UIReferenceManager.Instance.selectedWeapon1Icon.localPosition = new Vector3(305, 117, 0);
                 UIReferenceManager.Instance.iconActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
                 UIReferenceManager.Instance.iconActiveWeapon1.SetNativeSize();
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Beam Gun";
                 PlayerPrefs.SetInt("Weapon1", 2);
                 break;
             case 5:
@@ -181,17 +220,17 @@ public class MenuManager : MonoBehaviour {
             case 6:
                 itemCode = 0;
                 int state = PlayerPrefs.GetInt("WeaponTurret", 1);
-                ShowPopUp("Turret Gun Tier "+ (state + 1), weaponCosts[itemCode, state].ToString(), 0);      
+                ShowPopUp("Turret Gun Tier "+ (state + 1), weaponCosts[itemCode, state].ToString());      
                 break;
             case 7:
                 itemCode = 1;
                 state = PlayerPrefs.GetInt("WeaponGauss", 0);
-                ShowPopUp("Gauss Gun Tier " + (state + 1), weaponCosts[itemCode, state].ToString(), 0);
+                ShowPopUp("Gauss Gun Tier " + (state + 1), weaponCosts[itemCode, state].ToString());
                 break;
             case 8:
                 itemCode = 2;
                 state = PlayerPrefs.GetInt("WeaponBeam", 0);
-                ShowPopUp("Beam Tier " + (state + 1), weaponCosts[itemCode, state].ToString(), 0);
+                ShowPopUp("Beam Tier " + (state + 1), weaponCosts[itemCode, state].ToString());
                 break;
             case 9:
                 PopUpYes();
@@ -256,24 +295,27 @@ public class MenuManager : MonoBehaviour {
                 UIReferenceManager.Instance.iconPrimaryActiveWeapon2.SetNativeSize();
                 break;
             case 12:
-                UIReferenceManager.Instance.iconSelectedWeapon2.localPosition = new Vector3(-305, 117, 0);
+                UIReferenceManager.Instance.selectedWeapon2Icon.localPosition = new Vector3(-305, 117, 0);
                 UIReferenceManager.Instance.iconActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["RocketIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["RocketIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Rocket";
                 PlayerPrefs.SetInt("Weapon2", 0);
                 break;
             case 13:
-                UIReferenceManager.Instance.iconSelectedWeapon2.localPosition = new Vector3(0, 117, 0);
+                UIReferenceManager.Instance.selectedWeapon2Icon.localPosition = new Vector3(0, 117, 0);
                 UIReferenceManager.Instance.iconActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["MissileIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["MissileIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Missile";
                 PlayerPrefs.SetInt("Weapon2", 1);
                 break;
             case 14:
-                UIReferenceManager.Instance.iconSelectedWeapon2.localPosition = new Vector3(305, 117, 0);
+                UIReferenceManager.Instance.selectedWeapon2Icon.localPosition = new Vector3(305, 117, 0);
                 UIReferenceManager.Instance.iconActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["TeslaIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TeslaIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Tesla";
                 PlayerPrefs.SetInt("Weapon2", 2);
                 break;
             case 15:
@@ -282,22 +324,95 @@ public class MenuManager : MonoBehaviour {
             case 16:
                 itemCode = 3;
                 state = PlayerPrefs.GetInt("WeaponRocket", 1);
-                ShowPopUp("Rocket Gun Tier " + (state + 1), weaponCosts[itemCode, state].ToString(), 0);
+                ShowPopUp("Rocket Gun Tier " + (state + 1), weaponCosts[itemCode, state].ToString());
                 break;
             case 17:
                 itemCode = 4;
                 state = PlayerPrefs.GetInt("WeaponMissile", 0);
-                ShowPopUp("Homming Missile Tier " + (state + 1), weaponCosts[itemCode, state].ToString(), 0);
+                ShowPopUp("Homing Missile Tier " + (state + 1), weaponCosts[itemCode, state].ToString());
                 break;
             case 18:
                 itemCode = 5;
                 state = PlayerPrefs.GetInt("WeaponTesla", 0);
-                ShowPopUp("Beam Tier " + (state + 1), weaponCosts[itemCode, state].ToString(), 0);
+                ShowPopUp("Beam Tier " + (state + 1), weaponCosts[itemCode, state].ToString());
+                break;
+            case 19:
+                UIReferenceManager.Instance.windowsActive.SetActive(true);
+                int dashState = PlayerPrefs.GetInt("ActiveDash");
+                if(dashState == 1)
+                {
+                    UIReferenceManager.Instance.dashButton.interactable = true;
+                    UIReferenceManager.Instance.dashUnlockButton.interactable = false;
+                }
+                int warpState = PlayerPrefs.GetInt("ActiveWarp");
+                if(warpState == 1)
+                {
+                    UIReferenceManager.Instance.warpButton.interactable = true;
+                    UIReferenceManager.Instance.warpUnlockButton.interactable = false;
+                }
+                int bombState = PlayerPrefs.GetInt("ActiveBomb");
+                if(bombState == 1)
+                {
+                    UIReferenceManager.Instance.bombButton.interactable = true;
+                    UIReferenceManager.Instance.bombUnlockButton.interactable = false;
+                }
+                MenuAction(PlayerPrefs.GetInt("ActiveSkill",0) + 20);
+                break;
+            case 20:
+                UIReferenceManager.Instance.iconActiveWindowSkill.sprite = UIResourceManager.Instance.storedAllocations["ShieldIcon"];
+                UIReferenceManager.Instance.iconActiveWindowSkill.SetNativeSize();
+                UIReferenceManager.Instance.selectedActiveIcon.localPosition = new Vector3(-600,120,0);
+                UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["ShieldIcon"];
+                UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Shield";
+                PlayerPrefs.SetInt("ActiveSkill",0);
+                break;
+            case 21:
+                UIReferenceManager.Instance.iconActiveWindowSkill.sprite = UIResourceManager.Instance.storedAllocations["DashIcon"];
+                UIReferenceManager.Instance.iconActiveWindowSkill.SetNativeSize();
+                UIReferenceManager.Instance.selectedActiveIcon.localPosition = new Vector3(-325, 120, 0);
+                UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["DashIcon"];
+                UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Dash";
+                PlayerPrefs.SetInt("ActiveSkill", 1);
+                break;
+            case 22:
+                UIReferenceManager.Instance.iconActiveWindowSkill.sprite = UIResourceManager.Instance.storedAllocations["WarpIcon"];
+                UIReferenceManager.Instance.iconActiveWindowSkill.SetNativeSize();
+                UIReferenceManager.Instance.selectedActiveIcon.localPosition = new Vector3(-50, 120, 0);
+                UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["WarpIcon"];
+                UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Warp";
+                PlayerPrefs.SetInt("ActiveSkill", 2);
+                break;
+            case 23:
+                UIReferenceManager.Instance.iconActiveWindowSkill.sprite = UIResourceManager.Instance.storedAllocations["BombIcon"];
+                UIReferenceManager.Instance.iconActiveWindowSkill.SetNativeSize();
+                UIReferenceManager.Instance.selectedActiveIcon.localPosition = new Vector3(225, 120, 0);
+                UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["BombIcon"];
+                UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
+                UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Bomb";
+                PlayerPrefs.SetInt("ActiveSkill", 3);
+                break;
+            case 24:
+                itemCode = 6;
+                ShowPopUp("Dash Active Skill", activeSkillCosts[1].ToString());
+                break;
+            case 25:
+                itemCode = 7;
+                ShowPopUp("Warp Active Skill", activeSkillCosts[2].ToString());
+                break;
+            case 26:
+                itemCode = 8;
+                ShowPopUp("Bomb Active Skill", activeSkillCosts[3].ToString());
+                break;
+            case 27:
+                UIReferenceManager.Instance.windowsActive.SetActive(false);
                 break;
         }
     }
 
-    void ShowPopUp(string item,string cost,int itemCode)
+    void ShowPopUp(string item,string cost)
     {
         UIReferenceManager.Instance.popUpMenu.SetActive(true);
         UIReferenceManager.Instance.popUpMenuText.text = "Do you want to buy "+item+" for "+cost+"?";
@@ -314,8 +429,23 @@ public class MenuManager : MonoBehaviour {
             state = PlayerPrefs.GetInt("WeaponGauss", 0);
         else if (itemCode == 2)
             state = PlayerPrefs.GetInt("WeaponBeam", 0);
+        else if (itemCode == 3)
+            state = PlayerPrefs.GetInt("WeaponRocket", 1);
+        else if (itemCode == 4)
+            state = PlayerPrefs.GetInt("WeaponMissile", 0);
+        else if (itemCode == 5)
+            state = PlayerPrefs.GetInt("WeaponTesla", 0);
+        else if (itemCode == 6)
+            state = 1;
+        else if (itemCode == 7)
+            state = 2;
+        else if (itemCode == 8)
+            state = 3;
         //Deciding cost
-        cost = weaponCosts[itemCode, state];
+        if (itemCode <= 5 && itemCode >= 0)
+            cost = weaponCosts[itemCode, state];
+        else if (itemCode >= 6)
+            cost = activeSkillCosts[state];
         //Checking money
         if (playerMoney >= cost)
         {
@@ -425,6 +555,27 @@ public class MenuManager : MonoBehaviour {
                     UIReferenceManager.Instance.teslaUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponTesla", state);
+            }
+            else if (itemCode == 6)
+            {
+                UIReferenceManager.Instance.dashUnlockButton.interactable = false;
+                UIReferenceManager.Instance.dashButton.interactable = true;              
+                UIReferenceManager.Instance.dashInfoText.text = "Unlocked";
+                PlayerPrefs.SetInt("ActiveDash", 1);
+            }
+            else if (itemCode == 7)
+            {
+                UIReferenceManager.Instance.warpUnlockButton.interactable = false;
+                UIReferenceManager.Instance.warpButton.interactable = true;
+                UIReferenceManager.Instance.warpInfoText.text = "Unlocked";
+                PlayerPrefs.SetInt("ActiveWarp", 1);
+            }
+            else if (itemCode == 8)
+            {
+                UIReferenceManager.Instance.bombUnlockButton.interactable = false;
+                UIReferenceManager.Instance.bombButton.interactable = true;
+                UIReferenceManager.Instance.bombInfoText.text = "Unlocked";
+                PlayerPrefs.SetInt("ActiveBomb", 1);
             }
             UIReferenceManager.Instance.playerMoneyText.text = playerMoney.ToString() + "$";
             UIReferenceManager.Instance.popUpMenu.SetActive(false);
