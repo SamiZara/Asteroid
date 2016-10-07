@@ -3,17 +3,18 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour {
+public class MenuManager : MonoBehaviour
+{
 
     public static MenuManager Instace;
-    private int itemCode;//Decides which item is being bought for popup menu
+    private int itemCode, selectedShipIndex;//Decides which item is being bought for popup menu
     private int[,] weaponCosts;
     private int[] activeSkillCosts;
 
 
     void Start()
     {
-        
+        //Allocation
         UIResourceManager.Instance.AllocateAndStore("UI/Buttons/bt-upgrade", "ButtonUpgrade");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Turret", "TurretIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-GaussGun", "GaussIcon");
@@ -25,6 +26,9 @@ public class MenuManager : MonoBehaviour {
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-dash", "DashIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-im-shield", "ShieldIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-active-time-warp", "WarpIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/ui-ship1", "Ship1Icon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/ui-ship2", "Ship2Icon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/ui-ship3", "Ship3Icon");
         //Primary Weapon
         if (PlayerPrefs.GetInt("Weapon1", 0) == 0)
         {
@@ -63,7 +67,7 @@ public class MenuManager : MonoBehaviour {
             UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
             UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Tesla";
         }
-        //Active Düzeltmeleri yap
+        //Active
         if (PlayerPrefs.GetInt("ActiveSkill", 0) == 0)
         {
             UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["ShieldIcon"];
@@ -88,6 +92,28 @@ public class MenuManager : MonoBehaviour {
             UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
             UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Big Bomb";
         }
+        //Ship
+        if (PlayerPrefs.GetInt("ActiveShip", 0) == 0)
+        {
+            UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship1Icon"];
+            UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+            selectedShipIndex = 0;
+        }
+        else if (PlayerPrefs.GetInt("ActiveShip", 0) == 1)
+        {
+            UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship2Icon"];
+            UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+            selectedShipIndex = 1;
+        }
+        else if (PlayerPrefs.GetInt("ActiveShip", 0) == 2)
+        {
+            UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship3Icon"];
+            UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+            selectedShipIndex = 2;
+        }
     }
 
     void Awake()
@@ -95,9 +121,9 @@ public class MenuManager : MonoBehaviour {
         //PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("PlayerMoney", 1000000);
         Instace = this;
-        UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString()+"$";
+        UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString() + "$";
         //Weapons
-        weaponCosts = new int[6,3];
+        weaponCosts = new int[6, 3];
         weaponCosts[0, 0] = 0;
         weaponCosts[0, 1] = 50;
         weaponCosts[0, 2] = 200;
@@ -124,7 +150,7 @@ public class MenuManager : MonoBehaviour {
         activeSkillCosts[3] = 400;
     }
 
-	public void MenuAction(int option)
+    public void MenuAction(int option)
     {
         switch (option)
         {
@@ -134,7 +160,7 @@ public class MenuManager : MonoBehaviour {
             case 1:
                 UIReferenceManager.Instance.windowsWeapon1.SetActive(true);
                 int turretState = PlayerPrefs.GetInt("WeaponTurret", 1);
-                if(turretState != 0 && turretState < 3)
+                if (turretState != 0 && turretState < 3)
                 {
                     UIReferenceManager.Instance.turretInfoText.text = "Tier:" + (turretState) + "\nUpgrade Cost: " + weaponCosts[0, turretState] + "";
                 }
@@ -149,7 +175,7 @@ public class MenuManager : MonoBehaviour {
                     UIReferenceManager.Instance.gaussButton.interactable = true;
                     UIReferenceManager.Instance.gaussUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.gaussUpgradeButton.SetNativeSize();
-                    if(gaussState < 3)
+                    if (gaussState < 3)
                         UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + (gaussState) + "\nUpgrade Cost: " + weaponCosts[1, gaussState] + "";
                     else if (gaussState >= 3)
                     {
@@ -163,7 +189,7 @@ public class MenuManager : MonoBehaviour {
                     UIReferenceManager.Instance.beamButton.interactable = true;
                     UIReferenceManager.Instance.beamUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.beamUpgradeButton.SetNativeSize();
-                    if(beamState < 3)
+                    if (beamState < 3)
                         UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nUpgrade Cost: " + weaponCosts[2, beamState] + "";
                     if (beamState >= 3)
                     {
@@ -173,22 +199,22 @@ public class MenuManager : MonoBehaviour {
                 }
                 MenuAction(PlayerPrefs.GetInt("Weapon1", 0) + 2);
                 int secondaryWeaponState = PlayerPrefs.GetInt("Weapon2", 0);
-                if(secondaryWeaponState == 0)
+                if (secondaryWeaponState == 0)
                 {
                     UIReferenceManager.Instance.iconSecondaryActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["RocketIcon"];
                 }
-                else if(secondaryWeaponState == 1)
+                else if (secondaryWeaponState == 1)
                 {
                     UIReferenceManager.Instance.iconSecondaryActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["MissileIcon"];
                 }
-                else if(secondaryWeaponState == 2)
+                else if (secondaryWeaponState == 2)
                 {
                     UIReferenceManager.Instance.iconSecondaryActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["TeslaIcon"];
                 }
                 UIReferenceManager.Instance.iconSecondaryActiveWeapon1.SetNativeSize();
                 break;
             case 2:
-                UIReferenceManager.Instance.selectedWeapon1Icon.localPosition = new Vector3(-305,117,0);
+                UIReferenceManager.Instance.selectedWeapon1Icon.localPosition = new Vector3(-305, 117, 0);
                 UIReferenceManager.Instance.iconActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
                 UIReferenceManager.Instance.iconActiveWeapon1.SetNativeSize();
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["TurretIcon"];
@@ -220,7 +246,7 @@ public class MenuManager : MonoBehaviour {
             case 6:
                 itemCode = 0;
                 int state = PlayerPrefs.GetInt("WeaponTurret", 1);
-                ShowPopUp("Turret Gun Tier "+ (state + 1), weaponCosts[itemCode, state].ToString());      
+                ShowPopUp("Turret Gun Tier " + (state + 1), weaponCosts[itemCode, state].ToString());
                 break;
             case 7:
                 itemCode = 1;
@@ -339,33 +365,33 @@ public class MenuManager : MonoBehaviour {
             case 19:
                 UIReferenceManager.Instance.windowsActive.SetActive(true);
                 int dashState = PlayerPrefs.GetInt("ActiveDash");
-                if(dashState == 1)
+                if (dashState == 1)
                 {
                     UIReferenceManager.Instance.dashButton.interactable = true;
                     UIReferenceManager.Instance.dashUnlockButton.interactable = false;
                 }
                 int warpState = PlayerPrefs.GetInt("ActiveWarp");
-                if(warpState == 1)
+                if (warpState == 1)
                 {
                     UIReferenceManager.Instance.warpButton.interactable = true;
                     UIReferenceManager.Instance.warpUnlockButton.interactable = false;
                 }
                 int bombState = PlayerPrefs.GetInt("ActiveBomb");
-                if(bombState == 1)
+                if (bombState == 1)
                 {
                     UIReferenceManager.Instance.bombButton.interactable = true;
                     UIReferenceManager.Instance.bombUnlockButton.interactable = false;
                 }
-                MenuAction(PlayerPrefs.GetInt("ActiveSkill",0) + 20);
+                MenuAction(PlayerPrefs.GetInt("ActiveSkill", 0) + 20);
                 break;
             case 20:
                 UIReferenceManager.Instance.iconActiveWindowSkill.sprite = UIResourceManager.Instance.storedAllocations["ShieldIcon"];
                 UIReferenceManager.Instance.iconActiveWindowSkill.SetNativeSize();
-                UIReferenceManager.Instance.selectedActiveIcon.localPosition = new Vector3(-600,120,0);
+                UIReferenceManager.Instance.selectedActiveIcon.localPosition = new Vector3(-600, 120, 0);
                 UIReferenceManager.Instance.mainMenuActiveSkill.sprite = UIResourceManager.Instance.storedAllocations["ShieldIcon"];
                 UIReferenceManager.Instance.mainMenuActiveSkill.SetNativeSize();
                 UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Shield";
-                PlayerPrefs.SetInt("ActiveSkill",0);
+                PlayerPrefs.SetInt("ActiveSkill", 0);
                 break;
             case 21:
                 UIReferenceManager.Instance.iconActiveWindowSkill.sprite = UIResourceManager.Instance.storedAllocations["DashIcon"];
@@ -409,13 +435,45 @@ public class MenuManager : MonoBehaviour {
             case 27:
                 UIReferenceManager.Instance.windowsActive.SetActive(false);
                 break;
+            case 28:
+                selectedShipIndex = (selectedShipIndex - 1) % 3;
+                if (selectedShipIndex < 0)
+                    selectedShipIndex += 3;
+                UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship" + (selectedShipIndex + 1) + "Icon"];
+                UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
+                if (PlayerPrefs.GetInt("Ship" + selectedShipIndex, 0) == 0 && selectedShipIndex != 0)
+                {
+                    UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = false;
+                    UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(true);
+                }
+                else
+                {
+                    UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = true;
+                    UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+                }
+                break;
+             case 29:
+                selectedShipIndex = (selectedShipIndex + 1) % 3;
+                UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship" + (selectedShipIndex + 1) + "Icon"];
+                UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
+                if (PlayerPrefs.GetInt("Ship" + selectedShipIndex, 0) == 0 && selectedShipIndex != 0)
+                {
+                    UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = false;
+                    UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(true);
+                }
+                else
+                {
+                    UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = true;
+                    UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+                }
+                break;
         }
     }
 
-    void ShowPopUp(string item,string cost)
+    void ShowPopUp(string item, string cost)
     {
         UIReferenceManager.Instance.popUpMenu.SetActive(true);
-        UIReferenceManager.Instance.popUpMenuText.text = "Do you want to buy "+item+" for "+cost+"?";
+        UIReferenceManager.Instance.popUpMenuText.text = "Do you want to buy " + item + " for " + cost + "?";
     }
 
     void PopUpYes()
@@ -453,15 +511,15 @@ public class MenuManager : MonoBehaviour {
             PlayerPrefs.SetInt("PlayerMoney", playerMoney);
             state += 1;
             if (itemCode == 0)
-            { 
-                if(state < 3)
+            {
+                if (state < 3)
                 {
-                    UIReferenceManager.Instance.turretInfoText.text = "Tier:"+(state)+"\nUpgrade Cost: "+weaponCosts[0,state]+"";
+                    UIReferenceManager.Instance.turretInfoText.text = "Tier:" + (state) + "\nUpgrade Cost: " + weaponCosts[0, state] + "";
                 }
-                if(state  == 3)
+                if (state == 3)
                 {
                     UIReferenceManager.Instance.turretButton.interactable = false;
-                    UIReferenceManager.Instance.turretInfoText.text = "Tier:"+(state)+"\nMaxed";
+                    UIReferenceManager.Instance.turretInfoText.text = "Tier:" + (state) + "\nMaxed";
                     UIReferenceManager.Instance.turretUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponTurret", state);
@@ -474,16 +532,16 @@ public class MenuManager : MonoBehaviour {
                     UIReferenceManager.Instance.gaussUpgradeButton.SetNativeSize();
                     UIReferenceManager.Instance.gaussButton.interactable = true;
                 }
-                if(state < 3)
+                if (state < 3)
                 {
                     UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + ((state)) + "\nUpgrade Cost: " + weaponCosts[1, state] + "";
                 }
-                if(state == 3)
+                if (state == 3)
                 {
                     UIReferenceManager.Instance.gaussInfoText.text = "Tier:" + ((state)) + "\nMaxed";
                     UIReferenceManager.Instance.gaussUpgradeButton.GetComponent<Button>().interactable = false;
                 }
-                PlayerPrefs.SetInt("WeaponGauss", state );
+                PlayerPrefs.SetInt("WeaponGauss", state);
             }
             else if (itemCode == 2)
             {
@@ -493,7 +551,7 @@ public class MenuManager : MonoBehaviour {
                     UIReferenceManager.Instance.beamUpgradeButton.SetNativeSize();
                     UIReferenceManager.Instance.beamButton.interactable = true;
                 }
-                if (state  < 3)
+                if (state < 3)
                 {
                     UIReferenceManager.Instance.beamInfoText.text = "Tier:" + ((state)) + "\nUpgrade Cost: " + weaponCosts[2, state] + "";
                 }
@@ -559,7 +617,7 @@ public class MenuManager : MonoBehaviour {
             else if (itemCode == 6)
             {
                 UIReferenceManager.Instance.dashUnlockButton.interactable = false;
-                UIReferenceManager.Instance.dashButton.interactable = true;              
+                UIReferenceManager.Instance.dashButton.interactable = true;
                 UIReferenceManager.Instance.dashInfoText.text = "Unlocked";
                 PlayerPrefs.SetInt("ActiveDash", 1);
             }
