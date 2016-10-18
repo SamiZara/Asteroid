@@ -465,6 +465,7 @@ public class MenuManager : MonoBehaviour
                 {
                     UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = true;
                     UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+                    PlayerPrefs.SetInt("SelectedShip",selectedShipIndex);
                 }
                 break;
         }
