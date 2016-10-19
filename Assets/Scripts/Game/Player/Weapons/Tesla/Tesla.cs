@@ -6,6 +6,7 @@ public class Tesla : Weapon
 {
 
     public List<GameObject> asteroidsInRange = new List<GameObject>();
+    public GameObject lightningEffect;
     public float damage = 3;
     void Start()
     {
@@ -80,6 +81,11 @@ public class Tesla : Weapon
                     {
                         Debug.Log("Something collided with something it should not " + GetComponent<Collider>().name);
                     }
+                    GameObject effect = (GameObject)Instantiate(lightningEffect, transform.parent);
+                    effect.transform.FindChild("Destination").transform.position = asteroid.transform.position;
+                    effect.transform.FindChild("Destination").transform.parent = asteroid.transform;
+                    effect.transform.FindChild("Source").transform.position = transform.position;
+                    //effect.GetComponent<Lightn>
                 }
                 else
                 {

@@ -57,7 +57,7 @@ public class MenuManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("Weapon2", 0) == 1)
         {
-            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["HomMissileIcon"];
+            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["MissileIcon"];
             UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
             UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Homming";
         }
