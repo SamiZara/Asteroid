@@ -32,8 +32,9 @@ public class GameManager : MonoBehaviour {
         }
         else if (primaryWeaponState == 2)
         {
-            GameObject beamWeapon = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/Weapons/WeaponBeam"), GlobalsManager.Instance.player.transform);
-            beamWeapon.transform.localPosition = new Vector3(0, 0, 0);
+            GameObject beamWeapon = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/Weapons/WeaponLaser"), GlobalsManager.Instance.player.transform);
+            beamWeapon.transform.localPosition = new Vector3(0, 0, -1);
+            beamWeapon.transform.localRotation = Quaternion.Euler(0, 0, -90);
             int beamState = PlayerPrefs.GetInt("WeaponBeam",0);
             beamWeapon.GetComponent<Weapon>().tier = beamState;
         }
