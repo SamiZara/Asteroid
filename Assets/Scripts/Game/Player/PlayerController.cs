@@ -131,6 +131,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player hit but immune");
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+        //if (collision.gameObject.tag == "Obstacle")
+          //  Destroy();
+    }
+
+
     public void Dash()
     {
         GetComponent<CircleCollider2D>().enabled = false;
