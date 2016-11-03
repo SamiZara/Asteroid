@@ -20,6 +20,7 @@ public class Dash : MonoBehaviour {
     void Activate()
     {
         isDashed = true;
+        GlobalsManager.Instance.player.GetComponent<TrailRenderer>().enabled = true;
         GlobalsManager.Instance.player.GetComponent<PlayerController>().Dash();
         GetComponent<BoxCollider2D>().enabled = true;
     }

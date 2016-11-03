@@ -44,8 +44,8 @@ public class MenuManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("Weapon1", 0) == 2)
         {
-            UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
-            UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
+            UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
+            UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
             UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Beam";
         }
         //Secondary Weapon
@@ -573,9 +573,9 @@ public class MenuManager : MonoBehaviour
                 {
                     UIReferenceManager.Instance.rocketButton.interactable = false;
                     UIReferenceManager.Instance.rocketInfoText.text = "Tier:" + (state) + "\nMaxed";
-                    UIReferenceManager.Instance.rocketUpgradeButton.GetComponent<Button>().interactable = false;
-                    PlayerPrefs.SetInt("WeaponRocket", state);
+                    UIReferenceManager.Instance.rocketUpgradeButton.GetComponent<Button>().interactable = false;  
                 }
+                PlayerPrefs.SetInt("WeaponRocket", state);
             }
             else if (itemCode == 4)
             {

@@ -3,15 +3,11 @@ using System.Collections;
 
 public class TimeWarpBubble : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public float duration;
+	void OnEnable()
+    {
+        StartCoroutine(Deactivator());
+    }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -30,5 +26,11 @@ public class TimeWarpBubble : MonoBehaviour {
             collider.GetComponent<Obstacle>().isInTimeWarpBubble = false;
             collider.GetComponent<Rigidbody2D>().velocity *= GlobalsManager.Instance.asteroidSpeed / collider.GetComponent<Rigidbody2D>().velocity.magnitude;
         }
+    }
+
+    IEnumerator Deactivator()
+    {
+        yield return new WaitForSeconds(duration);
+        gameObject.SetActive(false);
     }
 }

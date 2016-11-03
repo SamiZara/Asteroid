@@ -24,7 +24,7 @@ public class ScatterMissileProjectile : MonoBehaviour
         if (startTime + splitDelay < Time.time)
         {
             Split();
-            Destroy();
+            DestroyWithoutExplosion();
         }
 
     }
@@ -121,6 +121,12 @@ public class ScatterMissileProjectile : MonoBehaviour
         Destroy(gameObject);
     }
 
+    void DestroyWithoutExplosion()
+    {
+        isReadyToDestroy = true;
+        Destroy(gameObject);
+    }
+
     /*IEnumerator ResetTrailRenderer(TrailRenderer tr)
     {
         tr.time = 0;
@@ -131,6 +137,9 @@ public class ScatterMissileProjectile : MonoBehaviour
     private void Split()
     {
         scatterParticle.SetActive(true);
+        Destroyer temp = scatterParticle.AddComponent<Destroyer>();
+        temp.destroyDelayTime = 0.59f;
+        scatterParticle.transform.parent = transform.parent.parent;
         List<GameObject> asteroidList = MissileLocker.Lock4DifferentAsteroid();
         GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["ScatteredMissileProjectile"], transform.position, transform.parent.rotation);
         for(int i = 1; i < 5; i++)

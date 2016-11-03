@@ -23,28 +23,6 @@ public class RocketProjectile : Projectile
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Obstacle")
-        {
-            ExplodingAsteroid temp = collision.GetComponent<ExplodingAsteroid>();
-            Obstacle temp2 = collision.GetComponent<Obstacle>();
-            if (temp != null)
-            {
-                temp.Damage(damage);
-            }
-            else if (temp2 != null)
-            {
-                temp2.Damage(damage);
-            }
-            else
-            {
-                Debug.Log("Something collided with something it should not " + collision.name);
-            }
-        }
-        Destroy();
-    }
-
     new void Destroy()
     {
 

@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
                 dash.GetComponent<Dash>().isDashed = false;
                 dash.SetActive(false);
                 isDashing = false;
+                StartCoroutine(TrailRendererDeactivator());
             }
         }
     }
@@ -144,6 +145,12 @@ public class PlayerController : MonoBehaviour
         playerRb.velocity = new Vector3(0, 0, 0);//Stopping player first
         playerRb.velocity = new Vector2(Constants.DASH_SPEED * Mathf.Cos(transform.rotation.eulerAngles.z * Mathf.Deg2Rad), Constants.DASH_SPEED * Mathf.Sin(transform.rotation.eulerAngles.z * Mathf.Deg2Rad));
         isDashing = true;
+    }
+
+    IEnumerator TrailRendererDeactivator()
+    {
+        yield return new WaitForSeconds(0.2f);
+        GetComponent<TrailRenderer>().enabled = false;
     }
 }
 
