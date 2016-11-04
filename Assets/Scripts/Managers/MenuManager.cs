@@ -10,6 +10,7 @@ public class MenuManager : MonoBehaviour
     private int itemCode, selectedShipIndex;//Decides which item is being bought for popup menu
     private int[,] weaponCosts;
     private int[] activeSkillCosts;
+    private int[] shipCosts;
 
 
     void Start()
@@ -93,21 +94,21 @@ public class MenuManager : MonoBehaviour
             UIReferenceManager.Instance.mainMenuActiveSkillText.text = "Big Bomb";
         }
         //Ship
-        if (PlayerPrefs.GetInt("ActiveShip", 0) == 0)
+        if (PlayerPrefs.GetInt("SelectedShip", 0) == 0)
         {
             UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship1Icon"];
             UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
             UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
             selectedShipIndex = 0;
         }
-        else if (PlayerPrefs.GetInt("ActiveShip", 0) == 1)
+        else if (PlayerPrefs.GetInt("SelectedShip", 0) == 1)
         {
             UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship2Icon"];
             UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
             UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
             selectedShipIndex = 1;
         }
-        else if (PlayerPrefs.GetInt("ActiveShip", 0) == 2)
+        else if (PlayerPrefs.GetInt("SelectedShip", 0) == 2)
         {
             UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship3Icon"];
             UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
@@ -148,6 +149,10 @@ public class MenuManager : MonoBehaviour
         activeSkillCosts[1] = 150;
         activeSkillCosts[2] = 250;
         activeSkillCosts[3] = 400;
+        //Ships
+        shipCosts = new int[2];
+        shipCosts[0] = 1000;
+        shipCosts[1] = 2500;
     }
 
     public void MenuAction(int option)
@@ -468,6 +473,13 @@ public class MenuManager : MonoBehaviour
                     PlayerPrefs.SetInt("SelectedShip",selectedShipIndex);
                 }
                 break;
+            case 30:
+                itemCode = 9;
+                if(selectedShipIndex == 1)
+                    ShowPopUp("Viper(only skin)", shipCosts[0].ToString());
+                else if(selectedShipIndex == 2)
+                    ShowPopUp("Orion(only skin)", shipCosts[1].ToString());
+                break;
         }
     }
 
@@ -635,6 +647,12 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.bombButton.interactable = true;
                 UIReferenceManager.Instance.bombInfoText.text = "Unlocked";
                 PlayerPrefs.SetInt("ActiveBomb", 1);
+            }
+            else if (itemCode == 9)
+            {
+                UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
+                UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = true;
+                PlayerPrefs.SetInt("Ship" + selectedShipIndex, 1);
             }
             UIReferenceManager.Instance.playerMoneyText.text = playerMoney.ToString() + "$";
             UIReferenceManager.Instance.popUpMenu.SetActive(false);

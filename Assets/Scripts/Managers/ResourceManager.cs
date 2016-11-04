@@ -24,4 +24,9 @@ public class ResourceManager : MonoBehaviour{
     {
         return Resources.Load<GameObject>(path);
     }
+
+    public Sprite AllocateAndDumpImage(string path)
+    {
+        return Resources.Load<Sprite>(path);
+    }
 }

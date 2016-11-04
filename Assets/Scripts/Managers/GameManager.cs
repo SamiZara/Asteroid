@@ -61,6 +61,18 @@ public class GameManager : MonoBehaviour {
             int teslaState = PlayerPrefs.GetInt("WeaponTesla", 0);
             teslaWeapon.GetComponent<Weapon>().tier = teslaState;
         }
+        //ActiveSkills
+
+        //Ship
+        int shipState = PlayerPrefs.GetInt("SelectedShip", 0);
+        if(shipState == 1)
+        {
+            GlobalsManager.Instance.player.GetComponent<SpriteRenderer>().sprite = ResourceManager.Instance.AllocateAndDumpImage("Sprites/ship2");
+        }
+        else if (shipState == 2)
+        {
+            GlobalsManager.Instance.player.GetComponent<SpriteRenderer>().sprite = ResourceManager.Instance.AllocateAndDumpImage("Sprites/ship3");
+        }
     }
 
 	// Update is called once per frame
