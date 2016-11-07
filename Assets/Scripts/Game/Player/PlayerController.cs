@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     public bool isImmune;
     private bool isDashing;
     private Vector3 dashDestinaion;
+    private float lastTapTime = float.MinValue;
+    private float lastSkillUseTime = float.MinValue;
+    public GameObject activeSkill;
     void Start()
     {
         if (Instance == null)
@@ -23,24 +26,36 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
             playerRb.AddForce(new Vector2(speed * Time.fixedDeltaTime * Mathf.Cos((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad), speed * Time.deltaTime * Mathf.Sin((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad)));
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
+        {
             jetParticle.Play();
+            if (Time.time - lastTapTime < Constants.TIME_GAP_TO_ACTIVATE_SKILL && lastSkillUseTime + GlobalsManager.Instance.activeSkillCooldown < Time.time)
+            {
+                Debug.Log("SkillActivated");
+                activeSkill.SetActive(true);
+                lastSkillUseTime = Time.time;
+                GlobalsManager.Instance.circlerCooldown.gameObject.SetActive(true);
+            }
+            lastTapTime = Time.time;
+        }
         else if (Input.GetMouseButtonUp(0))
+        {
             jetParticle.Stop();
+        }
         if (isDashing)
         {
-            if(Vector3.Distance(transform.position, dashDestinaion) < 0.5f)
+            if (Vector3.Distance(transform.position, dashDestinaion) < 0.5f)
             {
                 playerRb.velocity = new Vector2(0, 0);
                 transform.position = dashDestinaion;
                 GetComponent<CircleCollider2D>().enabled = true;
-                GameObject dash = transform.FindChild("Dash").gameObject;
+                GameObject dash = transform.FindChild("Dash(Clone)").gameObject;
                 dash.GetComponent<Dash>().isDashed = false;
                 dash.SetActive(false);
                 isDashing = false;
@@ -90,13 +105,13 @@ public class PlayerController : MonoBehaviour
     void OnBecameInvisible()
     {
         Vector3 playerPos = transform.position;
-        if(transform.position.y > GlobalsManager.Instance.screenPos.y)
+        if (transform.position.y > GlobalsManager.Instance.screenPos.y)
         {
             transform.position = new Vector3(playerPos.x, -playerPos.y, playerPos.z);
             playerPos = transform.position;
             //StartCoroutine("ResetTrailRenderer",playerTrail);
         }
-        else if(transform.position.y < -GlobalsManager.Instance.screenPos.y)
+        else if (transform.position.y < -GlobalsManager.Instance.screenPos.y)
         {
             transform.position = new Vector3(playerPos.x, -playerPos.y, playerPos.z);
             playerPos = transform.position;
@@ -135,7 +150,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log(collision.gameObject.tag);
         //if (collision.gameObject.tag == "Obstacle")
-          //  Destroy();
+        //  Destroy();
     }
 
 

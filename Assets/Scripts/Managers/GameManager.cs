@@ -14,6 +14,20 @@ public class GameManager : MonoBehaviour {
 	
     void Start()
     {
+        //Ship
+        int shipState = PlayerPrefs.GetInt("SelectedShip", 0);
+        if(shipState == 0)
+        {
+            GlobalsManager.Instance.player = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/PlayerShips/PlayerChargerShip"));
+        }
+        else if (shipState == 1)
+        {
+            GlobalsManager.Instance.player = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/PlayerShips/PlayerViperShip"));
+        }
+        else if (shipState == 2)
+        {
+            GlobalsManager.Instance.player = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/PlayerShips/PlayerOrionShip"));
+        }
         //Primary weapon instantiate
         int primaryWeaponState = PlayerPrefs.GetInt("Weapon1", 0);
         if(primaryWeaponState == 0)
@@ -62,16 +76,38 @@ public class GameManager : MonoBehaviour {
             teslaWeapon.GetComponent<Weapon>().tier = teslaState;
         }
         //ActiveSkills
-
-        //Ship
-        int shipState = PlayerPrefs.GetInt("SelectedShip", 0);
-        if(shipState == 1)
+        int activeSkillState = PlayerPrefs.GetInt("ActiveSkill", 0);
+        if(activeSkillState == 0)
         {
-            GlobalsManager.Instance.player.GetComponent<SpriteRenderer>().sprite = ResourceManager.Instance.AllocateAndDumpImage("Sprites/ship2");
+            GameObject shieldActive = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/ActiveSkills/ImmunityShield"), GlobalsManager.Instance.player.transform);
+            shieldActive.transform.localPosition = new Vector3(0, 0, 0);
+            GlobalsManager.Instance.player.GetComponent<PlayerController>().activeSkill = shieldActive;
+            GlobalsManager.Instance.activeSkillCooldown = Constants.SHIELD_COOLDOWN;
+            GlobalsManager.Instance.activeSkillIcon.sprite = ResourceManager.Instance.AllocateAndDumpImage("UI/Icons/icons-active-im-shield");
         }
-        else if (shipState == 2)
+        else if(activeSkillState == 1)
         {
-            GlobalsManager.Instance.player.GetComponent<SpriteRenderer>().sprite = ResourceManager.Instance.AllocateAndDumpImage("Sprites/ship3");
+            GameObject dashActive = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/ActiveSkills/Dash"), GlobalsManager.Instance.player.transform);
+            dashActive.transform.localPosition = new Vector3(0, 0, 0);
+            GlobalsManager.Instance.player.GetComponent<PlayerController>().activeSkill = dashActive;
+            GlobalsManager.Instance.activeSkillCooldown = Constants.DASH_COOLDOWN;
+            GlobalsManager.Instance.activeSkillIcon.sprite = ResourceManager.Instance.AllocateAndDumpImage("UI/Icons/icons-active-dash");
+        }
+        else if(activeSkillState == 2)
+        {
+            GameObject timeWarpActive = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/ActiveSkills/TimeWarpBubble"), GlobalsManager.Instance.player.transform);
+            timeWarpActive.transform.localPosition = new Vector3(0, 0, 0);
+            GlobalsManager.Instance.player.GetComponent<PlayerController>().activeSkill = timeWarpActive;
+            GlobalsManager.Instance.activeSkillCooldown = Constants.TIME_WARP_COOLDOWN;
+            GlobalsManager.Instance.activeSkillIcon.sprite = ResourceManager.Instance.AllocateAndDumpImage("UI/Icons/icons-active-time-warp");
+        }
+        else if(activeSkillState == 3)
+        {
+            GameObject bigBombActive = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/ActiveSkills/BigBomb"), GlobalsManager.Instance.player.transform);
+            bigBombActive.transform.localPosition = new Vector3(0, 0, 0);
+            GlobalsManager.Instance.player.GetComponent<PlayerController>().activeSkill = bigBombActive;
+            GlobalsManager.Instance.activeSkillCooldown = Constants.BIG_BOMB_COOLDOWN;
+            GlobalsManager.Instance.activeSkillIcon.sprite = ResourceManager.Instance.AllocateAndDumpImage("UI/Icons/icons-active-bomb");
         }
     }
 
