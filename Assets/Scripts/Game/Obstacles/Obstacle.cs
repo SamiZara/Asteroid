@@ -54,11 +54,12 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void Destroy()
+    public void Destroy()
     {
         explosionParticle.SetActive(true);
         explosionParticle.transform.parent = transform.parent;
         GeneratorManager.Instance.asteroids.Remove(gameObject);
+        GlobalsManager.Instance.asteroidExplosionSound.Play();
         Destroy(gameObject);
     }
 

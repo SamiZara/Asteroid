@@ -24,11 +24,8 @@ public class Asteroid : Obstacle
         }
     }
 
-    private void Destroy()
+    private new void Destroy()
     {
-        explosionParticle.SetActive(true);
-        explosionParticle.transform.parent = transform.parent;
-        GeneratorManager.Instance.asteroids.Remove(gameObject);
         float asteroidScatterDistance = 0.1f;
         if(smallerAsteroid != null)
         {
@@ -42,7 +39,7 @@ public class Asteroid : Obstacle
                 GeneratorManager.Instance.asteroids.Add(temp);
             }
         }
-        Destroy(gameObject);
+        base.Destroy();
     }
 
 }

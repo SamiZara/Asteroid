@@ -6,8 +6,9 @@ public class Rocket : Weapon
 
     public float cooldown;
     private float lastShootTime;
-    void Start()
+    new void Start()
     {
+        base.Start();
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Rocket/RocketProjectileTier" + tier, "RocketProjectile");
     }
 
@@ -18,6 +19,7 @@ public class Rocket : Weapon
         {
             lastShootTime = Time.time;
             GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["RocketProjectile"], transform.position, transform.parent.rotation);
+            sound.Play();
         }
     }
 }

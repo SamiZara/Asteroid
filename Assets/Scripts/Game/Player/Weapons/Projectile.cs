@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour {
     public float speed, damage, duration, startTime;
     public GameObject explosionParticle;
     public Rigidbody2D rb;
+    public AudioSource sound;
     void Start()
     {
         startTime = Time.time;

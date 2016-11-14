@@ -481,6 +481,16 @@ public class MenuManager : MonoBehaviour
                 else if(selectedShipIndex == 2)
                     ShowPopUp("Orion(only skin)", shipCosts[1].ToString());
                 break;
+            case 31:
+                UIReferenceManager.Instance.soundOffButton.interactable = false;
+                UIReferenceManager.Instance.soundOnButton.interactable = true;
+                PlayerPrefs.SetInt("Sound",0);
+                break;
+            case 32:
+                UIReferenceManager.Instance.soundOffButton.interactable = true;
+                UIReferenceManager.Instance.soundOnButton.interactable = false;
+                PlayerPrefs.SetInt("Sound", 1);
+                break;
         }
     }
 

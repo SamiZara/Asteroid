@@ -15,15 +15,11 @@ public class ExplodingAsteroid : Obstacle
         }
     }
 
-    private void Destroy()
+    private new void Destroy()
     {
-        explosionParticle.SetActive(true);
-        explosionParticle.transform.parent = transform.parent;
-        GeneratorManager.Instance.asteroids.Remove(gameObject);
-
         aoeDamager.transform.parent = transform.parent;
         aoeDamager.SetActive(true);
-
+        base.Destroy();
         Destroy(gameObject);
     }
 }

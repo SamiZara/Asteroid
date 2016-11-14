@@ -11,8 +11,9 @@ public class Laser : Weapon
     private float damage = 5;
     private float currentLaserTimer = float.MaxValue;
     private bool isLaserCharging;
-    void Start()
+    new void Start()
     {
+        base.Start();
         lr = GetComponent<LineRenderer>();
         player = GlobalsManager.Instance.player;
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Laser/LaserProjectileTier" + tier, "LaserProjectile");
@@ -87,6 +88,7 @@ public class Laser : Weapon
     {
         yield return new WaitForSeconds(cooldown / 2);
         laserEffectStart.gameObject.SetActive(true);
+        sound.Play();
         yield return new WaitForSeconds(cooldown / 2);
         currentLaserTimer = 0;
         isLaserCharging = false;

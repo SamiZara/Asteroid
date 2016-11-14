@@ -8,8 +8,9 @@ public class Tesla : Weapon
     public List<GameObject> asteroidsInRange = new List<GameObject>();
     public GameObject lightningEffect;
     public float damage = 3;
-    void Start()
+    new void Start()
     {
+        base.Start();
         StartCoroutine(PeriodicShock());
         if(tier == 2)
         {
@@ -58,6 +59,8 @@ public class Tesla : Weapon
         while (true)
         {
             List<GameObject> tempList = new List<GameObject>(asteroidsInRange);
+            if (tempList.Count != 0)
+                sound.Play();
             foreach (GameObject asteroid in tempList)
             {
                 if (asteroid != null)

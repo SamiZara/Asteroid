@@ -6,8 +6,9 @@ public class Gauss : Weapon
 
     public float cooldown;
     private float lastShootTime;
-    void Start()
+    new void Start()
     {
+        base.Start();
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Gauss/GaussProjectileTier" + tier, "GaussProjectile");
     }
 
@@ -18,6 +19,7 @@ public class Gauss : Weapon
         {
             lastShootTime = Time.time;
             GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["GaussProjectile"], transform.position, transform.parent.rotation);
+            sound.Play();
         }
     }
 }

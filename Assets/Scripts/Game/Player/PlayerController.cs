@@ -16,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private float lastTapTime = float.MinValue;
     private float lastSkillUseTime = float.MinValue;
     public GameObject activeSkill;
+    private bool isThrusterSoundPlaying;
+
     void Start()
     {
         if (Instance == null)
@@ -44,9 +46,25 @@ public class PlayerController : MonoBehaviour
             }
             lastTapTime = Time.time;
         }
+        else if (Input.GetMouseButton(0))
+        {
+            if (!isThrusterSoundPlaying)
+            {
+                GlobalsManager.Instance.thrusterSound.Play();
+                isThrusterSoundPlaying = true;
+            }
+            else
+            {
+                if(GlobalsManager.Instance.thrusterSound.volume < 0.5f)
+                    GlobalsManager.Instance.thrusterSound.volume += 0.5f * Time.deltaTime;
+            }
+        }
         else if (Input.GetMouseButtonUp(0))
         {
             jetParticle.Stop();
+            isThrusterSoundPlaying = false;
+            GlobalsManager.Instance.thrusterSound.Stop();
+            GlobalsManager.Instance.thrusterSound.volume = 0;
         }
         if (isDashing)
         {

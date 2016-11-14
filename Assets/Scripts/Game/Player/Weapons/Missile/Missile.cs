@@ -5,8 +5,9 @@ public class Missile : Weapon
 {
     public float cooldown;
     private float lastShootTime;
-    void Start()
+    new void Start()
     {
+        base.Start();
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/MissileProjectileTier"+tier, "MissileProjectile");
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/ScatteredMissileProjectile", "ScatteredMissileProjectile");
     }
@@ -18,6 +19,7 @@ public class Missile : Weapon
         {
             lastShootTime = Time.time;
             GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["MissileProjectile"], transform.position, transform.parent.rotation);
+            sound.Play();
         }
     }
 
