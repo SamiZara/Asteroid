@@ -19,14 +19,19 @@ public class ExplodingAsteroidAoeDamager : MonoBehaviour {
         if (collision.tag == "Obstacle")
         {
             ExplodingAsteroid temp = collision.GetComponent<ExplodingAsteroid>();
-            Obstacle temp2 = collision.GetComponent<Obstacle>();
+            Asteroid temp2 = collision.GetComponent<Asteroid>();
+            Obstacle temp3 = collision.GetComponent<Obstacle>();
             if (temp != null)
             {
                 temp.Damage(damage);
             }
             else if (temp2 != null)
             {
-                temp2.Damage(damage);
+                temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position));
+            }
+            else if (temp3 != null)
+            {
+                temp3.Damage(damage);
             }
             else
             {

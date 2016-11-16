@@ -6,14 +6,14 @@ public class ScatterMissileProjectile : MonoBehaviour
 {
     public float speed, rotateSpeed, damage, startTime,splitDelay;
     public GameObject target, explosionParticle,scatterParticle;
-    private TrailRenderer trainRenderer;
+    //private TrailRenderer trainRenderer;
     private Rigidbody2D rb;
     private bool isReadyToDestroy;
     void Start()
     {
         startTime = Time.time;
         isReadyToDestroy = false;
-        trainRenderer = GetComponent<TrailRenderer>();
+        //trainRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         target = MissileLocker.lockedAsteroid;        
     }

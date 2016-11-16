@@ -5,7 +5,8 @@ public class Turret : Weapon {
 
     public float cooldown;
     private float lastShootTime;
-    void Start () {
+    new void Start () {
+        base.Start();
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Turret/TurretProjectileTier" + tier, "TurretProjectile");
     }
 	
@@ -14,7 +15,9 @@ public class Turret : Weapon {
         if (canShoot && (lastShootTime + cooldown) < Time.time)
         {
             lastShootTime = Time.time;
-            GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["TurretProjectile"], transform.position, transform.parent.rotation);
+            Instantiate(ResourceManager.Instance.storedAllocations["TurretProjectile"], transform.position, transform.parent.rotation);
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                sound.Play();
         }
     }
 }

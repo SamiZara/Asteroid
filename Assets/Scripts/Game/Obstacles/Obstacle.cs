@@ -47,6 +47,7 @@ public class Obstacle : MonoBehaviour
 
     public void Damage(float damage)
     {
+        Debug.Log(damage);
         hp -= damage;
         if (hp <= 0)
         {
@@ -59,7 +60,8 @@ public class Obstacle : MonoBehaviour
         explosionParticle.SetActive(true);
         explosionParticle.transform.parent = transform.parent;
         GeneratorManager.Instance.asteroids.Remove(gameObject);
-        GlobalsManager.Instance.asteroidExplosionSound.Play();
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            GlobalsManager.Instance.asteroidExplosionSound.Play();
         Destroy(gameObject);
     }
 
@@ -73,7 +75,6 @@ public class Obstacle : MonoBehaviour
 
     IEnumerator SpeedStabilizer()
     {
-        float speedIncrementAmount = GlobalsManager.Instance.asteroidSpeed / 10;
         while (true)
         {
             if (!isInTimeWarpBubble && rb.velocity.magnitude != GlobalsManager.Instance.asteroidSpeed)

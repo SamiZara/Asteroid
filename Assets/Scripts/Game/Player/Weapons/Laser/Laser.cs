@@ -57,11 +57,11 @@ public class Laser : Weapon
                 }
                 else if (temp2 != null)
                 {
-                    temp2.Damage(damage * Time.fixedDeltaTime);
+                    temp2.Damage(damage * Time.fixedDeltaTime, MathHelper.degreeBetween2Points(hit.transform.position, transform.position));
                 }
                 else if (temp3 != null)
                 {
-                    temp3.Damage(damage * Time.fixedDeltaTime);
+                    temp3.Damage(damage);
                 }
                 else
                 {
@@ -88,7 +88,10 @@ public class Laser : Weapon
     {
         yield return new WaitForSeconds(cooldown / 2);
         laserEffectStart.gameObject.SetActive(true);
-        sound.Play();
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        {
+            sound.Play();
+        }
         yield return new WaitForSeconds(cooldown / 2);
         currentLaserTimer = 0;
         isLaserCharging = false;

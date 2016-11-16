@@ -115,6 +115,11 @@ public class MenuManager : MonoBehaviour
             UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
             selectedShipIndex = 2;
         }
+        //Sound
+        if (PlayerPrefs.GetInt("Sound",1) == 0){
+            UIReferenceManager.Instance.soundOffButton.interactable = false;
+            UIReferenceManager.Instance.soundOnButton.interactable = true;
+        }
     }
 
     void Awake()

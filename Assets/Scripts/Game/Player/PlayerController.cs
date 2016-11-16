@@ -48,23 +48,29 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
-            if (!isThrusterSoundPlaying)
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
             {
-                GlobalsManager.Instance.thrusterSound.Play();
-                isThrusterSoundPlaying = true;
-            }
-            else
-            {
-                if(GlobalsManager.Instance.thrusterSound.volume < 0.5f)
-                    GlobalsManager.Instance.thrusterSound.volume += 0.5f * Time.deltaTime;
+                if (!isThrusterSoundPlaying)
+                {
+                    GlobalsManager.Instance.thrusterSound.Play();
+                    isThrusterSoundPlaying = true;
+                }
+                else
+                {
+                    if (GlobalsManager.Instance.thrusterSound.volume < 0.5f)
+                        GlobalsManager.Instance.thrusterSound.volume += 0.5f * Time.deltaTime;
+                }
             }
         }
         else if (Input.GetMouseButtonUp(0))
         {
             jetParticle.Stop();
-            isThrusterSoundPlaying = false;
-            GlobalsManager.Instance.thrusterSound.Stop();
-            GlobalsManager.Instance.thrusterSound.volume = 0;
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            {
+                isThrusterSoundPlaying = false;
+                GlobalsManager.Instance.thrusterSound.Stop();
+                GlobalsManager.Instance.thrusterSound.volume = 0;
+            }
         }
         if (isDashing)
         {

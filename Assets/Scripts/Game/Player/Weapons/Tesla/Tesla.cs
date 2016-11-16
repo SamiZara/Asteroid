@@ -59,7 +59,7 @@ public class Tesla : Weapon
         while (true)
         {
             List<GameObject> tempList = new List<GameObject>(asteroidsInRange);
-            if (tempList.Count != 0)
+            if (tempList.Count != 0 && PlayerPrefs.GetInt("Sound", 1) == 1)
                 sound.Play();
             foreach (GameObject asteroid in tempList)
             {
@@ -74,7 +74,7 @@ public class Tesla : Weapon
                     }
                     else if (temp2 != null)
                     {
-                        temp2.Damage(damage);
+                        temp2.Damage(damage, MathHelper.degreeBetween2Points(asteroid.transform.position, transform.position));
                     }
                     else if (temp3 != null)
                     {

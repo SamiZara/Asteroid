@@ -62,7 +62,7 @@ public class Projectile : MonoBehaviour {
             }
             else if (temp2 != null)
             {
-                temp2.Damage(damage);
+                temp2.Damage(damage, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
             }
             else if (temp3 != null)
             {

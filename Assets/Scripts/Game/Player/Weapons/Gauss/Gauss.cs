@@ -18,8 +18,9 @@ public class Gauss : Weapon
         if (canShoot && (lastShootTime + cooldown) < Time.time)
         {
             lastShootTime = Time.time;
-            GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["GaussProjectile"], transform.position, transform.parent.rotation);
-            sound.Play();
+            Instantiate(ResourceManager.Instance.storedAllocations["GaussProjectile"], transform.position, transform.parent.rotation);
+            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+                sound.Play();
         }
     }
 }

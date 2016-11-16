@@ -30,14 +30,19 @@ public class Dash : MonoBehaviour {
         if (collider.tag == "Obstacle")
         {
             ExplodingAsteroid temp = collider.GetComponent<ExplodingAsteroid>();
-            Obstacle temp2 = collider.GetComponent<Obstacle>();
+            Asteroid temp2 = collider.GetComponent<Asteroid>();
+            Obstacle temp3 = collider.GetComponent<Obstacle>();
             if (temp != null)
             {
                 temp.Damage(float.MaxValue);
             }
             else if (temp2 != null)
             {
-                temp2.Damage(float.MaxValue);
+                temp2.Damage(float.MaxValue, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
+            }
+            else if (temp3 != null)
+            {
+                temp3.Damage(float.MaxValue);
             }
             else
             {
