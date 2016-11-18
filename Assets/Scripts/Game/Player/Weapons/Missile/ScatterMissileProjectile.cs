@@ -17,7 +17,7 @@ public class ScatterMissileProjectile : Projectile
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         if (startTime + splitDelay < Time.time)
         {

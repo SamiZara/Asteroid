@@ -106,7 +106,7 @@ public class Laser : Weapon
         laserEffectStart.gameObject.SetActive(true);
         if (PlayerPrefs.GetInt("Sound", 1) == 1)
         {
-            sound.Play();
+            fireSound.Play();
         }
         yield return new WaitForSeconds(cooldown / 2);
         currentLaserTimer = 0;

@@ -14,7 +14,7 @@ public class MoabProjectile : Projectile {
         aoeDamager.GetComponent<RocketAoeDamager>().damage = aoeDamage;
     }
 
-    void Update()
+    new void Update()
     {
         if (startTime + duration < Time.time)
         {

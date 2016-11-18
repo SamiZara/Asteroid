@@ -7,7 +7,7 @@ public class Tesla : Weapon
 
     public List<GameObject> asteroidsInRange = new List<GameObject>();
     public GameObject lightningEffect;
-    public float damage = 3;
+    public float damage = 2;
     new void Start()
     {
         base.Start();
@@ -15,12 +15,12 @@ public class Tesla : Weapon
         if(tier == 2)
         {
             GetComponent<CircleCollider2D>().radius = 2.4f;
-            damage = 4;
+            damage = 2.5f;
         }
         if (tier == 3)
         {
             GetComponent<CircleCollider2D>().radius = 3f;
-            damage = 5;
+            damage = 3.5f;
         }
     }
 
@@ -60,7 +60,7 @@ public class Tesla : Weapon
         {
             List<GameObject> tempList = new List<GameObject>(asteroidsInRange);
             if (tempList.Count != 0 && PlayerPrefs.GetInt("Sound", 1) == 1)
-                sound.Play();
+                fireSound.Play();
             foreach (GameObject asteroid in tempList)
             {
                 if (asteroid != null)
@@ -95,7 +95,7 @@ public class Tesla : Weapon
                     asteroidsInRange.Remove(asteroid);
                 }
             }
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.75f);
         }
     }
 }

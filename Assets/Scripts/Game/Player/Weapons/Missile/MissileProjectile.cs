@@ -53,4 +53,9 @@ public class MissileProjectile : Projectile
             GetComponent<Rigidbody2D>().velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
         }
     }
+
+    void OnDestroy()
+    {
+        Missile.PlayProjectileExplosionSound();
+    }
 }

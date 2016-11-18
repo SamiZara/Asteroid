@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     { 
         if (startTime + duration < Time.time)
         {

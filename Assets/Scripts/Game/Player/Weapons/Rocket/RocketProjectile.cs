@@ -15,7 +15,7 @@ public class RocketProjectile : Projectile
         aoeDamager.GetComponent<RocketAoeDamager>().damage = aoeDamage;
     }
 
-    void Update()
+    new void Update()
     {
         if (startTime + duration < Time.time)
         {
@@ -25,13 +25,14 @@ public class RocketProjectile : Projectile
 
     new void Destroy()
     {
-
-        explosionParticle.SetActive(true);
-        explosionParticle.transform.parent = transform.parent.parent;
-
+        Rocket.PlayProjectileExplosionSound();
         aoeDamager.SetActive(true);
         aoeDamager.transform.parent = transform.parent.parent;
-
-        Destroy(gameObject);
+        base.Update(); 
+    }
+    
+    void OnDestroy()
+    {
+        Rocket.PlayProjectileExplosionSound();
     }
 }
