@@ -11,6 +11,7 @@ public class Laser : Weapon
     private float damage = 5;
     private float currentLaserTimer = float.MaxValue;
     private bool isLaserCharging;
+    private float lastDebriGenerateTime;
     new void Start()
     {
         base.Start();
@@ -54,14 +55,29 @@ public class Laser : Weapon
                 if (temp != null)
                 {
                     temp.Damage(damage * Time.fixedDeltaTime);
+                    if (lastDebriGenerateTime + 0.5f < Time.time)
+                    {
+                        temp3.createDebris(hit.point, MathHelper.degreeBetween2Points(hit.transform.position, hit.point));
+                        lastDebriGenerateTime = Time.time;
+                    }
                 }
                 else if (temp2 != null)
                 {
-                    temp2.Damage(damage * Time.fixedDeltaTime, MathHelper.degreeBetween2Points(hit.transform.position, transform.position));
+                    temp2.Damage(damage * Time.fixedDeltaTime, MathHelper.degreeBetween2Points(hit.transform.position,hit.point));
+                    if (lastDebriGenerateTime + 0.5f < Time.time)
+                    {
+                        temp3.createDebris(hit.point, MathHelper.degreeBetween2Points(hit.transform.position, hit.point));
+                        lastDebriGenerateTime = Time.time;
+                    }
                 }
                 else if (temp3 != null)
                 {
-                    temp3.Damage(damage);
+                    temp3.Damage(damage * Time.fixedDeltaTime);
+                    if (lastDebriGenerateTime + 0.5f < Time.time)
+                    {
+                        temp3.createDebris(hit.point, MathHelper.degreeBetween2Points(hit.transform.position, hit.point));
+                        lastDebriGenerateTime = Time.time;
+                    }
                 }
                 else
                 {

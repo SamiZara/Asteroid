@@ -5,7 +5,7 @@ public class Obstacle : MonoBehaviour
 {
 
     public float hp;
-    public GameObject explosionParticle;
+    public GameObject explosionParticle,debriParticle;
     public Rigidbody2D rb;
     public bool isInTimeWarpBubble;
     public bool isScatterObject;
@@ -47,12 +47,17 @@ public class Obstacle : MonoBehaviour
 
     public void Damage(float damage)
     {
-        Debug.Log(damage);
         hp -= damage;
         if (hp <= 0)
         {
             Destroy();
         }
+    }
+
+    public void createDebris(Vector3 pos,float degree)
+    {
+        if(debriParticle != null)
+            Instantiate(debriParticle,pos,Quaternion.Euler(0,0,degree - 90));
     }
 
     public void Destroy()

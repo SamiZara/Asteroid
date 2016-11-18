@@ -2,18 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ScatterMissileProjectile : MonoBehaviour
+public class ScatterMissileProjectile : Projectile
 {
-    public float speed, rotateSpeed, damage, startTime,splitDelay;
-    public GameObject target, explosionParticle,scatterParticle;
+    public float rotateSpeed,splitDelay;
+    public GameObject target,scatterParticle;
     //private TrailRenderer trainRenderer;
-    private Rigidbody2D rb;
     private bool isReadyToDestroy;
     void Start()
     {
         startTime = Time.time;
         isReadyToDestroy = false;
-        //trainRenderer = GetComponent<TrailRenderer>();
         rb = GetComponent<Rigidbody2D>();
         target = MissileLocker.lockedAsteroid;        
     }
@@ -27,35 +25,6 @@ public class ScatterMissileProjectile : MonoBehaviour
             DestroyWithoutExplosion();
         }
 
-    }
-
-    void OnBecameInvisible()
-    {
-        Vector3 missilePos = transform.position;
-        if (transform.position.y > GlobalsManager.Instance.screenPos.y)
-        {
-            transform.position = new Vector3(missilePos.x, -missilePos.y, missilePos.z);
-            missilePos = transform.position;
-            //StartCoroutine("ResetTrailRenderer", trainRenderer);
-        }
-        else if (transform.position.y < -GlobalsManager.Instance.screenPos.y)
-        {
-            transform.position = new Vector3(missilePos.x, -missilePos.y, missilePos.z);
-            missilePos = transform.position;
-            //StartCoroutine("ResetTrailRenderer", trainRenderer);
-        }
-        if (transform.position.x > GlobalsManager.Instance.screenPos.x)
-        {
-            transform.position = new Vector3(-missilePos.x, missilePos.y, missilePos.z);
-            missilePos = transform.position;
-            //StartCoroutine("ResetTrailRenderer", trainRenderer);
-        }
-        else if (transform.position.x < -GlobalsManager.Instance.screenPos.x)
-        {
-            transform.position = new Vector3(-missilePos.x, missilePos.y, missilePos.z);
-            missilePos = transform.position;
-            //StartCoroutine("ResetTrailRenderer", trainRenderer);
-        }
     }
 
     void FixedUpdate()
@@ -97,28 +66,10 @@ public class ScatterMissileProjectile : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    new void Destroy()
     {
-        Asteroid temp = collision.GetComponent<Asteroid>();
-        if (temp != null)
-        {
-            temp.Damage(damage);
-        }
-        else
-        {
-            Debug.Log("Something collided with something it should not");
-        }
-        Destroy();
-    }
-
-    void Destroy()
-    {
-        explosionParticle.SetActive(true);
-        explosionParticle.transform.parent = transform.parent.parent;
-        Destroyer temp = explosionParticle.AddComponent<Destroyer>();
-        temp.destroyDelayTime = 1;
         isReadyToDestroy = true;
-        Destroy(gameObject);
+        base.Destroy();  
     }
 
     void DestroyWithoutExplosion()

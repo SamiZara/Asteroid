@@ -59,14 +59,17 @@ public class Projectile : MonoBehaviour {
             if (temp != null)
             {
                 temp.Damage(damage);
+                temp3.createDebris(transform.position, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
             }
             else if (temp2 != null)
             {
                 temp2.Damage(damage, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
+                temp3.createDebris(transform.position, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
             }
             else if (temp3 != null)
             {
                 temp3.Damage(damage);
+                temp3.createDebris(transform.position, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
             }
             else
             {

@@ -116,7 +116,8 @@ public class MenuManager : MonoBehaviour
             selectedShipIndex = 2;
         }
         //Sound
-        if (PlayerPrefs.GetInt("Sound",1) == 0){
+        if (PlayerPrefs.GetInt("Sound",1) == 0)
+        {
             UIReferenceManager.Instance.soundOffButton.interactable = false;
             UIReferenceManager.Instance.soundOnButton.interactable = true;
         }
