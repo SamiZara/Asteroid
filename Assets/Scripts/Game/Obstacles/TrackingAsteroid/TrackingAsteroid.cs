@@ -17,7 +17,10 @@ public class TrackingAsteroid : Obstacle
 
     void FixedUpdate()
     {
-        float degree = MathHelper.degreeBetween2Points(player.transform.position, transform.position);
-        rb.AddForce(new Vector2(-1000 * Time.fixedDeltaTime * Mathf.Cos(degree * Mathf.Deg2Rad), -1000 * Time.fixedDeltaTime * Mathf.Sin(degree * Mathf.Deg2Rad)));
+        if (!GameManager.Instance.isGameOver)
+        {
+            float degree = MathHelper.degreeBetween2Points(player.transform.position, transform.position);
+            rb.AddForce(new Vector2(-1000 * Time.fixedDeltaTime * Mathf.Cos(degree * Mathf.Deg2Rad), -1000 * Time.fixedDeltaTime * Mathf.Sin(degree * Mathf.Deg2Rad)));
+        }
     }
 }

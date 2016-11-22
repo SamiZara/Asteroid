@@ -35,7 +35,7 @@ public class GeneratorManager : MonoBehaviour
 
     void Update()
     {
-        if(asteroids.Count == 0 || Time.time >= nextWaveTime)
+        if (asteroids.Count == 0 || Time.time >= nextWaveTime)
         {
             sendWave();
         }
@@ -43,16 +43,23 @@ public class GeneratorManager : MonoBehaviour
 
     void sendWave()
     {
-        
+        nextWaveTime = Time.time + 60;
+        //Debug.Log("1");
         string waveData = waves[currentWave++];
         if (currentWave > 15)
             currentWave = 15;
+        //Debug.Log("2");
         string[] datas = waveData.Split(' ');
-        for(int i = 0; i < datas.Length; i+=2)
+        //Debug.Log("3");
+        for (int i = 0; i < datas.Length; i += 2)
         {
+            //Debug.Log("4");
             int generateCount = Int32.Parse(datas[i]);
-            GameObject asteroid = ResourceManager.Instance.storedAllocations[datas[i + 1]];
-            for(int h = 0; h < generateCount; h++)
+
+            //Debug.Log("5");
+            GameObject asteroid = ResourceManager.Instance.storedAllocations[datas[i + 1].Trim()];
+            //Debug.Log("6");
+            for (int h = 0; h < generateCount; h++)
             {
                 float asteroidXPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.width / 100 + GlobalsManager.Instance.screenPos.x;
                 float asteroidYPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.height / 100 + GlobalsManager.Instance.screenPos.y;
@@ -64,23 +71,26 @@ public class GeneratorManager : MonoBehaviour
                     asteroidYPos = UnityEngine.Random.Range(0, asteroidYPos);
                 GameObject temp = (GameObject)Instantiate(asteroid, new Vector3(random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
                 temp.GetComponent<Obstacle>().score *= Mathf.Sqrt(currentWave - 1);
-                asteroids.Add(temp);  
+                asteroids.Add(temp);
             }
         }
-        nextWaveTime = Time.time + 60;
+
     }
 
     void readText()
     {
-        using (StreamReader sr = new StreamReader("Assets/TextFiles/Waves.txt"))
+
+        TextAsset waveFile = (TextAsset)Resources.Load("TextFiles/Waves", typeof(TextAsset));
+        string[] lines = waveFile.text.Split('\n');
+        //using (StreamReader sr = new StreamReader(Application.persistentDataPath+"/TextFiles/Waves.txt"))
+        //{
+        int counter = 1;
+        foreach (string line in lines)
         {
             // Read the stream to a string, and write the string to the console.
-            string line = "";
-            int counter = 1;
-            while((line = sr.ReadLine()) != null){
-                waves.Add(counter, line);
-                counter++;
-            }
+            waves.Add(counter, line);
+            counter++;
         }
+        //}
     }
 }
