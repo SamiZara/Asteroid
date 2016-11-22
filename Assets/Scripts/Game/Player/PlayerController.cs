@@ -13,9 +13,8 @@ public class PlayerController : MonoBehaviour
     public bool isImmune;
     private bool isDashing;
     private Vector3 dashDestinaion;
-    private float lastTapTime = float.MinValue;
     private float lastSkillUseTime = float.MinValue;
-    public GameObject activeSkill;
+    public GameObject activeSkill,explosionParticle;
     private bool isThrusterSoundPlaying;
 
     void Start()
@@ -37,14 +36,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             jetParticle.Play();
-            if (Time.time - lastTapTime < Constants.TIME_GAP_TO_ACTIVATE_SKILL && lastSkillUseTime + GlobalsManager.Instance.activeSkillCooldown < Time.time)
-            {
-                Debug.Log("SkillActivated");
-                activeSkill.SetActive(true);
-                lastSkillUseTime = Time.time;
-                GlobalsManager.Instance.circlerCooldown.gameObject.SetActive(true);
-            }
-            lastTapTime = Time.time;
+
         }
         else if (Input.GetMouseButton(0))
         {
@@ -165,7 +157,13 @@ public class PlayerController : MonoBehaviour
     public void Destroy()
     {
         if (!isImmune)
+        {
             Debug.Log("Player hit");
+            explosionParticle.SetActive(true);
+            explosionParticle.transform.parent = explosionParticle.transform.parent.parent;
+            GameManager.Instance.GameOver();
+            Destroy(gameObject);
+        }
         else
             Debug.Log("Player hit but immune");
     }
@@ -173,8 +171,8 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(collision.gameObject.tag);
-        //if (collision.gameObject.tag == "Obstacle")
-        //  Destroy();
+        if (collision.gameObject.tag == "Obstacle")
+            Destroy();
     }
 
 
@@ -198,6 +196,16 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         GetComponent<TrailRenderer>().enabled = false;
+    }
+
+    public void ActivateSkill()
+    {
+        if (lastSkillUseTime + GlobalsManager.Instance.activeSkillCooldown < Time.time) {
+            Debug.Log("SkillActivated");
+            activeSkill.SetActive(true);
+            lastSkillUseTime = Time.time;
+            GlobalsManager.Instance.circlerCooldown.gameObject.SetActive(true);
+        }
     }
 }
 

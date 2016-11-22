@@ -6,6 +6,7 @@ public class TurretProjectile : Projectile
 
     void OnDestroy()
     {
-        Turret.PlayProjectileExplosionSound();
+        if (GameManager.Instance.isSoundOn)
+            Turret.PlayProjectileExplosionSound();
     }
 }

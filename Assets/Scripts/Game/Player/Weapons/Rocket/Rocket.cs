@@ -22,13 +22,14 @@ public class Rocket : Weapon
         {
             lastShootTime = Time.time;
             Instantiate(ResourceManager.Instance.storedAllocations["RocketProjectile"], transform.position, transform.parent.rotation);
-            if (PlayerPrefs.GetInt("Sound", 1) == 1) 
+            if (GameManager.Instance.isSoundOn)
                 fireSound.Play();
         }
     }
 
     public static void PlayProjectileExplosionSound()
     {
-        explosionSound.Play();
+        if (GameManager.Instance.isSoundOn)
+            explosionSound.Play();
     }
 }

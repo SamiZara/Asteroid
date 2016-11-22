@@ -7,8 +7,8 @@ public class Obstacle : MonoBehaviour
     public float hp;
     public GameObject explosionParticle,debriParticle;
     public Rigidbody2D rb;
-    public bool isInTimeWarpBubble;
-    public bool isScatterObject;
+    public bool isInTimeWarpBubble, isScatterObject,isSpecialAsteroid;
+    public float score,money;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -67,15 +67,13 @@ public class Obstacle : MonoBehaviour
         GeneratorManager.Instance.asteroids.Remove(gameObject);
         if (PlayerPrefs.GetInt("Sound", 1) == 1)
             GlobalsManager.Instance.asteroidExplosionSound.Play();
+        GameManager.Instance.Score += score;
+        GameManager.Instance.money += money;
+        if (isSpecialAsteroid)
+            GameManager.Instance.specialAsteroidDestroyCount += 1;
+        else
+            GameManager.Instance.normalAsteroidDestroyCount += 1;
         Destroy(gameObject);
-    }
-
-    void OnTriggerEnter2D(Collider2D collider)
-    {
-        if (collider.tag == "Player")
-        {
-            collider.GetComponent<PlayerController>().Destroy();
-        }
     }
 
     IEnumerator SpeedStabilizer()

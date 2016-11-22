@@ -5,28 +5,51 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
-    public Scene currentScene,scene2;
+    public bool isGameOver;
+    public float score,money;
+    public int normalAsteroidDestroyCount, specialAsteroidDestroyCount;
+    public float Score
+    {
+        get
+        {
+            return this.score;
+        }
+        set
+        {
+            this.score = value;
+            GlobalsManager.Instance.gameScoreText.text = ((int)value).ToString();
+        }
+    }
+    public bool isSoundOn = false;
+
 	void Awake () {
         Instance = this;
-        //Application.LoadLevelAdditiveAsync("Background");
+        //Sound
+        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            isSoundOn = true;
+        //PlayerMoney
+        //Background
         SceneManager.LoadScene("Background", LoadSceneMode.Additive);
     }
 	
     void Start()
-    {
+    {     
         //Ship
         int shipState = PlayerPrefs.GetInt("SelectedShip", 0);
         if(shipState == 0)
         {
             GlobalsManager.Instance.player = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/PlayerShips/PlayerChargerShip"));
+            GlobalsManager.Instance.playerController = GlobalsManager.Instance.player.GetComponent<PlayerController>();
         }
         else if (shipState == 1)
         {
             GlobalsManager.Instance.player = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/PlayerShips/PlayerViperShip"));
+            GlobalsManager.Instance.playerController = GlobalsManager.Instance.player.GetComponent<PlayerController>();
         }
         else if (shipState == 2)
         {
             GlobalsManager.Instance.player = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/PlayerShips/PlayerOrionShip"));
+            GlobalsManager.Instance.playerController = GlobalsManager.Instance.player.GetComponent<PlayerController>();
         }
         //Primary weapon instantiate
         int primaryWeaponState = PlayerPrefs.GetInt("Weapon1", 0);
@@ -109,10 +132,13 @@ public class GameManager : MonoBehaviour {
             GlobalsManager.Instance.activeSkillCooldown = Constants.BIG_BOMB_COOLDOWN;
             GlobalsManager.Instance.activeSkillIcon.sprite = ResourceManager.Instance.AllocateAndDumpImage("UI/Icons/icons-active-bomb");
         }
+
     }
 
-	// Update is called once per frame
-	void Update () {
+    public void GameOver()
+    {
+        isGameOver = true;
+        StartCoroutine(GameUIManager.Instance.GameOverSequence());
+    }
 	
-	}
 }

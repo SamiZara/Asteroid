@@ -59,12 +59,12 @@ public class Tesla : Weapon
         while (true)
         {
             List<GameObject> tempList = new List<GameObject>(asteroidsInRange);
-            if (tempList.Count != 0 && PlayerPrefs.GetInt("Sound", 1) == 1)
-                fireSound.Play();
+            if (GameManager.Instance.isSoundOn && tempList.Count != 0)
+                        fireSound.Play();
             foreach (GameObject asteroid in tempList)
             {
                 if (asteroid != null)
-                {
+                {   
                     ExplodingAsteroid temp = asteroid.GetComponent<ExplodingAsteroid>();
                     Asteroid temp2 = asteroid.GetComponent<Asteroid>();
                     Obstacle temp3 = asteroid.GetComponent<Obstacle>();

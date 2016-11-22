@@ -25,7 +25,8 @@ public class RocketProjectile : Projectile
 
     new void Destroy()
     {
-        Rocket.PlayProjectileExplosionSound();
+        if (GameManager.Instance.isSoundOn)
+            Rocket.PlayProjectileExplosionSound();
         aoeDamager.SetActive(true);
         aoeDamager.transform.parent = transform.parent.parent;
         base.Update(); 
@@ -33,6 +34,7 @@ public class RocketProjectile : Projectile
     
     void OnDestroy()
     {
-        Rocket.PlayProjectileExplosionSound();
+        if (GameManager.Instance.isSoundOn)
+            Rocket.PlayProjectileExplosionSound();
     }
 }

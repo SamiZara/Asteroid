@@ -63,7 +63,8 @@ public class GeneratorManager : MonoBehaviour
                 else
                     asteroidYPos = UnityEngine.Random.Range(0, asteroidYPos);
                 GameObject temp = (GameObject)Instantiate(asteroid, new Vector3(random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
-                asteroids.Add(temp);
+                temp.GetComponent<Obstacle>().score *= Mathf.Sqrt(currentWave - 1);
+                asteroids.Add(temp);  
             }
         }
         nextWaveTime = Time.time + 60;

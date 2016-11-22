@@ -6,6 +6,7 @@ public class GaussProjectile : Projectile
 
     void OnDestroy()
     {
-        Gauss.PlayProjectileExplosionSound();
+        if (GameManager.Instance.isSoundOn)
+            Gauss.PlayProjectileExplosionSound();
     }
 }

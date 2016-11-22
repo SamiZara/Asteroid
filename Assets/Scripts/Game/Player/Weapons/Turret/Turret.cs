@@ -19,13 +19,14 @@ public class Turret : Weapon {
         {
             lastShootTime = Time.time;
             Instantiate(ResourceManager.Instance.storedAllocations["TurretProjectile"], transform.position, transform.parent.rotation);
-            if (PlayerPrefs.GetInt("Sound", 1) == 1)
+            if (GameManager.Instance.isSoundOn)
                 fireSound.Play();
         }
     }
 
     public static void PlayProjectileExplosionSound()
     {
-        explosionSound.Play();
+        if (GameManager.Instance.isSoundOn)
+            explosionSound.Play();
     }
 }

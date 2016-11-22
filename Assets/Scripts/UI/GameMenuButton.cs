@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MenuButton : MonoBehaviour {
+public class GameMenuButton : MonoBehaviour {
 
     public int menuOption;
-	
+
     public void MenuAction()
     {
-        MenuManager.Instace.MenuAction(menuOption);
+        GameUIManager.Instance.MenuAction(menuOption);
     }
 }

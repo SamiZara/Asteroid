@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour
     // Use this for initialization
     public void Start()
     {
-        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        if (GameManager.Instance.isSoundOn)
         {
             GameObject temp = (GameObject)Instantiate(fireSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
             fireSound = temp.GetComponent<AudioSource>();

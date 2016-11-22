@@ -92,13 +92,16 @@ public class ScatterMissileProjectile : Projectile
         temp.destroyDelayTime = 0.59f;
         scatterParticle.transform.parent = transform.parent.parent;
         List<GameObject> asteroidList = MissileLocker.Lock4DifferentAsteroid();
-        GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["ScatteredMissileProjectile"], transform.position, transform.parent.rotation);
-        for(int i = 1; i < 5; i++)
+        if (asteroidList != null)
         {
-            if (i < asteroidList.Count)
-                projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[i];
-            else
-                projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[0];
+            GameObject projectile = (GameObject)Instantiate(ResourceManager.Instance.storedAllocations["ScatteredMissileProjectile"], transform.position, transform.parent.rotation);
+            for (int i = 1; i < 5; i++)
+            {
+                if (i < asteroidList.Count)
+                    projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[i];
+                else
+                    projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[0];
+            }
         }
     }
 }

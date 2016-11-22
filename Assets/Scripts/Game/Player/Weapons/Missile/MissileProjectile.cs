@@ -56,6 +56,7 @@ public class MissileProjectile : Projectile
 
     void OnDestroy()
     {
-        Missile.PlayProjectileExplosionSound();
+        if (GameManager.Instance.isSoundOn)
+            Missile.PlayProjectileExplosionSound();
     }
 }

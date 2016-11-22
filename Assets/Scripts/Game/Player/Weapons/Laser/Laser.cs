@@ -17,7 +17,6 @@ public class Laser : Weapon
         base.Start();
         lr = GetComponent<LineRenderer>();
         player = GlobalsManager.Instance.player;
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Laser/LaserProjectileTier" + tier, "LaserProjectile");
         if (tier == 2)
         {
             lr.SetWidth(0.3f, 0.3f);
@@ -104,7 +103,7 @@ public class Laser : Weapon
     {
         yield return new WaitForSeconds(cooldown / 2);
         laserEffectStart.gameObject.SetActive(true);
-        if (PlayerPrefs.GetInt("Sound", 1) == 1)
+        if (GameManager.Instance.isSoundOn)
         {
             fireSound.Play();
         }
