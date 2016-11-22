@@ -27,7 +27,6 @@ public class Asteroid : Obstacle
     private void Destroy(float degree)
     {
         degree += 180;
-        Debug.Log(degree);
         if (PlayerPrefs.GetInt("Sound", 1) == 1)
             GlobalsManager.Instance.asteroidExplosionSound.Play();
         float asteroidScatterDistance = 0.5f;

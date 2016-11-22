@@ -27,29 +27,99 @@ public class GameUIManager : MonoBehaviour
 
     public IEnumerator GameOverSequence()
     {
-        GlobalsManager.Instance.gameOverScreen.SetActive(true);
+        yield return new WaitForSeconds(2);
         int score = (int)GameManager.Instance.score;
+        int money = (int)GameManager.Instance.money;
+        int asteroidsDestroyed = (int)GameManager.Instance.normalAsteroidDestroyCount;
+        int specialAsteroidDestroyed = (int)GameManager.Instance.specialAsteroidDestroyCount;
+        /*int score = 1500;
+        int money = 1500;
+        int asteroidsDestroyed = 1500;
+        int specialAsteroidDestroyed = 1500;*/
+        //Saving Money
+        int playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
+        PlayerPrefs.SetInt("PlayerMoney",playerMoney+money);
+        //Checking highscore
+        int highScore = PlayerPrefs.GetInt("HighScore", 0);
+        if(highScore < score)
+        {
+            PlayerPrefs.SetInt("HighScore",score);
+            //Add Leaderboard 
+        }
+
+        GlobalsManager.Instance.gameOverScreen.SetActive(true);
+        int valueGainAcceleration = 0;
+        int currentValue = 0;
         for(int i=0;i< score; i++)
         {
-            GlobalsManager.Instance.gameOverScoreText.text = (i+1).ToString();
+            if (currentValue + i + valueGainAcceleration + 1 <= score)
+            {
+                GlobalsManager.Instance.gameOverScoreText.text = (currentValue + valueGainAcceleration + 1).ToString();
+                currentValue += i + valueGainAcceleration;
+            }
+            else
+            {
+                GlobalsManager.Instance.gameOverScoreText.text = (score).ToString();
+                break;
+            }
+            if(i % 5 == 0)
+                valueGainAcceleration += 1;
             yield return new WaitForSeconds(0.03f);
+
         }
-        int credits = (int)GameManager.Instance.money;
-        for(int i = 0; i < credits; i++)
+        valueGainAcceleration = 0;
+        currentValue = 0;
+        for (int i = 0; i < money; i++)
         {
-            GlobalsManager.Instance.gameOverCreditsText.text = (i + 1).ToString();
+            Debug.Log("fdsfds");
+            if (currentValue + i + valueGainAcceleration + 1 <= money)
+            {
+                GlobalsManager.Instance.gameOverMoneyText.text = (currentValue + valueGainAcceleration + 1).ToString();
+                currentValue += i + valueGainAcceleration;
+            }
+            else
+            {
+                GlobalsManager.Instance.gameOverMoneyText.text = (money).ToString();
+                break;
+            }
+            if (i % 5 == 0)
+                valueGainAcceleration += 1;
             yield return new WaitForSeconds(0.03f);
         }
-        int asteroidsDestroyed = (int)GameManager.Instance.normalAsteroidDestroyCount;
+        valueGainAcceleration = 0;
+        currentValue = 0;
         for (int i = 0; i < asteroidsDestroyed; i++)
         {
-            GlobalsManager.Instance.gameOverAsteroidsText.text = (i + 1).ToString();
+            if (currentValue + i + valueGainAcceleration + 1 <= asteroidsDestroyed)
+            {
+                GlobalsManager.Instance.gameOverAsteroidsText.text = (currentValue + valueGainAcceleration + 1).ToString();
+                currentValue += i + valueGainAcceleration;
+            }
+            else
+            {
+                GlobalsManager.Instance.gameOverAsteroidsText.text = (asteroidsDestroyed).ToString();
+                break;
+            }
+            if (i % 5 == 0)
+                valueGainAcceleration += 1;
             yield return new WaitForSeconds(0.03f);
         }
-        int specialAsteroidDestroyed = (int)GameManager.Instance.specialAsteroidDestroyCount;
+        valueGainAcceleration = 0;
+        currentValue = 0;
         for (int i = 0; i < specialAsteroidDestroyed; i++)
         {
-            GlobalsManager.Instance.gameOverSpecialAsteroidText.text = (i + 1).ToString();
+            if (currentValue + i + valueGainAcceleration + 1 <= specialAsteroidDestroyed)
+            {
+                GlobalsManager.Instance.gameOverSpecialAsteroidText.text = (currentValue + valueGainAcceleration + 1).ToString();
+                currentValue += i + valueGainAcceleration;
+            }
+            else
+            {
+                GlobalsManager.Instance.gameOverSpecialAsteroidText.text = (specialAsteroidDestroyed).ToString();
+                break;
+            }
+            if (i % 5 == 0)
+                valueGainAcceleration += 1;
             yield return new WaitForSeconds(0.03f);
         }
         yield return null;

@@ -497,6 +497,14 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.soundOnButton.interactable = false;
                 PlayerPrefs.SetInt("Sound", 1);
                 break;
+            case 33:
+                MenuAction(5);
+                MenuAction(11);
+                break;
+            case 34:
+                MenuAction(1);
+                MenuAction(15);
+                break;
         }
     }
 
@@ -553,6 +561,7 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.turretUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponTurret", state);
+                MenuAction(2);
             }
             else if (itemCode == 1)
             {
@@ -572,6 +581,7 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.gaussUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponGauss", state);
+                MenuAction(3);
             }
             else if (itemCode == 2)
             {
@@ -591,6 +601,7 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.beamUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponBeam", state);
+                MenuAction(4);
             }
             else if (itemCode == 3)
             {
@@ -605,6 +616,7 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.rocketUpgradeButton.GetComponent<Button>().interactable = false;  
                 }
                 PlayerPrefs.SetInt("WeaponRocket", state);
+                MenuAction(12);
             }
             else if (itemCode == 4)
             {
@@ -624,6 +636,7 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.missileUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponMissile", state);
+                MenuAction(13);
             }
             else if (itemCode == 5)
             {
@@ -643,6 +656,7 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.teslaUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponTesla", state);
+                MenuAction(14);
             }
             else if (itemCode == 6)
             {
@@ -650,6 +664,7 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.dashButton.interactable = true;
                 UIReferenceManager.Instance.dashInfoText.text = "Unlocked";
                 PlayerPrefs.SetInt("ActiveDash", 1);
+                MenuAction(21);
             }
             else if (itemCode == 7)
             {
@@ -657,6 +672,7 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.warpButton.interactable = true;
                 UIReferenceManager.Instance.warpInfoText.text = "Unlocked";
                 PlayerPrefs.SetInt("ActiveWarp", 1);
+                MenuAction(22);
             }
             else if (itemCode == 8)
             {
@@ -664,12 +680,14 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.bombButton.interactable = true;
                 UIReferenceManager.Instance.bombInfoText.text = "Unlocked";
                 PlayerPrefs.SetInt("ActiveBomb", 1);
+                MenuAction(23);
             }
             else if (itemCode == 9)
             {
                 UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
                 UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = true;
                 PlayerPrefs.SetInt("Ship" + selectedShipIndex, 1);
+                PlayerPrefs.SetInt("SelectedShip", selectedShipIndex);
             }
             UIReferenceManager.Instance.playerMoneyText.text = playerMoney.ToString() + "$";
             UIReferenceManager.Instance.popUpMenu.SetActive(false);
