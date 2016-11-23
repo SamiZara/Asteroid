@@ -64,7 +64,11 @@ public class Tesla : Weapon
             foreach (GameObject asteroid in tempList)
             {
                 if (asteroid != null)
-                {   
+                {
+                    GameObject effect = (GameObject)Instantiate(lightningEffect, transform.parent);
+                    effect.transform.FindChild("Destination").transform.position = asteroid.transform.position;
+                    effect.transform.FindChild("Destination").transform.parent = asteroid.transform;
+                    effect.transform.FindChild("Source").transform.position = transform.position;
                     ExplodingAsteroid temp = asteroid.GetComponent<ExplodingAsteroid>();
                     Asteroid temp2 = asteroid.GetComponent<Asteroid>();
                     Obstacle temp3 = asteroid.GetComponent<Obstacle>();
@@ -84,10 +88,6 @@ public class Tesla : Weapon
                     {
                         Debug.Log("Something collided with something it should not " + GetComponent<Collider>().name);
                     }
-                    GameObject effect = (GameObject)Instantiate(lightningEffect, transform.parent);
-                    effect.transform.FindChild("Destination").transform.position = asteroid.transform.position;
-                    effect.transform.FindChild("Destination").transform.parent = asteroid.transform;
-                    effect.transform.FindChild("Source").transform.position = transform.position;
                     //effect.GetComponent<Lightn>
                 }
                 else
