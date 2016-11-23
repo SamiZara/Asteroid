@@ -67,7 +67,7 @@ public class Tesla : Weapon
                 {
                     GameObject effect = (GameObject)Instantiate(lightningEffect, transform.parent);
                     effect.transform.FindChild("Destination").transform.position = asteroid.transform.position;
-                    effect.transform.FindChild("Destination").transform.parent = asteroid.transform;
+                    //effect.transform.FindChild("Destination").transform.parent = asteroid.transform;
                     effect.transform.FindChild("Source").transform.position = transform.position;
                     ExplodingAsteroid temp = asteroid.GetComponent<ExplodingAsteroid>();
                     Asteroid temp2 = asteroid.GetComponent<Asteroid>();
