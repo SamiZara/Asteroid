@@ -4,7 +4,7 @@ using System.Collections;
 public class InputManager : MonoBehaviour {
 
     public static InputManager Instance;
-    private float lastTapTime = float.MinValue;
+    //private float lastTapTime = float.MinValue;
     void Awake () {
         Instance = this;
 	}
@@ -13,14 +13,14 @@ public class InputManager : MonoBehaviour {
 	void Update () {
         if (!GameManager.Instance.isGameOver)
         {
-            if (Input.GetMouseButtonDown(0))
+            /*if (Input.GetMouseButtonDown(0))
             {
                 if (Time.time - lastTapTime < Constants.TIME_GAP_TO_ACTIVATE_SKILL)
                 {
                     GlobalsManager.Instance.playerController.ActivateSkill();
                 }
                 lastTapTime = Time.time;
-            }
+            }*/
             if (Input.GetMouseButton(0))
             {
                 PlayerController.Instance.rotate();

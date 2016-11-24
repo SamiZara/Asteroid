@@ -118,13 +118,21 @@ public class Obstacle : MonoBehaviour
     {
         while (true)
         {
-            if (Vector2.Distance(transform.position, Vector2.zero) > 14)
+            Vector3 obstaclePos = transform.position;
+            if (transform.position.y > GlobalsManager.Instance.screenPos.y + 1 || transform.position.y < -GlobalsManager.Instance.screenPos.y - 1 ||
+                transform.position.x > GlobalsManager.Instance.screenPos.x + 1 || transform.position.x < -GlobalsManager.Instance.screenPos.x - 1)
             {
                 float degreeToMiddle = MathHelper.degreeBetween2Points(transform.position, new Vector3(0, 0, 0));
                 degreeToMiddle = Random.Range(degreeToMiddle - Constants.ASTEROID_DEGREE_DEVIATION_TO_MIDDLE, degreeToMiddle + Constants.ASTEROID_DEGREE_DEVIATION_TO_MIDDLE);
                 rb.velocity = new Vector2(GlobalsManager.Instance.asteroidSpeed * Mathf.Cos((float)degreeToMiddle * Mathf.Deg2Rad), GlobalsManager.Instance.asteroidSpeed * Mathf.Sin((float)degreeToMiddle * Mathf.Deg2Rad));
             }
-            yield return new WaitForSeconds(3);
+            /*if (Vector2.Distance(transform.position, Vector2.zero) > 11)
+            {
+                float degreeToMiddle = MathHelper.degreeBetween2Points(transform.position, new Vector3(0, 0, 0));
+                degreeToMiddle = Random.Range(degreeToMiddle - Constants.ASTEROID_DEGREE_DEVIATION_TO_MIDDLE, degreeToMiddle + Constants.ASTEROID_DEGREE_DEVIATION_TO_MIDDLE);
+                rb.velocity = new Vector2(GlobalsManager.Instance.asteroidSpeed * Mathf.Cos((float)degreeToMiddle * Mathf.Deg2Rad), GlobalsManager.Instance.asteroidSpeed * Mathf.Sin((float)degreeToMiddle * Mathf.Deg2Rad));
+            }*/
+            yield return new WaitForSeconds(1);
         }
     }
 }

@@ -21,6 +21,9 @@ public class CirclerCooldown : MonoBehaviour
     {
         cooldownSprite.fillAmount -= 1 / GlobalsManager.Instance.activeSkillCooldown * Time.deltaTime;
         if (cooldownSprite.fillAmount <= 0)
+        {
+            GlobalsManager.Instance.activateSkillButton.interactable = true;
             gameObject.SetActive(false);
+        }
     }
 }

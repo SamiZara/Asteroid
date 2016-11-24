@@ -39,7 +39,7 @@ public class Asteroid : Obstacle
                 GameObject temp = (GameObject)Instantiate(smallerAsteroid, pos, Quaternion.Euler(0, 0, degree + ((i - 1) * 20)));
                 temp.GetComponent<Obstacle>().isScatterObject = true;
                 //Debug.Log(new Vector2(GlobalsManager.Instance.asteroidSpeed * Mathf.Cos((transform.rotation.eulerAngles.z)), GlobalsManager.Instance.asteroidSpeed * Mathf.Sin((transform.rotation.eulerAngles.z))));
-                temp.GetComponent<Rigidbody2D>().velocity = new Vector2((GlobalsManager.Instance.asteroidSpeed) * Mathf.Cos(temp.transform.rotation.eulerAngles.z), (GlobalsManager.Instance.asteroidSpeed)  * Mathf.Sin(temp.transform.rotation.eulerAngles.z));
+                temp.GetComponent<Rigidbody2D>().velocity = new Vector2((GlobalsManager.Instance.asteroidSpeed) * Mathf.Cos(temp.transform.rotation.eulerAngles.z * Mathf.Deg2Rad), (GlobalsManager.Instance.asteroidSpeed)  * Mathf.Sin(temp.transform.rotation.eulerAngles.z * Mathf.Deg2Rad));
                 //temp.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(1200, 1800);
                 GeneratorManager.Instance.asteroids.Add(temp);
             }

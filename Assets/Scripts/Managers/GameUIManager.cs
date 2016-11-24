@@ -22,6 +22,17 @@ public class GameUIManager : MonoBehaviour
             case 1:
                 SceneManager.LoadScene("Menu");
                 break;
+            case 2:
+                GlobalsManager.Instance.gamePauseScreen.SetActive(true);
+                Time.timeScale = 0;
+                break;
+            case 3:
+                GlobalsManager.Instance.gamePauseScreen.SetActive(false);
+                Time.timeScale = 1;
+                break;
+            case 4:
+                GlobalsManager.Instance.playerController.ActivateSkill();
+                break;
         }
     }
 
