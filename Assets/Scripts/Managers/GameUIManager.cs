@@ -59,6 +59,7 @@ public class GameUIManager : MonoBehaviour
         }
 
         GlobalsManager.Instance.gameOverScreen.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
         int valueGainAcceleration = 0;
         int currentValue = 0;
         for(int i=0;i< score; i++)
@@ -82,7 +83,6 @@ public class GameUIManager : MonoBehaviour
         currentValue = 0;
         for (int i = 0; i < money; i++)
         {
-            Debug.Log("fdsfds");
             if (currentValue + i + valueGainAcceleration + 1 <= money)
             {
                 GlobalsManager.Instance.gameOverMoneyText.text = (currentValue + valueGainAcceleration + 1).ToString();

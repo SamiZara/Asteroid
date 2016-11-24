@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        Debug.Log(playerRb.velocity.magnitude);
         if (Input.GetMouseButton(0) && playerRb.velocity.magnitude < maxSpeed)
             playerRb.AddForce(new Vector2(acceleration * Time.fixedDeltaTime * Mathf.Cos((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad), acceleration * Time.deltaTime * Mathf.Sin((transform.rotation.eulerAngles.z) * Mathf.Deg2Rad)));
     }
@@ -159,7 +158,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!isImmune)
         {
-            Debug.Log("Player hit");
             explosionParticle.SetActive(true);
             explosionParticle.transform.parent = explosionParticle.transform.parent.parent;
             GameManager.Instance.GameOver();
@@ -171,7 +169,6 @@ public class PlayerController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Obstacle")
             Destroy();
     }
@@ -202,7 +199,6 @@ public class PlayerController : MonoBehaviour
     public void ActivateSkill()
     {
         if (lastSkillUseTime + GlobalsManager.Instance.activeSkillCooldown < Time.time) {
-            Debug.Log("SkillActivated");
             activeSkill.SetActive(true);
             lastSkillUseTime = Time.time;
             GlobalsManager.Instance.circlerCooldown.gameObject.SetActive(true);

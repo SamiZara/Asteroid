@@ -8,7 +8,7 @@ public class Laser : Weapon
     public Transform lrAim, laserEffectEnd, laserEffectStart;
     private GameObject player;
     public float laserDuration, cooldown;
-    private float damage = 5;
+    private float damage = 7;
     private float currentLaserTimer = float.MaxValue;
     private bool isLaserCharging;
     private float lastDebriGenerateTime;
@@ -22,14 +22,14 @@ public class Laser : Weapon
             lr.SetWidth(0.3f, 0.3f);
             laserEffectEnd.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             laserEffectStart.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-            damage = 11f;
+            damage = 14f;
         }
         else if (tier == 3)
         {
             lr.SetWidth(0.6f, 0.6f);
             laserEffectEnd.localScale = new Vector3(3, 3, 3);
             laserEffectStart.localScale = new Vector3(3, 3, 3);
-            damage = 22.5f;
+            damage = 21f;
         }
     }
 
