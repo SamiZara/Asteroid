@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour {
             GlobalsManager.Instance.activeSkillCooldown = Constants.BIG_BOMB_COOLDOWN;
             GlobalsManager.Instance.activeSkillIcon.sprite = ResourceManager.Instance.AllocateAndDumpImage("UI/Icons/icons-active-bomb");
         }
-
+        GlobalsManager.Instance.activeSkillIcon.SetNativeSize();
     }
 
     public void GameOver()

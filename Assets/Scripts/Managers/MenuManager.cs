@@ -126,9 +126,9 @@ public class MenuManager : MonoBehaviour
     void Awake()
     {
         //PlayerPrefs.DeleteAll();
-        //PlayerPrefs.SetInt("PlayerMoney", 1000000);
+        PlayerPrefs.SetInt("PlayerMoney", 1000000);
         Instace = this;
-        UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString() + "$";
+        UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString();
         //Weapons
         weaponCosts = new int[6, 3];
         weaponCosts[0, 0] = 0;
@@ -689,7 +689,7 @@ public class MenuManager : MonoBehaviour
                 PlayerPrefs.SetInt("Ship" + selectedShipIndex, 1);
                 PlayerPrefs.SetInt("SelectedShip", selectedShipIndex);
             }
-            UIReferenceManager.Instance.playerMoneyText.text = playerMoney.ToString() + "$";
+            UIReferenceManager.Instance.playerMoneyText.text = playerMoney.ToString();
             UIReferenceManager.Instance.popUpMenu.SetActive(false);
         }
     }
