@@ -33,6 +33,11 @@ public class GameUIManager : MonoBehaviour
             case 4:
                 GlobalsManager.Instance.playerController.ActivateSkill();
                 break;
+            case 5:
+                AdManager.Instance.ShowVideo();
+                GlobalsManager.Instance.videoRewardButton.interactable = false;
+                GlobalsManager.Instance.rewardButtonDimmer.SetActive(true);
+                break;
         }
     }
 
@@ -50,12 +55,12 @@ public class GameUIManager : MonoBehaviour
         //Saving Money
         int playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
         PlayerPrefs.SetInt("PlayerMoney",playerMoney+money);
+        GlobalsManager.Instance.videoRewardText.text = "+" + money;
         //Checking highscore
         int highScore = PlayerPrefs.GetInt("HighScore", 0);
         if(highScore < score)
         {
             PlayerPrefs.SetInt("HighScore",score);
-            //Add Leaderboard 
         }
 
         GlobalsManager.Instance.gameOverScreen.SetActive(true);

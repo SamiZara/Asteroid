@@ -15,6 +15,8 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        //Version
+        PlayerPrefs.SetString("Version-OS","1-Android");
         //Allocation
         UIResourceManager.Instance.AllocateAndStore("UI/Buttons/bt-upgrade", "ButtonUpgrade");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Turret", "TurretIcon");
@@ -126,7 +128,7 @@ public class MenuManager : MonoBehaviour
     void Awake()
     {
         //PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("PlayerMoney", 1000000);
+        //PlayerPrefs.SetInt("PlayerMoney", 1000000);
         Instace = this;
         UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString();
         //Weapons

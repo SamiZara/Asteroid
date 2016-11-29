@@ -118,7 +118,6 @@ public class Obstacle : MonoBehaviour
     {
         while (true)
         {
-            Vector3 obstaclePos = transform.position;
             if (transform.position.y > GlobalsManager.Instance.screenPos.y + 1 || transform.position.y < -GlobalsManager.Instance.screenPos.y - 1 ||
                 transform.position.x > GlobalsManager.Instance.screenPos.x + 1 || transform.position.x < -GlobalsManager.Instance.screenPos.x - 1)
             {

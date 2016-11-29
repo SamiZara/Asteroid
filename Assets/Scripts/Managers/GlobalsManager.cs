@@ -6,13 +6,13 @@ public class GlobalsManager : MonoBehaviour {
     public static GlobalsManager Instance;
     public Vector3 screenPos;
     public float asteroidSpeed,activeSkillCooldown;
-    public GameObject player,soundParent,gameOverScreen,gamePauseScreen;
+    public GameObject player,soundParent,gameOverScreen,gamePauseScreen,rewardButtonDimmer;
     public CirclerCooldown circlerCooldown;
     public Image activeSkillIcon;
     public AudioSource thrusterSound,asteroidExplosionSound,playerExplosionSound;
-    public Text gameScoreText,gameOverScoreText,gameOverMoneyText,gameOverAsteroidsText,gameOverSpecialAsteroidText;
+    public Text gameScoreText,gameOverScoreText,gameOverMoneyText,gameOverAsteroidsText,gameOverSpecialAsteroidText,videoRewardText;
     public PlayerController playerController;
-    public Button activateSkillButton;
+    public Button activateSkillButton,videoRewardButton;
     // Use this for initialization
     void Awake () {
         Instance = this;

@@ -141,4 +141,9 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(GameUIManager.Instance.GameOverSequence());
     }
 	
+    public void GainMoneyFromVideo()
+    {
+        int playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
+        PlayerPrefs.SetInt("PlayerMoney", (int)(playerMoney + money));
+    }
 }
