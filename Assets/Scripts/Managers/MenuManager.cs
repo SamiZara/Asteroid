@@ -505,6 +505,9 @@ public class MenuManager : MonoBehaviour
                 MenuAction(1);
                 MenuAction(15);
                 break;
+            case 35:
+                LeaderboardManager.Instance.ShowLeaderboard();
+                break;
         }
     }
 
