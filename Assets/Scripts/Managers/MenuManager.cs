@@ -508,7 +508,9 @@ public class MenuManager : MonoBehaviour
                 MenuAction(15);
                 break;
             case 35:
+                #if UNITY_ANDROID
                 LeaderboardManager.Instance.ShowLeaderboard();
+                #endif
                 break;
         }
     }

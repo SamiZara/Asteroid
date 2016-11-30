@@ -8,6 +8,7 @@ public class LeaderboardManager : MonoBehaviour {
 
     public static LeaderboardManager Instance;
 
+    #if UNITY_ANDROID
     void Awake()
     {
         Instance = this;
@@ -47,4 +48,5 @@ public class LeaderboardManager : MonoBehaviour {
     {
         Social.ShowLeaderboardUI();
     }
+#endif
 }

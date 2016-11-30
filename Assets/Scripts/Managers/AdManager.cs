@@ -5,7 +5,7 @@ using System.Collections;
 public class AdManager : MonoBehaviour {
 
     public static AdManager Instance;
-	
+#if UNITY_ANDROID
     void Awake()
     {
         Instance = this;
@@ -34,4 +34,5 @@ public class AdManager : MonoBehaviour {
                 break;
         }
     }
+#endif
 }

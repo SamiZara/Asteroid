@@ -34,9 +34,11 @@ public class GameUIManager : MonoBehaviour
                 GlobalsManager.Instance.playerController.ActivateSkill();
                 break;
             case 5:
+#if UNITY_ANDROID
                 AdManager.Instance.ShowVideo();
                 GlobalsManager.Instance.videoRewardButton.interactable = false;
                 GlobalsManager.Instance.rewardButtonDimmer.SetActive(true);
+#endif
                 break;
         }
     }

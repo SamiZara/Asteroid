@@ -40,7 +40,7 @@ public class Asteroid : Obstacle
                 temp.GetComponent<Obstacle>().isScatterObject = true;
                 //Debug.Log(new Vector2(GlobalsManager.Instance.asteroidSpeed * Mathf.Cos((transform.rotation.eulerAngles.z)), GlobalsManager.Instance.asteroidSpeed * Mathf.Sin((transform.rotation.eulerAngles.z))));
                 temp.GetComponent<Rigidbody2D>().velocity = new Vector2((GlobalsManager.Instance.asteroidSpeed) * Mathf.Cos(temp.transform.rotation.eulerAngles.z * Mathf.Deg2Rad), (GlobalsManager.Instance.asteroidSpeed)  * Mathf.Sin(temp.transform.rotation.eulerAngles.z * Mathf.Deg2Rad));
-                //temp.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(1200, 1800);
+                temp.GetComponent<Rigidbody2D>().angularVelocity = Random.Range(200, 200);
                 GeneratorManager.Instance.asteroids.Add(temp);
             }
         }
