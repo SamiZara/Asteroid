@@ -9,7 +9,7 @@ public class GeneratorManager : MonoBehaviour
 
     public static GeneratorManager Instance;
     public List<GameObject> asteroids = new List<GameObject>();
-    private int currentWave = 1;
+    private int currentWave = 14;
     private Dictionary<int, string> waves = new Dictionary<int, string>();
     private float nextWaveTime;
     void Awake()
@@ -45,9 +45,12 @@ public class GeneratorManager : MonoBehaviour
     {
         nextWaveTime = Time.time + 60;
         //Debug.Log("1");
-        string waveData = waves[currentWave++];
-        if (currentWave > 15)
-            currentWave = 15;
+        string waveData;
+        if (currentWave <= 15)
+            waveData = waves[currentWave];
+        else
+            waveData = waves[15];
+        currentWave++;
         //Debug.Log("2");
         string[] datas = waveData.Split(' ');
         //Debug.Log("3");
