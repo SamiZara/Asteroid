@@ -9,7 +9,7 @@ public class GeneratorManager : MonoBehaviour
 
     public static GeneratorManager Instance;
     public List<GameObject> asteroids = new List<GameObject>();
-    private int currentWave = 14;
+    private int currentWave = 1;
     private Dictionary<int, string> waves = new Dictionary<int, string>();
     private float nextWaveTime;
     void Awake()
