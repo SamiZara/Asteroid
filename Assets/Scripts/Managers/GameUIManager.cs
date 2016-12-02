@@ -18,9 +18,11 @@ public class GameUIManager : MonoBehaviour
         {
             case 0:
                 SceneManager.LoadScene("Game");
+                GlobalsManager.Instance.screenCover.SetActive(true);
                 break;
             case 1:
                 SceneManager.LoadScene("Menu");
+                GlobalsManager.Instance.screenCover.SetActive(true);
                 break;
             case 2:
                 GlobalsManager.Instance.gamePauseScreen.SetActive(true);

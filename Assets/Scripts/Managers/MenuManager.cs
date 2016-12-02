@@ -170,6 +170,7 @@ public class MenuManager : MonoBehaviour
         {
             case 0:
                 SceneManager.LoadScene("Game");
+                UIReferenceManager.Instance.screenCover.SetActive(true);
                 break;
             case 1:
                 UIReferenceManager.Instance.windowsWeapon1.SetActive(true);

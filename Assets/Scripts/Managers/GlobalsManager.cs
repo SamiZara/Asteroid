@@ -6,7 +6,7 @@ public class GlobalsManager : MonoBehaviour {
     public static GlobalsManager Instance;
     public Vector3 screenPos;
     public float asteroidSpeed,activeSkillCooldown;
-    public GameObject player,soundParent,gameOverScreen,gamePauseScreen,rewardButtonDimmer;
+    public GameObject player,soundParent,gameOverScreen,gamePauseScreen,rewardButtonDimmer,screenCover;
     public CirclerCooldown circlerCooldown;
     public Image activeSkillIcon;
     public AudioSource thrusterSound,asteroidExplosionSound,playerExplosionSound;
