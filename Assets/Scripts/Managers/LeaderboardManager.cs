@@ -4,17 +4,19 @@ using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
 using System.Collections;
 
-public class LeaderboardManager : MonoBehaviour {
+public class LeaderboardManager : MonoBehaviour
+{
 
     public static LeaderboardManager Instance;
 
-    #if UNITY_ANDROID
+#if UNITY_ANDROID
     void Awake()
     {
         Instance = this;
     }
 
-	void Start () {
+    void OnEnable()
+    {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
         // require access to a player's Google+ social graph (usually not needed)
         .RequireGooglePlus()
@@ -25,26 +27,40 @@ public class LeaderboardManager : MonoBehaviour {
         PlayGamesPlatform.DebugLogEnabled = true;
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
-
-        Social.localUser.Authenticate((bool success) => {
-            if (success)
+        if (!Social.localUser.authenticated)
+        {
+            Debug.Log("Login attempt");
+            Social.localUser.Authenticate((bool success) =>
             {
-                Debug.Log("Login success");
-                Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQAA", (bool successScore) => {
-                    if (successScore)
-                        Debug.Log("Report score success");
-                    else
-                        Debug.Log("Report score fail");                    
-                });
-            }
-            else
+                if (success)
+                {
+                    Debug.Log("Login success");
+                    Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQAA", (bool successScore) =>
+                    {
+                        if (successScore)
+                            Debug.Log("Report score success");
+                        else
+                            Debug.Log("Report score fail");
+                    });
+                }
+                else
+                {
+                    Debug.Log("Login fail");
+                }
+            });
+        }
+        {
+            Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQAA", (bool successScore) =>
             {
-                Debug.Log("Login fail");
-            }
-        });
+                if (successScore)
+                    Debug.Log("Report score success");
+                else
+                    Debug.Log("Report score fail");
+            });
+        }
     }
-	
-	public void ShowLeaderboard()
+
+    public void ShowLeaderboard()
     {
         Social.ShowLeaderboardUI();
     }

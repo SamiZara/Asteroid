@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.Advertisements;
 using System.Collections;
+#if UNITY_ANDROID
+using UnityEngine.Advertisements;
+#endif
 
 public class AdManager : MonoBehaviour {
 

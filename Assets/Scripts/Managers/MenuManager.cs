@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class MenuManager : MonoBehaviour
 {
@@ -519,6 +520,16 @@ public class MenuManager : MonoBehaviour
     {
         UIReferenceManager.Instance.popUpMenu.SetActive(true);
         UIReferenceManager.Instance.popUpMenuText.text = "Do you want to buy " + item + " for " + cost + "?";
+        int playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
+        if(playerMoney < Convert.ToInt32(cost))
+        {
+            UIReferenceManager.Instance.popUpYesButton.interactable = false;
+        }
+        else
+        {
+            UIReferenceManager.Instance.popUpYesButton.interactable = true;
+        }
+
     }
 
     void PopUpYes()
