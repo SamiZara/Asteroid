@@ -6,13 +6,16 @@ public class RocketProjectile : Projectile
 
     public float aoeDamage;
     public GameObject aoeDamager;
-    void Start()
+    public new void Start()
     {
-        startTime = Time.time;
-        rb = GetComponent<Rigidbody2D>();
-        float myRotation = transform.rotation.eulerAngles.z;
-        GetComponent<Rigidbody2D>().velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
+        tier = Rocket.rocketTier;
+        if (tier > 3)
+        {
+            int diff = tier - 3;
+            aoeDamage *= Mathf.Pow(1.20f, diff);
+        }
         aoeDamager.GetComponent<RocketAoeDamager>().damage = aoeDamage;
+        base.Start();
     }
 
     new void Update()

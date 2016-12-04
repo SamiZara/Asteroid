@@ -8,12 +8,18 @@ public class ScatterMissileProjectile : Projectile
     public GameObject target,scatterParticle;
     //private TrailRenderer trainRenderer;
     private bool isReadyToDestroy;
-    void Start()
+    public new void Start()
     {
+        tier = Missile.missileTier;
         startTime = Time.time;
         isReadyToDestroy = false;
         rb = GetComponent<Rigidbody2D>();
-        target = MissileLocker.lockedAsteroid;        
+        target = MissileLocker.lockedAsteroid;
+        if (tier > 3)
+        {
+            int diff = tier - 3;
+            damage *= Mathf.Pow(1.20f, diff);
+        }
     }
 
     // Update is called once per frame

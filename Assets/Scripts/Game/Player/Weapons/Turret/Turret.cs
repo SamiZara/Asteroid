@@ -6,9 +6,14 @@ public class Turret : Weapon {
     public float cooldown;
     private float lastShootTime;
     private static AudioSource explosionSound;
+    public static int turretTier;
     new void Start () {
         base.Start();
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Turret/TurretProjectileTier" + tier, "TurretProjectile");
+        turretTier = tier;
+        int tempTier = tier;
+        if (tier > 3)
+            tempTier = 3;
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Turret/TurretProjectileTier" + tempTier, "TurretProjectile");
         GameObject temp2 = (GameObject)Instantiate(explosionSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
         explosionSound = temp2.GetComponent<AudioSource>();
     }

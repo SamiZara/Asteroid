@@ -7,10 +7,15 @@ public class Gauss : Weapon
     public float cooldown;
     private float lastShootTime;
     private static AudioSource explosionSound;
+    public static int gaussTier;
     new void Start()
     {
         base.Start();
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Gauss/GaussProjectileTier" + tier, "GaussProjectile");
+        gaussTier = tier;
+        int tempTier = tier;
+        if (tier > 3)
+            tempTier = 3;
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Gauss/GaussProjectileTier" + tempTier, "GaussProjectile");
         GameObject temp2 = (GameObject)Instantiate(explosionSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
         explosionSound = temp2.GetComponent<AudioSource>();
     }

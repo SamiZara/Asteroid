@@ -7,7 +7,7 @@ public class Tesla : Weapon
 
     public List<GameObject> asteroidsInRange = new List<GameObject>();
     public GameObject lightningEffect;
-    public float damage = 0.9f;
+    private float damage = 0.9f;
     new void Start()
     {
         base.Start();
@@ -21,6 +21,21 @@ public class Tesla : Weapon
         {
             GetComponent<CircleCollider2D>().radius = 3f;
             damage = 1.7f;
+        }
+        if (tier == 3)
+        {
+            GetComponent<CircleCollider2D>().radius = 3f;
+            damage = 2.04f;
+        }
+        if (tier == 3)
+        {
+            GetComponent<CircleCollider2D>().radius = 3f;
+            damage = 2.44f;
+        }
+        if (tier == 3)
+        {
+            GetComponent<CircleCollider2D>().radius = 3f;
+            damage = 2.93f;
         }
     }
 
@@ -75,6 +90,7 @@ public class Tesla : Weapon
                     if (temp != null)
                     {
                         temp.Damage(damage);
+                        
                     }
                     else if (temp2 != null)
                     {

@@ -7,10 +7,15 @@ public class Rocket : Weapon
     public float cooldown;
     private float lastShootTime;
     private static AudioSource explosionSound;
+    public static int rocketTier;
     new void Start()
     {
         base.Start();
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Rocket/RocketProjectileTier" + tier, "RocketProjectile");
+        rocketTier = tier;
+        int tempTier = tier;
+        if (tier > 3)
+            tempTier = 3;
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Rocket/RocketProjectileTier" + tempTier, "RocketProjectile");
         GameObject temp2 = (GameObject)Instantiate(explosionSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
         explosionSound = temp2.GetComponent<AudioSource>();
     }

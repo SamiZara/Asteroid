@@ -1,5 +1,5 @@
-1 NormalBig 1 Exploding
-1 NormalBig 1 NormalMedium 1 Exploding
+1 NormalMedium 1 Exploding
+1 NormalBig 2 NormalMedium 1 Exploding
 2 NormalBig 2 Exploding 1 Pushing
 2 NormalBig 2 Exploding 1 Pushing 2 Pulling
 2 NormalBig 2 Exploding 2 Pushing 1 Pulling 2 Steel

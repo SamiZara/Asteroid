@@ -7,12 +7,18 @@ public class Projectile : MonoBehaviour {
     public GameObject explosionParticle;
     public Rigidbody2D rb;
     public AudioSource sound;
-    void Start()
+    public int tier;
+    public void Start()
     {
         startTime = Time.time;
         rb = GetComponent<Rigidbody2D>();
         float myRotation = transform.rotation.eulerAngles.z;
         rb.velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
+        if(tier > 3)
+        {
+            int diff = tier - 3;
+            damage *= Mathf.Pow(1.20f, diff);
+        }
     }
 
     // Update is called once per frame

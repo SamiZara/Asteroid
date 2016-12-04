@@ -6,10 +6,15 @@ public class Missile : Weapon
     public float cooldown;
     private float lastShootTime;
     private static AudioSource explosionSound;
+    public static int missileTier;
     new void Start()
     {
         base.Start();
-        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/MissileProjectileTier"+tier, "MissileProjectile");
+        missileTier = tier;
+        int tempTier = tier;
+        if (tier > 3)
+            tempTier = 3;
+        ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/MissileProjectileTier"+ tempTier, "MissileProjectile");
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/ScatteredMissileProjectile", "ScatteredMissileProjectile");
         GameObject temp2 = (GameObject)Instantiate(explosionSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
         explosionSound = temp2.GetComponent<AudioSource>();
