@@ -11,6 +11,7 @@ public class MoabProjectile : Projectile {
         rb = GetComponent<Rigidbody2D>();
         float myRotation = transform.rotation.eulerAngles.z;
         GetComponent<Rigidbody2D>().velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
+        Destroy();
         aoeDamager.GetComponent<RocketAoeDamager>().damage = aoeDamage;
     }
 

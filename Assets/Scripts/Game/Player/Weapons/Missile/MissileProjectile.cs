@@ -7,12 +7,18 @@ public class MissileProjectile : Projectile
     public GameObject target;
     public bool autoLock;
     private bool isReadyToDestroy = false;
-    void Start()
+    public new void Start()
     {
+        tier = Missile.missileTier;
         startTime = Time.time;
         if (autoLock)
             target = MissileLocker.lockedAsteroid;
         rb = GetComponent<Rigidbody2D>();
+        if (tier > 3)
+        {
+            int diff = tier - 3;
+            damage *= Mathf.Pow(1.20f, diff);
+        }
     }
 
     void FixedUpdate()
