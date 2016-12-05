@@ -35,7 +35,7 @@ public class GeneratorManager : MonoBehaviour
 
     void Update()
     {
-        if (asteroids.Count <= 5 || Time.time >= nextWaveTime)
+        if (asteroids.Count <= 4 || Time.time >= nextWaveTime)
         {
             sendWave();
         }

@@ -1,4 +1,4 @@
-1 NormalMedium 1 Exploding
+1 NormalBig 4 NormalMedium 1 Exploding
 1 NormalBig 2 NormalMedium 1 Exploding
 2 NormalBig 2 Exploding 1 Pushing
 2 NormalBig 2 Exploding 1 Pushing 2 Pulling

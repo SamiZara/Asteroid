@@ -17,7 +17,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         //Version
-        PlayerPrefs.SetString("Version-OS","1-Android");
+        PlayerPrefs.SetString("Version-OS", "1-Android");
         //Allocation
         UIResourceManager.Instance.AllocateAndStore("UI/Buttons/bt-upgrade", "ButtonUpgrade");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Turret", "TurretIcon");
@@ -119,7 +119,7 @@ public class MenuManager : MonoBehaviour
             selectedShipIndex = 2;
         }
         //Sound
-        if (PlayerPrefs.GetInt("Sound",1) == 0)
+        if (PlayerPrefs.GetInt("Sound", 1) == 0)
         {
             UIReferenceManager.Instance.soundOffButton.interactable = false;
             UIReferenceManager.Instance.soundOnButton.interactable = true;
@@ -222,9 +222,9 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.beamButton.interactable = true;
                     UIReferenceManager.Instance.beamUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.beamUpgradeButton.SetNativeSize();
-                    if (beamState < 3)
+                    if (beamState < 6)
                         UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nUpgrade Cost:" + weaponCosts[2, beamState] + "";
-                    if (beamState >= 3)
+                    if (beamState >= 6)
                     {
                         UIReferenceManager.Instance.beamUpgradeButton.GetComponent<Button>().interactable = false;
                         UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nMaxed";
@@ -300,11 +300,11 @@ public class MenuManager : MonoBehaviour
             case 11:
                 UIReferenceManager.Instance.windowsWeapon2.SetActive(true);
                 int rocketState = PlayerPrefs.GetInt("WeaponRocket", 1);
-                if (rocketState != 0 && rocketState < 3)
+                if (rocketState != 0 && rocketState < 6)
                 {
                     UIReferenceManager.Instance.rocketInfoText.text = "Tier:" + (rocketState) + "\nUpgrade Cost:" + weaponCosts[3, rocketState] + "";
                 }
-                else if (rocketState >= 3)
+                else if (rocketState >= 6)
                 {
                     UIReferenceManager.Instance.rocketUpgradeButton.GetComponent<Button>().interactable = false;
                     UIReferenceManager.Instance.rocketInfoText.text = "Tier:" + (rocketState) + "\nMaxed";
@@ -315,9 +315,9 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.missileButton.interactable = true;
                     UIReferenceManager.Instance.missileUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.missileUpgradeButton.SetNativeSize();
-                    if (missileState < 3)
+                    if (missileState < 6)
                         UIReferenceManager.Instance.missileInfoText.text = "Tier:" + (missileState) + "\nUpgrade Cost:" + weaponCosts[4, missileState] + "";
-                    else if (missileState >= 3)
+                    else if (missileState >= 6)
                     {
                         UIReferenceManager.Instance.missileUpgradeButton.GetComponent<Button>().interactable = false;
                         UIReferenceManager.Instance.missileInfoText.text = "Tier:" + (missileState) + "\nMaxed";
@@ -329,9 +329,9 @@ public class MenuManager : MonoBehaviour
                     UIReferenceManager.Instance.teslaButton.interactable = true;
                     UIReferenceManager.Instance.teslaUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                     UIReferenceManager.Instance.teslaUpgradeButton.SetNativeSize();
-                    if (teslaState < 3)
+                    if (teslaState < 6)
                         UIReferenceManager.Instance.teslaInfoText.text = "Tier:" + (teslaState) + "\nUpgrade Cost:" + weaponCosts[5, teslaState] + "";
-                    if (teslaState >= 3)
+                    if (teslaState >= 6)
                     {
                         UIReferenceManager.Instance.teslaUpgradeButton.GetComponent<Button>().interactable = false;
                         UIReferenceManager.Instance.teslaInfoText.text = "Tier:" + (teslaState) + "\nMaxed";
@@ -486,7 +486,7 @@ public class MenuManager : MonoBehaviour
                     PlayerPrefs.SetInt("SelectedShip", selectedShipIndex);
                 }
                 break;
-             case 29:
+            case 29:
                 selectedShipIndex = (selectedShipIndex + 1) % 3;
                 UIReferenceManager.Instance.mainMenuActiveShipIcon.sprite = UIResourceManager.Instance.storedAllocations["Ship" + (selectedShipIndex + 1) + "Icon"];
                 UIReferenceManager.Instance.mainMenuActiveShipIcon.SetNativeSize();
@@ -499,20 +499,20 @@ public class MenuManager : MonoBehaviour
                 {
                     UIReferenceManager.Instance.mainMenuActiveShipIcon.GetComponent<Button>().interactable = true;
                     UIReferenceManager.Instance.mainMenuShipUnlockButton.SetActive(false);
-                    PlayerPrefs.SetInt("SelectedShip",selectedShipIndex);
+                    PlayerPrefs.SetInt("SelectedShip", selectedShipIndex);
                 }
                 break;
             case 30:
                 itemCode = 9;
-                if(selectedShipIndex == 1)
+                if (selectedShipIndex == 1)
                     ShowPopUp("Viper best mobility in the universe", shipCosts[0].ToString());
-                else if(selectedShipIndex == 2)
+                else if (selectedShipIndex == 2)
                     ShowPopUp("Orion fastest ship in the universe", shipCosts[1].ToString());
                 break;
             case 31:
                 UIReferenceManager.Instance.soundOffButton.interactable = false;
                 UIReferenceManager.Instance.soundOnButton.interactable = true;
-                PlayerPrefs.SetInt("Sound",0);
+                PlayerPrefs.SetInt("Sound", 0);
                 break;
             case 32:
                 UIReferenceManager.Instance.soundOffButton.interactable = true;
@@ -528,9 +528,9 @@ public class MenuManager : MonoBehaviour
                 MenuAction(15);
                 break;
             case 35:
-                #if UNITY_ANDROID
+#if UNITY_ANDROID
                 LeaderboardManager.Instance.ShowLeaderboard();
-                #endif
+#endif
                 break;
         }
     }
@@ -541,7 +541,7 @@ public class MenuManager : MonoBehaviour
         UIReferenceManager.Instance.popUpMenuText.text = "Do you want to buy " + item + " for " + cost + "?";
         popUpItemCost = Convert.ToInt32(cost);
         int playerMoney = PlayerPrefs.GetInt("PlayerMoney", 0);
-        if(playerMoney < Convert.ToInt32(cost))
+        if (playerMoney < Convert.ToInt32(cost))
         {
             UIReferenceManager.Instance.popUpYesButton.interactable = false;
         }
@@ -644,7 +644,7 @@ public class MenuManager : MonoBehaviour
                 {
                     UIReferenceManager.Instance.rocketButton.interactable = false;
                     UIReferenceManager.Instance.rocketInfoText.text = "Tier:" + (state) + "\nMaxed";
-                    UIReferenceManager.Instance.rocketUpgradeButton.GetComponent<Button>().interactable = false;  
+                    UIReferenceManager.Instance.rocketUpgradeButton.GetComponent<Button>().interactable = false;
                 }
                 PlayerPrefs.SetInt("WeaponRocket", state);
                 MenuAction(12);

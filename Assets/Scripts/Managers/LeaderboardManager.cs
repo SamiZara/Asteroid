@@ -35,7 +35,7 @@ public class LeaderboardManager : MonoBehaviour
                 if (success)
                 {
                     Debug.Log("Login success");
-                    Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQAA", (bool successScore) =>
+                    Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQBw", (bool successScore) =>
                     {
                         if (successScore)
                             Debug.Log("Report score success");
@@ -50,7 +50,7 @@ public class LeaderboardManager : MonoBehaviour
             });
         }
         {
-            Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQAA", (bool successScore) =>
+            Social.ReportScore(PlayerPrefs.GetInt("HighScore", 0), "CgkIwJ2wkI8fEAIQBw", (bool successScore) =>
             {
                 if (successScore)
                     Debug.Log("Report score success");
