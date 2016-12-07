@@ -22,17 +22,17 @@ public class Tesla : Weapon
             GetComponent<CircleCollider2D>().radius = 3f;
             damage = 1.7f;
         }
-        if (tier == 3)
+        if (tier == 4)
         {
             GetComponent<CircleCollider2D>().radius = 3f;
             damage = 2.04f;
         }
-        if (tier == 3)
+        if (tier == 5)
         {
             GetComponent<CircleCollider2D>().radius = 3f;
             damage = 2.44f;
         }
-        if (tier == 3)
+        if (tier == 6)
         {
             GetComponent<CircleCollider2D>().radius = 3f;
             damage = 2.93f;
