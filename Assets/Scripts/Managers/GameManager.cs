@@ -12,11 +12,11 @@ public class GameManager : MonoBehaviour {
     {
         get
         {
-            return this.score;
+            return score;
         }
         set
         {
-            this.score = value;
+            score = value;
             GlobalsManager.Instance.gameScoreText.text = ((int)value).ToString();
         }
     }
@@ -79,17 +79,17 @@ public class GameManager : MonoBehaviour {
         int secondaryWeaponState = PlayerPrefs.GetInt("Weapon2", 0);
         if (secondaryWeaponState == 0)
         {
-            GameObject rocketWeapon = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/Weapons/WeaponRocket"), GlobalsManager.Instance.player.transform);
-            rocketWeapon.transform.localPosition = new Vector3(0, 0, 0);
-            int rocketState = PlayerPrefs.GetInt("WeaponRocket", 1);
-            rocketWeapon.GetComponent<Weapon>().tier = rocketState;
+            GameObject missileWeapon = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/Weapons/WeaponMissile"), GlobalsManager.Instance.player.transform);
+            missileWeapon.transform.localPosition = new Vector3(0, 0, 0);
+            int missileState = PlayerPrefs.GetInt("WeaponMissile", 1);
+            missileWeapon.GetComponent<Weapon>().tier = missileState;
         }
         else if (secondaryWeaponState == 1)
         {
-            GameObject missileWeapon = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/Weapons/WeaponMissile"), GlobalsManager.Instance.player.transform);
-            missileWeapon.transform.localPosition = new Vector3(0, 0, 0);
-            int missileState = PlayerPrefs.GetInt("WeaponMissile", 0);
-            missileWeapon.GetComponent<Weapon>().tier = missileState;
+            GameObject rocketWeapon = (GameObject)Instantiate(ResourceManager.Instance.AllocateAndDump("Prefabs/Weapons/WeaponRocket"), GlobalsManager.Instance.player.transform);
+            rocketWeapon.transform.localPosition = new Vector3(0, 0, 0);
+            int rocketState = PlayerPrefs.GetInt("WeaponRocket", 0);
+            rocketWeapon.GetComponent<Weapon>().tier = rocketState;
         }
         else if (secondaryWeaponState == 2)
         {
