@@ -34,7 +34,7 @@ public class MissileProjectile : Projectile
         }
         if (!isReadyToDestroy)
         {
-            float degree = (float)MathHelper.degreeBetween2Points(transform.position, target.transform.position);
+            float degree = MathHelper.degreeBetween2Points(transform.position, target.transform.position);
             if (degree < 0)
                 degree += 360;
             float myRotation = transform.rotation.eulerAngles.z;

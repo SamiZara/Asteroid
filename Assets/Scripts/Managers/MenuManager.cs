@@ -277,8 +277,8 @@ public class MenuManager : MonoBehaviour
 
     void Awake()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("PlayerMoney", 1000000);
+        //PlayerPrefs.DeleteAll();
+        //PlayerPrefs.SetInt("PlayerMoney", 1000000);
         Instace = this;
         UIReferenceManager.Instance.playerMoneyText.text = PlayerPrefs.GetInt("PlayerMoney", 0).ToString();
         //Weapons
