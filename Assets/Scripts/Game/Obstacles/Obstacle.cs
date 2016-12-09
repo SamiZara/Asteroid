@@ -52,6 +52,7 @@ public class Obstacle : MonoBehaviour
         {
             Destroy();
         }
+        FloatingTextManager.Instance.SpawnText(transform.position, damage.ToString("0.0"));
     }
 
     public void createDebris(Vector3 pos,float degree)

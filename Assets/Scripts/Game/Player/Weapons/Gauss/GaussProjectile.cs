@@ -39,7 +39,6 @@ public class GaussProjectile : Projectile
             if (asteroid != null)
             {
                 float degree = MathHelper.degreeBetween2Points(transform.position, asteroid.transform.position);
-                Debug.Log(degree + "," + asteroid.name);
                 rb.velocity = new Vector2(speed * (float)Mathf.Cos(degree * Mathf.PI / 180), speed * (float)Mathf.Sin(degree * Mathf.PI / 180));
             }
         }

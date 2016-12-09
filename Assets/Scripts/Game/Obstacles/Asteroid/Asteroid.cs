@@ -21,7 +21,7 @@ public class Asteroid : Obstacle
         {
             Destroy(degree);
         }
-
+        FloatingTextManager.Instance.SpawnText(transform.position, damage.ToString("0.0"));
     }
 
     private void Destroy(float degree)

@@ -34,15 +34,15 @@ public class Dash : MonoBehaviour {
             Obstacle temp3 = collider.GetComponent<Obstacle>();
             if (temp != null)
             {
-                temp.Damage(float.MaxValue);
+                temp.Damage(1000);
             }
             else if (temp2 != null)
             {
-                temp2.Damage(float.MaxValue, MathHelper.degreeBetween2Points(collider.transform.position, transform.position),false);
+                temp2.Damage(1000, MathHelper.degreeBetween2Points(collider.transform.position, transform.position),false);
             }
             else if (temp3 != null)
             {
-                temp3.Damage(float.MaxValue);
+                temp3.Damage(1000);
             }
             else
             {
