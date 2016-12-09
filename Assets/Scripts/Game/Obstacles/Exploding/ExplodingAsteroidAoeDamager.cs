@@ -27,7 +27,7 @@ public class ExplodingAsteroidAoeDamager : MonoBehaviour {
             }
             else if (temp2 != null)
             {
-                temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position));
+                temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position),true);
             }
             else if (temp3 != null)
             {

@@ -472,7 +472,7 @@ public class MenuManager : MonoBehaviour
             case 18:
                 itemCode = 5;
                 //state = PlayerPrefs.GetInt("WeaponTesla", 0);
-                ShowPopUp("Beam Tier " + (TeslaState + 1), weaponCosts[itemCode, TeslaState].ToString());
+                ShowPopUp("Tesla Tier " + (TeslaState + 1), weaponCosts[itemCode, TeslaState].ToString());
                 break;
             case 19:
                 UIReferenceManager.Instance.windowsActive.SetActive(true);

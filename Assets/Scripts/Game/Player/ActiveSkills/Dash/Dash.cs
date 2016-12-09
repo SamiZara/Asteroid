@@ -38,7 +38,7 @@ public class Dash : MonoBehaviour {
             }
             else if (temp2 != null)
             {
-                temp2.Damage(float.MaxValue, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
+                temp2.Damage(float.MaxValue, MathHelper.degreeBetween2Points(collider.transform.position, transform.position),false);
             }
             else if (temp3 != null)
             {

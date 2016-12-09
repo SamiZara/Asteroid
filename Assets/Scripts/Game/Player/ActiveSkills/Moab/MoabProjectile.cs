@@ -5,7 +5,7 @@ public class MoabProjectile : Projectile {
 
     public float aoeDamage;
     public GameObject aoeDamager;
-    void Start()
+    new void Start()
     {
         startTime = Time.time;
         rb = GetComponent<Rigidbody2D>();
@@ -36,7 +36,7 @@ public class MoabProjectile : Projectile {
             }
             else if (temp2 != null)
             {
-                temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position));
+                temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position),true);
             }
             else if (temp3 != null)
             {

@@ -88,7 +88,7 @@ public class Laser : Weapon
                 }
                 else if (temp2 != null)
                 {
-                    temp2.Damage(damage * Time.fixedDeltaTime, MathHelper.degreeBetween2Points(hit.transform.position,hit.point));
+                    temp2.Damage(damage * Time.fixedDeltaTime, MathHelper.degreeBetween2Points(hit.transform.position,hit.point),false);
                     if (lastDebriGenerateTime + 0.5f < Time.time)
                     {
                         temp3.createDebris(hit.point, MathHelper.degreeBetween2Points(hit.transform.position, hit.point));

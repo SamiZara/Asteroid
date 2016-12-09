@@ -48,7 +48,6 @@ public class GaussProjectile : Projectile
             ExplodingAsteroid temp = collider.GetComponent<ExplodingAsteroid>();
             Asteroid temp2 = collider.GetComponent<Asteroid>();
             Obstacle temp3 = collider.GetComponent<Obstacle>();
-            hp = temp3.hp;
             if (temp != null)
             {
                 temp.Damage(damage);
@@ -56,7 +55,7 @@ public class GaussProjectile : Projectile
             }
             else if (temp2 != null)
             {
-                temp2.Damage(damage, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
+                temp2.Damage(damage, MathHelper.degreeBetween2Points(collider.transform.position, transform.position),false);
                 temp3.createDebris(transform.position, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
             }
             else if (temp3 != null)

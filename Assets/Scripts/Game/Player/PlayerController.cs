@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     public static PlayerController Instance;
-    public float rotateSpeed, acceleration,maxSpeed;
+    public float rotateSpeed, acceleration, maxSpeed;
     private Rigidbody2D playerRb;
     //public TrailRenderer playerTrail;
     public ParticleSystem jetParticle;
@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool isDashing;
     private Vector3 dashDestinaion;
     private float lastSkillUseTime = float.MinValue;
-    public GameObject activeSkill,explosionParticle;
+    public GameObject activeSkill, explosionParticle;
     private bool isThrusterSoundPlaying;
 
     void Start()
@@ -198,12 +198,14 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateSkill()
     {
-        if (lastSkillUseTime + GlobalsManager.Instance.activeSkillCooldown < Time.time) {
-            activeSkill.SetActive(true);
-            lastSkillUseTime = Time.time;
-            GlobalsManager.Instance.circlerCooldown.gameObject.SetActive(true);
-            GlobalsManager.Instance.activateSkillButton.interactable = false;
-        }
+        if (!GameManager.Instance.isGameOver)
+            if (lastSkillUseTime + GlobalsManager.Instance.activeSkillCooldown < Time.time)
+            {
+                activeSkill.SetActive(true);
+                lastSkillUseTime = Time.time;
+                GlobalsManager.Instance.circlerCooldown.gameObject.SetActive(true);
+                GlobalsManager.Instance.activateSkillButton.interactable = false;
+            }
     }
 }
 

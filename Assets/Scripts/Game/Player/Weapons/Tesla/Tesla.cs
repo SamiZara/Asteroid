@@ -94,7 +94,7 @@ public class Tesla : Weapon
                     }
                     else if (temp2 != null)
                     {
-                        temp2.Damage(damage, MathHelper.degreeBetween2Points(asteroid.transform.position, transform.position));
+                        temp2.Damage(damage, MathHelper.degreeBetween2Points(asteroid.transform.position, transform.position),false);
                     }
                     else if (temp3 != null)
                     {
