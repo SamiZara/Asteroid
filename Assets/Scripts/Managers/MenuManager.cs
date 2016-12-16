@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
     private int[,] weaponCosts;
     private int[] activeSkillCosts;
     private int[] shipCosts;
-    private int popUpItemCost,turretState,gaussState,beamState,rocketState,missileState,teslaState;
+    private int popUpItemCost,turretState,gaussState,plasmaOrbState,rocketState,missileState,teslaState;
     private int TurretState
     {
         get
@@ -63,26 +63,26 @@ public class MenuManager : MonoBehaviour
             }
         }
     }
-    private int BeamState
+    private int PlasmaOrbState
     {
         get
         {
-            return beamState;
+            return plasmaOrbState;
         }
         set
         {
-            beamState = value;
-            if (beamState > 0)
+            plasmaOrbState = value;
+            if (plasmaOrbState > 0)
             {
-                UIReferenceManager.Instance.beamButton.interactable = true;
-                UIReferenceManager.Instance.beamUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
-                UIReferenceManager.Instance.beamUpgradeButton.SetNativeSize();
-                if (beamState < 6)
-                    UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nUpgrade Cost:" + weaponCosts[2, beamState] + "";
-                if (beamState >= 6)
+                UIReferenceManager.Instance.plasmaOrbButton.interactable = true;
+                UIReferenceManager.Instance.plasmaOrbUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
+                UIReferenceManager.Instance.plasmaOrbUpgradeButton.SetNativeSize();
+                if (plasmaOrbState < 6)
+                    UIReferenceManager.Instance.plasmaOrbInfoText.text = "Tier:" + (plasmaOrbState) + "\nUpgrade Cost:" + weaponCosts[2, plasmaOrbState] + "";
+                if (plasmaOrbState >= 6)
                 {
-                    UIReferenceManager.Instance.beamUpgradeButton.GetComponent<Button>().interactable = false;
-                    UIReferenceManager.Instance.beamInfoText.text = "Tier:" + (beamState) + "\nMaxed";
+                    UIReferenceManager.Instance.plasmaOrbUpgradeButton.GetComponent<Button>().interactable = false;
+                    UIReferenceManager.Instance.plasmaOrbInfoText.text = "Tier:" + (plasmaOrbState) + "\nMaxed";
                 }
             }
         }
@@ -103,7 +103,7 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.rocketUpgradeButton.SetNativeSize();
                 if (rocketState < 6)
                 {
-                    UIReferenceManager.Instance.rocketInfoText.text = "Tier:" + (rocketState) + "\nUpgrade Cost:" + weaponCosts[3, rocketState] + "";
+                    UIReferenceManager.Instance.rocketInfoText.text = "Tier:" + (rocketState) + "\nUpgrade Cost:" + weaponCosts[4, rocketState] + "";
                 }
                 else if (rocketState >= 6)
                 {
@@ -128,7 +128,7 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.missileUpgradeButton.sprite = UIResourceManager.Instance.storedAllocations["ButtonUpgrade"];
                 UIReferenceManager.Instance.missileUpgradeButton.SetNativeSize();
                 if (missileState < 6)
-                    UIReferenceManager.Instance.missileInfoText.text = "Tier:" + (missileState) + "\nUpgrade Cost:" + weaponCosts[4, missileState] + "";
+                    UIReferenceManager.Instance.missileInfoText.text = "Tier:" + (missileState) + "\nUpgrade Cost:" + weaponCosts[3, missileState] + "";
                 else if (missileState >= 6)
                 {
                     UIReferenceManager.Instance.missileUpgradeButton.GetComponent<Button>().interactable = false;
@@ -170,7 +170,7 @@ public class MenuManager : MonoBehaviour
         UIResourceManager.Instance.AllocateAndStore("UI/Buttons/bt-upgrade", "ButtonUpgrade");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Turret", "TurretIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-GaussGun", "GaussIcon");
-        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Beam", "BeamIcon");
+        UIResourceManager.Instance.AllocateAndStore("UI/Icons/icons-weapons-plasma", "PlasmaOrbIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-Rocket", "RocketIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-HomMissile", "MissileIcon");
         UIResourceManager.Instance.AllocateAndStore("UI/Icons/icon-TeslaGun", "TeslaIcon");
@@ -196,9 +196,9 @@ public class MenuManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("Weapon1", 0) == 2)
         {
-            UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
+            UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["PlasmaOrbIcon"];
             UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
-            UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Beam";
+            UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Plasma Orb";
         }
         //Secondary Weapon     
         if (PlayerPrefs.GetInt("Weapon2", 0) == 0)
@@ -327,8 +327,8 @@ public class MenuManager : MonoBehaviour
         activeSkillCosts[3] = 400;
         //Ships
         shipCosts = new int[2];
-        shipCosts[0] = 1000;
-        shipCosts[1] = 2500;
+        shipCosts[0] = 2000;
+        shipCosts[1] = 5000;
     }
 
     public void MenuAction(int option)
@@ -343,7 +343,7 @@ public class MenuManager : MonoBehaviour
                 UIReferenceManager.Instance.windowsWeapon1.SetActive(true);
                 TurretState = PlayerPrefs.GetInt("WeaponTurret", 1);
                 GaussState = PlayerPrefs.GetInt("WeaponGauss", 0);
-                BeamState = PlayerPrefs.GetInt("WeaponBeam", 0);
+                PlasmaOrbState = PlayerPrefs.GetInt("WeaponPlasmaOrb", 0);
                 MenuAction(PlayerPrefs.GetInt("Weapon1", 0) + 2);
                 int secondaryWeaponState = PlayerPrefs.GetInt("Weapon2", 0);
                 if (secondaryWeaponState == 0)
@@ -380,11 +380,11 @@ public class MenuManager : MonoBehaviour
                 break;
             case 4:
                 UIReferenceManager.Instance.selectedWeapon1Icon.localPosition = new Vector3(305, 117, 0);
-                UIReferenceManager.Instance.iconActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
+                UIReferenceManager.Instance.iconActiveWeapon1.sprite = UIResourceManager.Instance.storedAllocations["PlasmaOrbIcon"];
                 UIReferenceManager.Instance.iconActiveWeapon1.SetNativeSize();
-                UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
+                UIReferenceManager.Instance.mainMenuPrimaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["PlasmaOrbIcon"];
                 UIReferenceManager.Instance.mainMenuPrimaryWeapon.SetNativeSize();
-                UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Beam Gun";
+                UIReferenceManager.Instance.mainMenuPrimaryWeaponText.text = "Plasma Orb";
                 PlayerPrefs.SetInt("Weapon1", 2);
                 break;
             case 5:
@@ -403,7 +403,7 @@ public class MenuManager : MonoBehaviour
             case 8:
                 itemCode = 2;
                 //state = PlayerPrefs.GetInt("WeaponBeam", 0);
-                ShowPopUp("Beam Tier " + (BeamState + 1), weaponCosts[itemCode, BeamState].ToString());
+                ShowPopUp("Plasma Orb Tier " + (PlasmaOrbState + 1), weaponCosts[itemCode, PlasmaOrbState].ToString());
                 break;
             case 9:
                 PopUpYes();
@@ -428,7 +428,7 @@ public class MenuManager : MonoBehaviour
                 }
                 else if (primaryWeaponState == 2)
                 {
-                    UIReferenceManager.Instance.iconPrimaryActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["BeamIcon"];
+                    UIReferenceManager.Instance.iconPrimaryActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["PlasmaOrbIcon"];
                 }
                 UIReferenceManager.Instance.iconPrimaryActiveWeapon2.SetNativeSize();
                 break;
@@ -442,8 +442,8 @@ public class MenuManager : MonoBehaviour
                 break;
             case 13:
                 UIReferenceManager.Instance.selectedWeapon2Icon.localPosition = new Vector3(0, 117, 0);
-                UIReferenceManager.Instance.iconActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["MissileIcon"];
-                UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["MissileIcon"];
+                UIReferenceManager.Instance.iconActiveWeapon2.sprite = UIResourceManager.Instance.storedAllocations["RocketIcon"];
+                UIReferenceManager.Instance.mainMenuSecondaryWeapon.sprite = UIResourceManager.Instance.storedAllocations["RocketIcon"];
                 UIReferenceManager.Instance.mainMenuSecondaryWeapon.SetNativeSize();
                 UIReferenceManager.Instance.mainMenuSecondaryWeaponText.text = "Rocket";
                 PlayerPrefs.SetInt("Weapon2", 1);
@@ -653,8 +653,8 @@ public class MenuManager : MonoBehaviour
             }
             else if (itemCode == 2)
             {
-                BeamState += 1;
-                PlayerPrefs.SetInt("WeaponBeam", BeamState);
+                PlasmaOrbState += 1;
+                PlayerPrefs.SetInt("WeaponPlasmaOrb", PlasmaOrbState);
                 MenuAction(4);
             }  
             else if (itemCode == 3)

@@ -19,27 +19,23 @@ public class Laser : Weapon
         player = GlobalsManager.Instance.player;
         if (tier == 2)
         {
+            damage = 10.5f;
+        }
+        else if (tier == 3)
+        {
             lr.startWidth = 0.3f;
             lr.endWidth = 0.3f;
             laserEffectEnd.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             laserEffectStart.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             damage = 14f;
         }
-        else if (tier == 3)
-        {
-            lr.startWidth = 0.6f;
-            lr.endWidth = 0.6f;
-            laserEffectEnd.localScale = new Vector3(3, 3, 3);
-            laserEffectStart.localScale = new Vector3(3, 3, 3);
-            damage = 21f;
-        }
         else if (tier == 4)
         {
-            lr.startWidth = 0.6f;
-            lr.endWidth = 0.6f;
-            laserEffectEnd.localScale = new Vector3(3, 3, 3);
-            laserEffectStart.localScale = new Vector3(3, 3, 3);
-            damage = 25.2f;
+            lr.startWidth = 0.3f;
+            lr.endWidth = 0.3f;
+            laserEffectEnd.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            laserEffectStart.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            damage = 21f;
         }
         else if (tier == 5)
         {
@@ -47,7 +43,7 @@ public class Laser : Weapon
             lr.endWidth = 0.6f;
             laserEffectEnd.localScale = new Vector3(3, 3, 3);
             laserEffectStart.localScale = new Vector3(3, 3, 3);
-            damage = 30.24f;
+            damage = 28f;
         }
         else if (tier == 6)
         {
@@ -55,7 +51,7 @@ public class Laser : Weapon
             lr.endWidth = 0.6f;
             laserEffectEnd.localScale = new Vector3(3, 3, 3);
             laserEffectStart.localScale = new Vector3(3, 3, 3);
-            damage = 36.28f;
+            damage = 42f;
         }
     }
 

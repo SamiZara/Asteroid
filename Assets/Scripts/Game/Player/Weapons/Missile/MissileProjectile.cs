@@ -14,10 +14,9 @@ public class MissileProjectile : Projectile
         if (autoLock)
             target = MissileLocker.lockedAsteroid;
         rb = GetComponent<Rigidbody2D>();
-        if (tier > 3)
+        if (tier % 2 == 0)
         {
-            int diff = tier - 3;
-            damage *= Mathf.Pow(1.20f, diff);
+            damage *= 1.5f;
         }
     }
 
@@ -30,9 +29,10 @@ public class MissileProjectile : Projectile
             if (target == null)
             {
                 Destroy();
+                return;
             }
         }
-        if (!isReadyToDestroy)
+        if (!isReadyToDestroy && target != null)
         {
             float degree = MathHelper.degreeBetween2Points(transform.position, target.transform.position);
             if (degree < 0)

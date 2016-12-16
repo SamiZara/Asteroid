@@ -14,17 +14,16 @@ public class Tesla : Weapon
         StartCoroutine(PeriodicShock());
         if(tier == 2)
         {
-            GetComponent<CircleCollider2D>().radius = 2.4f;
             damage = 2.4f;
         }
         if (tier == 3)
         {
-            GetComponent<CircleCollider2D>().radius = 3f;
+            GetComponent<CircleCollider2D>().radius = 2.4f;
             damage = 3.4f;
         }
         if (tier == 4)
         {
-            GetComponent<CircleCollider2D>().radius = 3f;
+            GetComponent<CircleCollider2D>().radius = 2.4f;
             damage = 4.08f;
         }
         if (tier == 5)

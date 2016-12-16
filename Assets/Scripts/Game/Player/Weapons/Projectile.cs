@@ -14,10 +14,9 @@ public class Projectile : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         float myRotation = transform.rotation.eulerAngles.z;
         rb.velocity = new Vector2(speed * (float)Mathf.Cos(myRotation * Mathf.PI / 180), speed * (float)Mathf.Sin(myRotation * Mathf.PI / 180));
-        if(tier > 3)
+        if(tier%2 == 0)
         {
-            int diff = tier - 3;
-            damage *= Mathf.Pow(1.20f, diff);
+            damage *= 1.5f;
         }
     }
 

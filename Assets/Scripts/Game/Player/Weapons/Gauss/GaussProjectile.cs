@@ -3,9 +3,8 @@ using System.Collections;
 
 public class GaussProjectile : Projectile
 {
-
     public new void Start()
-    { 
+    {
         tier = Gauss.gaussTier;
         base.Start();
     }
@@ -54,7 +53,7 @@ public class GaussProjectile : Projectile
             }
             else if (temp2 != null)
             {
-                temp2.Damage(damage, MathHelper.degreeBetween2Points(collider.transform.position, transform.position),false);
+                temp2.Damage(damage, MathHelper.degreeBetween2Points(collider.transform.position, transform.position), false);
                 temp3.createDebris(transform.position, MathHelper.degreeBetween2Points(collider.transform.position, transform.position));
             }
             else if (temp3 != null)
@@ -67,9 +66,13 @@ public class GaussProjectile : Projectile
                 Debug.Log("Something collided with something it should not " + collider.name);
             }
         }
+        transform.localScale *= (damage - hp) / damage;
+        if (transform.localScale.x < 0.4f)
+        {
+            transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        }
         damage -= hp;
         if (damage <= 0)
             Destroy();
-        
     }
 }

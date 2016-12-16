@@ -11,9 +11,7 @@ public class Missile : Weapon
     {
         base.Start();
         missileTier = tier;
-        int tempTier = tier;
-        if (tier > 3)
-            tempTier = 3;
+        int tempTier = Mathf.CeilToInt((float)tier / 2);
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/MissileProjectileTier"+ tempTier, "MissileProjectile");
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Missile/ScatteredMissileProjectile", "ScatteredMissileProjectile");
         GameObject temp2 = (GameObject)Instantiate(explosionSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
@@ -35,7 +33,10 @@ public class Missile : Weapon
     public static void PlayProjectileExplosionSound()
     {
         if (GameManager.Instance.isSoundOn)
-            explosionSound.Play();
+        {
+            if(explosionSound != null)
+                explosionSound.Play();
+        }
     }
 }
 

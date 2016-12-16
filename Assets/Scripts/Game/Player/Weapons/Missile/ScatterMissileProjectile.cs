@@ -15,10 +15,9 @@ public class ScatterMissileProjectile : Projectile
         isReadyToDestroy = false;
         rb = GetComponent<Rigidbody2D>();
         target = MissileLocker.lockedAsteroid;
-        if (tier > 3)
+        if (tier % 2 == 0)
         {
-            int diff = tier - 3;
-            damage *= Mathf.Pow(1.20f, diff);
+            damage *= 1.5f;
         }
     }
 

@@ -13,7 +13,7 @@ public class ExplodingAsteroid : Obstacle
         {
             Destroy();
         }
-        FloatingTextManager.Instance.SpawnText(transform.position, damage.ToString("0.0"));
+        FloatingTextManager.Instance.SpawnText(transform.position, ((int)(damage * 10)).ToString());
     }
 
     private new void Destroy()

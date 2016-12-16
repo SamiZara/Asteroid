@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloatingTextManager : MonoBehaviour {
+public class FloatingTextManager : MonoBehaviour
+{
 
     public static FloatingTextManager Instance;
 
@@ -19,7 +20,6 @@ public class FloatingTextManager : MonoBehaviour {
         ResourceManager.Instance.AllocateAndStore("Prefabs/Numbers/7", "Number7");
         ResourceManager.Instance.AllocateAndStore("Prefabs/Numbers/8", "Number8");
         ResourceManager.Instance.AllocateAndStore("Prefabs/Numbers/9", "Number9");
-        ResourceManager.Instance.AllocateAndStore("Prefabs/Numbers/dot", "dot");
     }
 
     public void SpawnText(Vector3 pos, string numberText)
@@ -27,25 +27,14 @@ public class FloatingTextManager : MonoBehaviour {
         GameObject temp = new GameObject("FloatingText");
         char[] characters = numberText.ToCharArray();
         float count = 0;
-        foreach(char character in characters)
+        foreach (char character in characters)
         {
             GameObject number = null;
-            if (character != '.')
-            {    
-                number = Instantiate(ResourceManager.Instance.storedAllocations["Number" + character], temp.transform);           
-                number.transform.localPosition = new Vector2(count, 0);
-                count += 0.1f;
-            }
-            else
-            {              
-                number = Instantiate(ResourceManager.Instance.storedAllocations["dot"], temp.transform);
-                count -= 0.03f;
-                number.transform.localPosition = new Vector2(count, -0.065f);
-                count += 0.08f;
-            }
-            
-            
+            number = Instantiate(ResourceManager.Instance.storedAllocations["Number" + character], temp.transform);
+            number.transform.localPosition = new Vector2(count, 0);
+            count += 0.1f;
         }
+        pos += new Vector3(Random.Range(-0.2f,0.2f),Random.Range(-0.2f,0.2f));
         temp.transform.position = pos;
         temp.AddComponent<DesroyerWithNoChild>();
         Rigidbody2D rb = temp.AddComponent<Rigidbody2D>();

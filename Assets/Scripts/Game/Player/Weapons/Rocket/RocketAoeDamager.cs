@@ -24,14 +24,17 @@ public class RocketAoeDamager : MonoBehaviour {
             if (temp != null)
             {
                 temp.Damage(damage);
+                Debug.Log("Rocket damaged:"+damage);
             }
             else if (temp2 != null)
             {
                 temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position),true);
+                Debug.Log("Rocket damaged:" + damage);
             }
             else if (temp3 != null)
             {
                 temp3.Damage(damage);
+                Debug.Log("Rocket damaged:" + damage);
             }
             else
             {

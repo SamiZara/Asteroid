@@ -52,7 +52,7 @@ public class Obstacle : MonoBehaviour
         {
             Destroy();
         }
-        FloatingTextManager.Instance.SpawnText(transform.position, damage.ToString("0.0"));
+        FloatingTextManager.Instance.SpawnText(transform.position, ((int)(damage * 10)).ToString());
     }
 
     public void createDebris(Vector3 pos,float degree)
@@ -68,7 +68,7 @@ public class Obstacle : MonoBehaviour
         GeneratorManager.Instance.asteroids.Remove(gameObject);
         if (PlayerPrefs.GetInt("Sound", 1) == 1)
             GlobalsManager.Instance.asteroidExplosionSound.Play();
-        GameManager.Instance.Score += score;
+        GameManager.Instance.Score += score * GameManager.Instance.ScoreMultiplier;
         GameManager.Instance.money += money;
         if (isSpecialAsteroid)
             GameManager.Instance.specialAsteroidDestroyCount += 1;

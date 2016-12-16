@@ -21,7 +21,7 @@ public class Asteroid : Obstacle
         {
             Destroy(degree);
         }
-        FloatingTextManager.Instance.SpawnText(transform.position, damage.ToString("0.0"));
+        FloatingTextManager.Instance.SpawnText(transform.position, ((int)(damage * 10)).ToString());
     }
 
     private void Destroy(float degree)
@@ -44,6 +44,6 @@ public class Asteroid : Obstacle
                 GeneratorManager.Instance.asteroids.Add(temp);
             }
         }
-        base.Destroy();
+        Destroy();
     }
 }

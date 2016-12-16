@@ -20,6 +20,7 @@ public class Puller : MonoBehaviour {
         if (collision.tag == "Player")
         {
             player = null;
+            StopCoroutine(Pull());
         }
     }
 

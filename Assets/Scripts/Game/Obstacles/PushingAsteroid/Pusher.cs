@@ -5,13 +5,16 @@ public class Pusher : MonoBehaviour {
 
     private GameObject player = null;
 
+    void Start()
+    {
+        StartCoroutine(Push());
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            player = collision.gameObject;
-            StartCoroutine(Push());
+            player = collision.gameObject; 
         }
     }
 
@@ -30,9 +33,10 @@ public class Pusher : MonoBehaviour {
             if (player != null)
             {
                 float degree = MathHelper.degreeBetween2Points(transform.position, player.transform.position);
-                player.GetComponent<Rigidbody2D>().AddForce(new Vector2(750 * Time.fixedDeltaTime * Mathf.Cos(degree * Mathf.Deg2Rad), 750 * Time.fixedDeltaTime * Mathf.Sin(degree * Mathf.Deg2Rad)));
+                player.GetComponent<Rigidbody2D>().AddForce(new Vector2(250 * Mathf.Cos(degree * Mathf.Deg2Rad), 250 * Mathf.Sin(degree * Mathf.Deg2Rad)));
+                Debug.Log("Push");
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(1.5f);
         }
     }
 }

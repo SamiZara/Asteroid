@@ -12,9 +12,7 @@ public class Rocket : Weapon
     {
         base.Start();
         rocketTier = tier;
-        int tempTier = tier;
-        if (tier > 3)
-            tempTier = 3;
+        int tempTier = Mathf.CeilToInt((float)tier / 2);
         ResourceManager.Instance.AllocateAndStore("Prefabs/WeaponProjectiles/Rocket/RocketProjectileTier" + tempTier, "RocketProjectile");
         GameObject temp2 = (GameObject)Instantiate(explosionSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
         explosionSound = temp2.GetComponent<AudioSource>();
@@ -35,6 +33,9 @@ public class Rocket : Weapon
     public static void PlayProjectileExplosionSound()
     {
         if (GameManager.Instance.isSoundOn)
-            explosionSound.Play();
+        {
+            if(explosionSound != null)
+                explosionSound.Play();
+        }
     }
 }

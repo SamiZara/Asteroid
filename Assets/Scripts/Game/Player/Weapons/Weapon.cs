@@ -13,7 +13,7 @@ public class Weapon : MonoBehaviour
     {
         if (GameManager.Instance.isSoundOn)
         {
-            GameObject temp = (GameObject)Instantiate(fireSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
+            GameObject temp = Instantiate(fireSoundObject, new Vector3(0, 0, 0), Quaternion.identity, GlobalsManager.Instance.soundParent.transform);
             fireSound = temp.GetComponent<AudioSource>();
         }
     }

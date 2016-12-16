@@ -29,6 +29,7 @@ public class GeneratorManager : MonoBehaviour
         ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/Steel", "Steel");
         ResourceManager.Instance.AllocateAndStore("Prefabs/Asteroids/Tracking", "Tracking");
         //
+        GameManager.Instance.ScoreMultiplier = 1;
         readText();
         sendWave();
     }
@@ -37,45 +38,59 @@ public class GeneratorManager : MonoBehaviour
     {
         if (asteroids.Count <= 4 || Time.time >= nextWaveTime)
         {
+            if (nextWaveTime - 35 > Time.time)
+            {
+                currentWave++;
+                GameManager.Instance.ScoreMultiplier += 0.2f;
+            }
             sendWave();
         }
+        GlobalsManager.Instance.comboTimer.value += Time.deltaTime / 25;
+        if (GlobalsManager.Instance.comboTimer.value >= 1)
+            GameManager.Instance.ScoreMultiplier = 1;
+        GlobalsManager.Instance.asteroidCountText.text = (asteroids.Count - 4).ToString();
     }
 
     void sendWave()
     {
+        GlobalsManager.Instance.comboTimer.value = 0;
         nextWaveTime = Time.time + 60;
-        //Debug.Log("1");
         string waveData;
         if (currentWave <= 15)
             waveData = waves[currentWave];
         else
             waveData = waves[15];
+        GlobalsManager.Instance.waveText.text = "Wave." + currentWave;
         currentWave++;
-        //Debug.Log("2");
         string[] datas = waveData.Split(' ');
-        //Debug.Log("3");
         for (int i = 0; i < datas.Length; i += 2)
         {
-            //Debug.Log("4");
             int generateCount = Int32.Parse(datas[i]);
-
-            //Debug.Log("5");
             GameObject asteroid = ResourceManager.Instance.storedAllocations[datas[i + 1].Trim()];
-            //Debug.Log("6");
             for (int h = 0; h < generateCount; h++)
             {
-                float asteroidXPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.width / 100 + GlobalsManager.Instance.screenPos.x;
-                float asteroidYPos = asteroid.GetComponent<SpriteRenderer>().sprite.rect.height / 100 + GlobalsManager.Instance.screenPos.y;
-                int random1 = (UnityEngine.Random.Range(0, 2) * 2) - 1;
-                int random2 = (UnityEngine.Random.Range(0, 2) * 2) - 1;
-                if (random1 == 1)
-                    asteroidXPos = UnityEngine.Random.Range(0, asteroidXPos);
+                float asteroidXPos = 0;
+                float asteroidYPos = 0;
+                int random1 = 0;
+                int randomSide = (UnityEngine.Random.Range(0, 2) * 2) - 1;
+                if(randomSide == -1)
+                {
+                    random1 = (UnityEngine.Random.Range(0, 2) * 2) - 1;
+                    asteroidXPos = ((GlobalsManager.Instance.screenPos.x) + 2) * random1 ;
+                    asteroidYPos = UnityEngine.Random.Range(-GlobalsManager.Instance.screenPos.y, GlobalsManager.Instance.screenPos.y);
+                }
                 else
-                    asteroidYPos = UnityEngine.Random.Range(0, asteroidYPos);
-                GameObject temp = (GameObject)Instantiate(asteroid, new Vector3(random1 * asteroidXPos, random2 * asteroidYPos, 0), Quaternion.identity);
+                {
+                    random1 = (UnityEngine.Random.Range(0, 2) * 2) - 1;
+                    asteroidXPos = UnityEngine.Random.Range(-GlobalsManager.Instance.screenPos.x, GlobalsManager.Instance.screenPos.x);
+                    asteroidYPos = ((GlobalsManager.Instance.screenPos.y) + 2) * random1;
+                }
+
+                GameObject temp = Instantiate(asteroid, new Vector3(asteroidXPos, asteroidYPos, 0), Quaternion.identity);
                 temp.GetComponent<Obstacle>().score *= Mathf.Sqrt(currentWave - 1);
-                temp.GetComponent<Obstacle>().hp *= Mathf.Pow(1.045f, currentWave - 1);
-                temp.GetComponent<Obstacle>().money *= Mathf.Pow(1.1f, currentWave - 1);
+                temp.GetComponent<Obstacle>().hp *= Mathf.Pow(1.045f, currentWave - 2);
+                if (currentWave == 2)
+                    temp.GetComponent<Obstacle>().hp *= 0.5f;
                 asteroids.Add(temp);
             }
         }
@@ -87,15 +102,11 @@ public class GeneratorManager : MonoBehaviour
 
         TextAsset waveFile = (TextAsset)Resources.Load("TextFiles/Waves", typeof(TextAsset));
         string[] lines = waveFile.text.Split('\n');
-        //using (StreamReader sr = new StreamReader(Application.persistentDataPath+"/TextFiles/Waves.txt"))
-        //{
         int counter = 1;
         foreach (string line in lines)
         {
-            // Read the stream to a string, and write the string to the console.
             waves.Add(counter, line);
             counter++;
         }
-        //}
     }
 }

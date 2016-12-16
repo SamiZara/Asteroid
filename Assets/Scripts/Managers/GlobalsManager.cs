@@ -10,9 +10,10 @@ public class GlobalsManager : MonoBehaviour {
     public CirclerCooldown circlerCooldown;
     public Image activeSkillIcon;
     public AudioSource thrusterSound,asteroidExplosionSound,playerExplosionSound;
-    public Text gameScoreText,gameOverScoreText,gameOverMoneyText,gameOverAsteroidsText,gameOverSpecialAsteroidText,videoRewardText;
+    public Text gameScoreText,gameOverScoreText,gameOverMoneyText,gameOverAsteroidsText,gameOverSpecialAsteroidText,videoRewardText,asteroidCountText,scoreMultiplier,waveText;
     public PlayerController playerController;
     public Button activateSkillButton,videoRewardButton;
+    public Slider comboTimer;
     // Use this for initialization
     void Awake () {
         Instance = this;
