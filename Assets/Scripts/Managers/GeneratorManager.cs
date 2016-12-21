@@ -43,7 +43,8 @@ public class GeneratorManager : MonoBehaviour
                 currentWave++;
                 GameManager.Instance.ScoreMultiplier += 0.2f;
             }
-            sendWave();
+            if(!GameManager.Instance.isGameOver)
+                sendWave();
         }
         GlobalsManager.Instance.comboTimer.value += Time.deltaTime / 25;
         if (GlobalsManager.Instance.comboTimer.value >= 1)
