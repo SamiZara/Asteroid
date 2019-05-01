@@ -34,7 +34,6 @@ public class Pusher : MonoBehaviour {
             {
                 float degree = MathHelper.degreeBetween2Points(transform.position, player.transform.position);
                 player.GetComponent<Rigidbody2D>().AddForce(new Vector2(250 * Mathf.Cos(degree * Mathf.Deg2Rad), 250 * Mathf.Sin(degree * Mathf.Deg2Rad)));
-                Debug.Log("Push");
             }
             yield return new WaitForSeconds(1.5f);
         }

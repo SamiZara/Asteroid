@@ -24,21 +24,18 @@ public class RocketAoeDamager : MonoBehaviour {
             if (temp != null)
             {
                 temp.Damage(damage);
-                Debug.Log("Rocket damaged:"+damage);
             }
             else if (temp2 != null)
             {
                 temp2.Damage(damage, MathHelper.degreeBetween2Points(collision.transform.position, transform.position),true);
-                Debug.Log("Rocket damaged:" + damage);
             }
             else if (temp3 != null)
             {
                 temp3.Damage(damage);
-                Debug.Log("Rocket damaged:" + damage);
             }
             else
             {
-                Debug.Log("Something collided with something it should not " + collision.name);
+                //Debug.Log("Something collided with something it should not " + collision.name);
             }
         }
     }

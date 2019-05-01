@@ -103,9 +103,9 @@ public class ScatterMissileProjectile : Projectile
             for (int i = 1; i < 5; i++)
             {
                 if (i < asteroidList.Count)
-                    projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[i];
+                    projectile.transform.Find("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[i];
                 else
-                    projectile.transform.FindChild("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[0];
+                    projectile.transform.Find("Projectile" + i).GetComponent<MissileProjectile>().target = asteroidList[0];
             }
         }
     }

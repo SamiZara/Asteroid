@@ -27,6 +27,7 @@ public class InputManager : MonoBehaviour {
             }
             else if (Input.GetMouseButtonUp(0))
             {
+                GlobalsManager.Instance.knob.transform.localPosition = Vector3.zero;
                 PlayerController.Instance.stopRotate();
             }
         }

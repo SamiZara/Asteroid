@@ -16,6 +16,9 @@ public class PlayerController : MonoBehaviour
     private float lastSkillUseTime = float.MinValue;
     public GameObject activeSkill, explosionParticle;
     private bool isThrusterSoundPlaying;
+    bool isRotating = false;
+
+
 
     void Start()
     {
@@ -71,7 +74,7 @@ public class PlayerController : MonoBehaviour
                 playerRb.velocity = new Vector2(0, 0);
                 transform.position = dashDestinaion;
                 GetComponent<CircleCollider2D>().enabled = true;
-                GameObject dash = transform.FindChild("Dash(Clone)").gameObject;
+                GameObject dash = transform.Find("Dash(Clone)").gameObject;
                 dash.GetComponent<Dash>().isDashed = false;
                 dash.SetActive(false);
                 isDashing = false;
@@ -84,10 +87,18 @@ public class PlayerController : MonoBehaviour
     {
         var v3 = Input.mousePosition;
         v3.z = 10.0f;
-        v3 = Camera.main.ScreenToWorldPoint(v3);
-        float degree = MathHelper.degreeBetween2Points(transform.position, v3);
+        //Debug.Log(v3);
+        //v3 -= new Vector3(Screen.width / 2, Screen.height / 2, 0);
+        GlobalsManager.Instance.knob.transform.position = v3;
+        float degree = MathHelper.degreeBetween2Points(GlobalsManager.Instance.joystick.transform.position, v3);
         if (degree < 0)
             degree += 360;
+        float distance = GlobalsManager.Instance.knob.transform.localPosition.magnitude;
+        if (distance > 170)
+        {
+            Debug.Log(distance);
+            GlobalsManager.Instance.knob.transform.localPosition *= 170 / distance;
+        }
         float myRotation = transform.rotation.eulerAngles.z;
         if (Math.Abs(myRotation - degree) > 5)
         {
